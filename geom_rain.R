@@ -19,12 +19,33 @@
 #' @import ggplot2
 #' @export
 
+#############################################################
+#############################################################
+# TO DO OCT 12th WENS
+
+# tomorrow to do: sort out fill & color...
+# it should be able to take +
+# scale_fill_brewer(palette = "Dark2") +
+#   scale_color_brewer(palette = "Dark2")
+
+#############################################################
+#############################################################
+
+
+
+
+
 
 # so dots in center, with space for a left right arguement for the box & violin
 
 # the jitter arguement will scale with width!
 # or it is just a width argu for dots
 
+
+# See if you can nudge differently depending on the itteration
+
+
+# color & colour args
 # https://stackoverflow.com/questions/60348226/is-there-an-r-function-to-connect-grouped-data-points-created-by-a-geom-objec
 
 # this is just notes & working on stuff
@@ -38,33 +59,80 @@
 # maybe just layer! (but violin & boxplot need geom_bar params; maybe they are competing tho)
 #' @inheritParams layer
 #' @inheritParams geom_bar
+#' 
+#' # only export the %||% from tidyverse 
+
+library(tidyverse)
 
 geom_rain <- function(mapping = NULL,
                       data = NULL,
                       trim = TRUE,
-                      scale = c("area", "count", "width"),
                       show.legend = NA,
                       inherit.aes = TRUE,
                       dots_size = 0.7,
-                      dots_color = NULL,
-                      dots_fill = NULL,
+                      dots_color = waiver(),
+                      dots_fill = waiver(),
                       binwidth = 0.05,
                       position_dots = ggplot2::position_nudge(x = -0.025, y = 0),
                       ...,
-                      size_dots = dots_size,
-                      color_dots = dots_color,
-                      fill_dots = dots_fill) {
+                      global_alpha = NULL, # global alpha; local alpha's take presidence
+                      dot_alpha = NULL, 
+                      violin_alpha = NULL,
+                      box_alpha = NULL,
+                      side = NULL, # underdeveloped; arg for the sides
+                      
+                      
+                      #colors (need to do colour)
+                      #global_color = NA,
+                      dot_color = NULL, 
+                      violin_color = NULL,
+                      box_color = NULL,
+                      
+                      # fill?
+                      #dot_fill = NULL, #  # does point have a fill?
+                      violin_fill = NULL,
+                      box_fill = NULL,
+                      
+                      
+                      
+                      #longitudinal should be dependednt to each other in the future
+                      long = aes(),
+                      linecolor = NA
+                      
+                      # size_dots = dots_size,
+                      # color_dots = dots_color,
+                      # fill_dots = dots_fill
+                      ) {
+  
+  
+  
+  
+  # first thing do color args that are bilingual and friendly to scales()
+  # you need to figure out how to do defaults
+  
+  
+  # The most major issue is position_nudge() with groups, I would like to avoid subseting if possible
+  # might not be possible...
+  
   
   # aes_string() should solve the null issue!
   
   
+  # some sort of spacing function for position_nudge() based from jittering
+  # this should check the side arguement and nudge accordingly
+  
+  # also an orientation function would be nice that takes "violin", "box", or "dot" as arguments
+  
+  
+  # one with !!!
+  
   # from: https://github.com/IndrajeetPatil/ggstatsplot/blob/main/R/ggbetweenstats.R
-  point_args = list(
-    #position = pj,
-    alpha = 0.4,
-    size = .1,
-    stroke = 0
-  )
+  # point_args = list(
+  #   #position = pj,
+  #   alpha = 0.4,
+  #   size = .1,
+  #   stroke = 0
+  # )
   # violin_args = list(
   #   width = 0.5,
   #   alpha = 0.2
@@ -75,36 +143,78 @@ geom_rain <- function(mapping = NULL,
   # )
   
   
+  # dont think i need this but may be useful for "ort" function
+  #scale = c("area", "count", "width"),
+ # scale <- match.arg(scale) 
+  
+  # setting default if there are no local or global alpha args
+  dot_alpha <- dot_alpha %||% global_alpha %||% .2
+  violin_alpha <- violin_alpha %||% global_alpha %||% .4
+  box_alpha <- box_alpha %||% global_alpha %||% .8
+  
+  side <- side %||% "l" # rep("l", length(!!color))
+  
+  # for color
+  dot_color <- dot_color %||% "black"
+  violin_color <- violin_color %||% "black"
+  box_color <- box_color %||% "black"
+  
+  # for fill
+  # dot_fill <- dot_fill %||% "black" # does point have a fill?
+  violin_fill <- violin_fill %||% "black"
+  box_fill<- box_fill %||% "black"
   
   
   
-  scale <- match.arg(scale)
+  # missing line connection alpha
+  # do we want alpha on the edge of violins & box's? (difficulty ++)
   
-  pj <- position_jitterdodge(jitter.width=0.2, seed=9,
-                             jitter.height = 0,
-                             dodge.width = 0.05)
+
+  # they insert an arg either pj list
+  # pj = ggpp::position_jitternudge(width=.8, height = 0, seed=42, x = 0)
   
-  pointline <- lemon::geom_pointline(mapping = mapping, data = data,
-                                     size = size_dots, #color = color_dots,
-                          alpha = .2, linecolour = NA, # this will need a specific arg or you need to cancel it for the other two!
-                          position = pj) #, position = pj
+  
+  pj = position_jitter(width=0.04, height = 0, seed=9)
+  
+  # pj = position_jitterdodge(jitter.width=0.2, seed=9,
+  #                            jitter.height = 0,
+  #                            dodge.width = .05)
+
+  #mm <- aes(group = id)
+  
+  pointline <- lemon::geom_pointline(mapping = long, data = data, 
+                                     color = dot_color, #size = size_dots, 
+                                     #fill = dot_fill, # does this exist?
+                          alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
+                          position = pj) 
   violin <- gghalves::geom_half_violin(mapping = mapping, data = data,
-                               color = NA, alpha = .3,
-                               side = c("l", "l", "l", "l"),
+                               color = violin_color, fill = violin_fill, alpha = violin_alpha,
+                               side = side,
                                #position = position_nudge(x = c(-.2, -.1, 0, 0))
-                               position = position_nudge(x = -.2)) #+
+                               position = position_nudge(x = -.15)) #+
   box <- gghalves::geom_half_boxplot(mapping = mapping, data = data,
-                                center = TRUE, errorbar.draw = FALSE, outlier.shape = NA,
-                                width = .1, colour = "black", alpha = .1,
-                                position = position_nudge(x = -.1))
+                                center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+                                colour = box_color, fill = violin_fill, alpha = box_alpha,
+                                width = .08, position = position_nudge(x = -.08))
 
   list(pointline, violin, box)
-}  
-  
+}
 
 
-# need to add a global arg & specific ones that take presidence
-local %**% global %**% default
+ggplot(temp, aes(x = 1, y = value)) +
+  geom_rain()
+# you need to sort out single geom colors later
+
+
+
+ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
+  geom_rain() +
+  theme_minimal() +
+  theme(legend.position='none') +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2")
+
+
 
 
 
@@ -118,9 +228,18 @@ temp <- reshape2::melt(temp, id.vars = "id")
 temp$value_round <- round(temp$value,1)
 
 temp_subset10 <- temp[temp$id %in% as.character(1:10),]
+temp2 <- temp[temp$variable %in% c("t1","t2"),]
+
+
+
 
 ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
-  geom_rain() +
+  geom_rain(dot_alpha = .1, violin_alpha = .5, box_alpha = 1) +
+  theme(legend.position='none', panel.background = element_rect(fill = "white", colour = "grey50")) +
+  
+
+ggplot(temp2, aes(x = variable, y = value, fill = variable, color = variable)) +
+  geom_rain(long = aes(group = id)) +
   theme(legend.position='none', panel.background = element_rect(fill = "white", colour = "grey50"))
 
 
@@ -141,14 +260,12 @@ ggplot(temp, aes(x = variable, y = value)) +
 # geom_point(aes(!!!point.args)) # might work in the new version as there's a merged branch
 
 
-
+ggplot(temp, aes(x = variable, y = value)) +
+  geom_point(color = waiver())
 
 
 
 exec(geom_point, data = ~ filter(.x, !isanoutlier), aes(color = {{ x }}), !!!point.args)
-
-
-
 
 
 
