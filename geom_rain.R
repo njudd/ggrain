@@ -24,6 +24,9 @@
 # TO DO Major things denoted with *
 
 # *change alpha in pointline!!!
+
+# Issues of orientation is how to jitter & nudge?
+# you could have a stat that jitters (already built)
 # you can do the jittering as a stat for pointline and than do position_nudge()
 # what about postion dodge, maybe that would automatically adjust to wider jitters
 
@@ -262,6 +265,9 @@ temp_subset10 <- temp[temp$id %in% as.character(1:10),]
 temp2 <- temp[temp$variable %in% c("t1","t2"),]
 
 
+
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_rain()
 
 
 ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
