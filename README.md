@@ -12,6 +12,7 @@ This should work for one timepoint and many.
 List of priorities:
 
 - flips based on x & y arg
+- orientation argument (to center dots, box or vio)
 - has a longitudinal option
 - allows customization
 - has an automatic scalling function?
