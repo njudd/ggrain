@@ -21,18 +21,32 @@
 
 #############################################################
 #############################################################
-# TO DO OCT 12th WENS
+# TO DO Major things denoted with *
+
+# *change alpha in pointline!!!
+# you can do the jittering as a stat for pointline and than do position_nudge()
+# what about postion dodge, maybe that would automatically adjust to wider jitters
 
 # tomorrow to do: sort out fill & color...
+# line 247 might be the way...? you want it to default when there's nothing
 # it should be able to take +
 # scale_fill_brewer(palette = "Dark2") +
 #   scale_color_brewer(palette = "Dark2")
 
+
+# *x & y should make the orientation not just coord_flip()
+
+
+
+
 #############################################################
 #############################################################
 
 
 
+
+# for two have them flanking but long should be the same direction
+# geom_rainAU()
 
 
 
@@ -61,8 +75,11 @@
 #' @inheritParams geom_bar
 #' 
 #' # only export the %||% from tidyverse 
+#' 
+#' @keywords internal
+"%||%" <- function(a, b) if (!is.null(a)) a else b
 
-library(tidyverse)
+
 
 geom_rain <- function(mapping = NULL,
                       data = NULL,
@@ -75,6 +92,8 @@ geom_rain <- function(mapping = NULL,
                       binwidth = 0.05,
                       position_dots = ggplot2::position_nudge(x = -0.025, y = 0),
                       ...,
+                      
+                      # alpha
                       global_alpha = NULL, # global alpha; local alpha's take presidence
                       dot_alpha = NULL, 
                       violin_alpha = NULL,
@@ -183,21 +202,23 @@ geom_rain <- function(mapping = NULL,
   #mm <- aes(group = id)
   
   pointline <- lemon::geom_pointline(mapping = long, data = data, 
-                                     color = dot_color, #size = size_dots, 
+                                     #color = dot_color, #size = size_dots, 
                                      #fill = dot_fill, # does this exist?
                           alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
                           position = pj) 
   violin <- gghalves::geom_half_violin(mapping = mapping, data = data,
-                               color = violin_color, fill = violin_fill, alpha = violin_alpha,
+                               #color = violin_color, fill = violin_fill, 
+                               alpha = violin_alpha,
                                side = side,
                                #position = position_nudge(x = c(-.2, -.1, 0, 0))
                                position = position_nudge(x = -.15)) #+
   box <- gghalves::geom_half_boxplot(mapping = mapping, data = data,
                                 center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
-                                colour = box_color, fill = violin_fill, alpha = box_alpha,
+                                #colour = box_color, fill = box_fill, 
+                                alpha = box_alpha,
                                 width = .08, position = position_nudge(x = -.08))
 
-  list(pointline, violin, box)
+  list(pointline, violin , box)
 }
 
 
@@ -206,16 +227,26 @@ ggplot(temp, aes(x = 1, y = value)) +
 # you need to sort out single geom colors later
 
 
+# 
+ggplot(temp, aes(y = variable,x  = value)) +
+  geom_boxplot() + coord_flip()
+
 
 ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
-  geom_rain() +
+  geom_rain(dot_alpha= 1) +
+  theme_minimal() +
+  theme(legend.position='none') +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2") #+ 
+  #coord_flip() # not behaving as expected
+
+
+ggplot(temp_subset10, aes(x = variable, y = value, fill = variable, color = variable)) +
+  geom_rain(violin_alpha= 1, long = aes(group = id), linecolor = "#8E44AD") +
   theme_minimal() +
   theme(legend.position='none') +
   scale_fill_brewer(palette = "Dark2") +
   scale_color_brewer(palette = "Dark2")
-
-
-
 
 
 
@@ -260,10 +291,13 @@ ggplot(temp, aes(x = variable, y = value)) +
 # geom_point(aes(!!!point.args)) # might work in the new version as there's a merged branch
 
 
-ggplot(temp, aes(x = variable, y = value)) +
-  geom_point(color = waiver())
+ggplot(temp, aes(x = variable, y = value, group = id)) +
+  lemon::geom_pointline(linealpha = .3)
 
 
+
+ggplot(temp, aes(variable, value, fill = variable)) + 
+  geom_paired_raincloud()
 
 exec(geom_point, data = ~ filter(.x, !isanoutlier), aes(color = {{ x }}), !!!point.args)
 
