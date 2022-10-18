@@ -134,7 +134,7 @@ geom_rain2 <- function(mapping = NULL,
     
     # you need false, but you need to take x & y with you!!!
     
-    list(e4, e3, e2, e1)
+    list(e2, e4, e3, e1)
 
   }else{
     
@@ -143,11 +143,21 @@ geom_rain2 <- function(mapping = NULL,
   }
 }
 
+# to trouble shoot turn off e3 &e4
+
+# now you need to get the lines & jittering matched... the jitter seed should do it?
+# there's this odd jitter function with nudge (jitter nudge)
+
+
 
 # temp_subset10 |> dplyr::filter(time == "t1")
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain2(alpha = .3, id.long.var = 'id') +
+  geom_rain2(alpha = 1, id.long.var = 'id') +
+  theme_minimal()
+
+ggplot(temp, aes(time, value, fill = time)) + 
+  geom_rain2(alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
   theme_minimal()
 
 # current issue
