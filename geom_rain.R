@@ -120,6 +120,7 @@ geom_rain2 <- function(mapping = NULL,
                     )
 )
 {
+
   
   e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) 
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
@@ -130,11 +131,26 @@ geom_rain2 <- function(mapping = NULL,
     # quo_id.long.var = rlang::sym(id.long.var)
     # https://stackoverflow.com/questions/50960339/create-ggplot2-function-and-specify-arguments-as-variables-in-data-as-per-ggplot
     
-    e2 <- rlang::exec(geom_line, aes(group = !! rlang::sym(id.long.var)), inherit.aes = TRUE, !!!line.args)
+    e2 <- rlang::exec(geom_line, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!line.args)
     
     # you need false, but you need to take x & y with you!!!
     
-    list(e2, e4, e3, e1)
+
+    
+    # https://github.com/tidyverse/ggplot2/issues/3535
+    # redoing geom_point with ordered data
+    # I don't think this will work because data isn't passed
+    # now it works but I need to pass the data arg
+    
+    data <-
+      data |>
+      dplyr::arrange(!!rlang::sym(id.long.var), time)
+    
+    e1 <- rlang::exec(geom_point, data = data, inherit.aes = TRUE, !!!point.args) 
+
+    # list(e2, e4, e3, e1)
+    list(e2, e1)
+    
 
   }else{
     
@@ -153,8 +169,20 @@ geom_rain2 <- function(mapping = NULL,
 # temp_subset10 |> dplyr::filter(time == "t1")
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain2(alpha = 1, id.long.var = 'id') +
+  geom_rain2(data = temp_subset10,
+             alpha = .3, id.long.var = 'id', 
+             point.args = rlang::list2(
+               alpha = .3,
+               position = position_jitter(
+                 width = .02, height = NULL, seed = 42)),
+             line.args = rlang::list2(
+               alpha = .3,
+               position = position_jitter(
+                 width = .02, height = NULL, seed = 42))
+             ) +
   theme_minimal()
+
+
 
 ggplot(temp, aes(time, value, fill = time)) + 
   geom_rain2(alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
