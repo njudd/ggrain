@@ -89,24 +89,28 @@
 #' 
 #' 
 
-
+dev.off()
 
 geom_rain2 <- function(mapping = NULL,
                     data = NULL,
                     trim = TRUE,
                     show.legend = NA,
                     inherit.aes = TRUE,
+                    id.long.var = NULL,
                     ...,
                     point.args = rlang::list2(
+                      position = position_jitter(
+                        width = .02, 
+                        height = NULL,
+                        seed = 42),
                       ...
                     ),
                     line.args = rlang::list2(
-                      color = NA,
                       ...
                     ),
                     boxplot.args =  rlang::list2(
                       center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
-                      width = .08, position = position_nudge(x = .08),
+                      width = .08, position = position_nudge(x = .1),
                       ...
                     ),
                     violin.args = rlang::list2(
@@ -118,44 +122,41 @@ geom_rain2 <- function(mapping = NULL,
 {
   
   e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) 
-  e2 <- rlang::exec(geom_line, inherit.aes = TRUE, !!!line.args) #, mapping = aes(group = id),
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
   e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   
-  # list(e1, e2)
-  list(e4, e3, e2, e1)
+  
+  if (!is.null(id.long.var)){
+    # quo_id.long.var = rlang::sym(id.long.var)
+    # https://stackoverflow.com/questions/50960339/create-ggplot2-function-and-specify-arguments-as-variables-in-data-as-per-ggplot
+    
+    e2 <- rlang::exec(geom_line, aes(group = !! rlang::sym(id.long.var)), inherit.aes = TRUE, !!!line.args)
+    
+    # you need false, but you need to take x & y with you!!!
+    
+    list(e4, e3, e2, e1)
+
+  }else{
+    
+    list(e4, e3, e1)
+
+  }
 }
 
 
+# temp_subset10 |> dplyr::filter(time == "t1")
+
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_ct(alpha = .3, point.args = list(alpha = 1)) +
+  geom_rain2(alpha = .3, id.long.var = 'id') +
   theme_minimal()
 
+# current issue
 
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_line(aes(time, value, group = 'id'))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_line(aes(time, value, group = id))
 
 
 
