@@ -80,6 +80,86 @@
 #' # only export the %||% from tidyverse 
 #' 
 #' @keywords internal
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+
+
+
+geom_rain2 <- function(mapping = NULL,
+                    data = NULL,
+                    trim = TRUE,
+                    show.legend = NA,
+                    inherit.aes = TRUE,
+                    ...,
+                    point.args = rlang::list2(
+                      ...
+                    ),
+                    line.args = rlang::list2(
+                      color = NA,
+                      ...
+                    ),
+                    boxplot.args =  rlang::list2(
+                      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+                      width = .08, position = position_nudge(x = .08),
+                      ...
+                    ),
+                    violin.args = rlang::list2(
+                      color = NA,
+                      position = position_nudge(x = .15), side = "r",
+                      ...
+                    )
+)
+{
+  
+  e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) 
+  e2 <- rlang::exec(geom_line, inherit.aes = TRUE, !!!line.args) #, mapping = aes(group = id),
+  e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
+  e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
+  
+  # list(e1, e2)
+  list(e4, e3, e2, e1)
+}
+
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_ct(alpha = .3, point.args = list(alpha = 1)) +
+  theme_minimal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 "%||%" <- function(a, b) if (!is.null(a)) a else b
 
 
@@ -195,20 +275,30 @@ geom_rain <- function(mapping = NULL,
   # they insert an arg either pj list
   # pj = ggpp::position_jitternudge(width=.8, height = 0, seed=42, x = 0)
   
-  
   pj = position_jitter(width=0.04, height = 0, seed=9)
   
   # pj = position_jitterdodge(jitter.width=0.2, seed=9,
   #                            jitter.height = 0,
   #                            dodge.width = .05)
 
-  #mm <- aes(group = id)
+  print(mapping)
   
-  pointline <- lemon::geom_pointline(mapping = long, data = data, 
-                                     #color = dot_color, #size = size_dots, 
+  #mm <- aes(group = id)
+  point <- geom_point(mapping = mapping, data = data, 
+                                     #color = "black", #size = size_dots, 
                                      #fill = dot_fill, # does this exist?
-                          alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
-                          position = pj) 
+                                     # alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
+                                     position = pj) 
+  line <- geom_line(mapping = long, data = data, 
+                                     #color = "black", #size = size_dots, 
+                                     #fill = dot_fill, # does this exist?
+                                     # alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
+                                     position = pj) 
+  # pointline <- lemon::geom_pointline(mapping = long, data = data, 
+  #                                    #color = "black", #size = size_dots, 
+  #                                    #fill = dot_fill, # does this exist?
+  #                         alpha = dot_alpha, linecolour = linecolor, # this will need a specific arg or you need to cancel it for the other two!
+  #                         position = pj) 
   violin <- gghalves::geom_half_violin(mapping = mapping, data = data,
                                #color = violin_color, fill = violin_fill, 
                                alpha = violin_alpha,
@@ -217,16 +307,17 @@ geom_rain <- function(mapping = NULL,
                                position = position_nudge(x = -.15)) #+
   box <- gghalves::geom_half_boxplot(mapping = mapping, data = data,
                                 center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+                                side = side,
                                 #colour = box_color, fill = box_fill, 
                                 alpha = box_alpha,
                                 width = .08, position = position_nudge(x = -.08))
 
-  list(pointline, violin , box)
+  list(point, line, violin , box)
 }
 
 
 ggplot(temp, aes(x = 1, y = value)) +
-  geom_rain()
+  geom_rain(side = "r")
 # you need to sort out single geom colors later
 
 
@@ -245,13 +336,21 @@ ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
 
 
 ggplot(temp_subset10, aes(x = variable, y = value, fill = variable, color = variable)) +
-  geom_rain(violin_alpha= 1, long = aes(group = id), linecolor = "#8E44AD") +
+  geom_rain(violin_alpha= 1, long = aes(group = id)) +
   theme_minimal() +
   theme(legend.position='none') +
   scale_fill_brewer(palette = "Dark2") +
   scale_color_brewer(palette = "Dark2")
 
 
+ct = position_jitter(width=0.04, height = 0, seed=9)
+
+pd <- position_dodge(0.4)
+
+
+ggplot(temp_subset10, aes(x = variable, y = value, fill = variable, color = variable, group = id)) +
+  geom_point(position = pd) +
+  geom_line(position = pd)
 
 
 # testing 
@@ -260,23 +359,27 @@ temp <- lavaan::Demo.growth[,1:4]
 temp$id <- as.factor(as.character(rep(1:dim(temp)[1])))
 temp <- reshape2::melt(temp, id.vars = "id")
 temp$value_round <- round(temp$value,1)
+colnames(temp)[2] <- "time"
 
 temp_subset10 <- temp[temp$id %in% as.character(1:10),]
 temp2 <- temp[temp$variable %in% c("t1","t2"),]
 
 
 
+
+
 ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
-  geom_rain()
+  geom_rain() +
+  coord_flip()
 
 
 ggplot(temp, aes(x = variable, y = value, fill = variable, color = variable)) +
   geom_rain(dot_alpha = .1, violin_alpha = .5, box_alpha = 1) +
-  theme(legend.position='none', panel.background = element_rect(fill = "white", colour = "grey50")) +
+  theme(legend.position='none', panel.background = element_rect(fill = "white", colour = "grey50"))
   
 
 ggplot(temp2, aes(x = variable, y = value, fill = variable, color = variable)) +
-  geom_rain(long = aes(group = id)) +
+  geom_rain(long = aes(group = id), linecolor = "black") +
   theme(legend.position='none', panel.background = element_rect(fill = "white", colour = "grey50"))
 
 
