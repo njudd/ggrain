@@ -141,6 +141,7 @@ geom_rain2 <- function(mapping = NULL,
     # redoing geom_point with ordered data
     # I don't think this will work because data isn't passed
     # now it works but I need to pass the data arg
+    # also the args are quite verbose, can you trim them down/
     
     data <-
       data |>
@@ -164,7 +165,14 @@ geom_rain2 <- function(mapping = NULL,
 # now you need to get the lines & jittering matched... the jitter seed should do it?
 # there's this odd jitter function with nudge (jitter nudge)
 
-
+# your function doesn't support overlapping violins like in rainclouds_2x2_repmems
+# neither does geom_violin atm
+# temp_g <- rbind(temp, temp)
+# temp_g$g <- c(rep("a", dim(temp_g)[1]/2), rep("b", dim(temp_g)[1]/2))
+# temp_g[1:(dim(temp_g)[1]/2),]$value <- temp_g[1:(dim(temp_g)[1]/2),]$value + 1
+# 
+# ggplot(temp_g, aes(time, value, fill = g)) +
+#   geom_violin()
 
 # temp_subset10 |> dplyr::filter(time == "t1")
 
