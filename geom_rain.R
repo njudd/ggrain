@@ -5,8 +5,9 @@
 #'
 #' https://github.com/easystats/see/blob/main/R/geom_violindot.R
 #' 
-#' 
-#' 
+#' https://ggplot2-book.org/spring1.html
+#' https://testthat.r-lib.org/
+
 
 #############################################################
 #############################################################
@@ -15,7 +16,15 @@
 
 ############# long (almost done)
 
+###### PRIORITY
+
+# TIME IS HARDCODED LINE 152; 
+# I COULD MAKE AN EDIT TO THE STAT IDENTITY WHERE IT ORDERS BASED OF THE THE aes()
+# @Jordy it would be cool to figure out how to edit the data and aes() that ggplot() passes???
+
 # I think the best thing would to make an 'identity_sorted' stat for geom_point()
+# edit the compute_group()
+
 # it would be nice to edit the data from ggplot() that goes to the geom if possible
 # this would get rid of the data = arg which is nice
 # https://community.rstudio.com/t/what-is-the-difference-between-and-data/76330
@@ -32,6 +41,10 @@
 
 ############## orientation (incomplete)
 # currently hardcoded yet if you use a function you will have the default args issues again
+
+# idea do this with "width" have a default percentage 40/10/50 (dots ditter, box, vio)
+# tricky as jittering is now tied to it
+# than min & max widths; when max is hit break & tell about ggpointdensity
 
 
 ############## overlapping (not started)
@@ -76,7 +89,10 @@ geom_rain <- function(mapping = NULL,
                     inherit.aes = TRUE,
                     id.long.var = NULL,
                     ...,
-                    point.args = rlang::list2(
+                    # one con of doing it this way is when the user changes one it wipes them all out
+                    # yet its okay they can look at the function & copy the args
+                    # one issue is that we will have to interactively edit it for additional features (i.e., orientation)
+                    point.args = rlang::list2( 
                       position = position_jitter(
                         width = .02, 
                         height = NULL,
@@ -105,7 +121,7 @@ geom_rain <- function(mapping = NULL,
 {
 
   
-  e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) 
+  e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
   e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   
@@ -125,15 +141,19 @@ geom_rain <- function(mapping = NULL,
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
     
-    head(.)
-    
     if(is.null(data)){
-      stop("WARNING you need to specify a data arg in geom_rain for longitudinally connected plots: \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
+      stop("WARNING you need to specify a data arg in geom_rain for longitudinally connected plots: 
+           \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
     }
     
-    data <-
-      data |>
-      dplyr::arrange(!!rlang::sym(id.long.var), time)
+    data_ordered = function(data){
+      data <-
+        data |>
+        dplyr::arrange(!!rlang::sym(id.long.var), time) # TIME IS HARDCODED
+      data
+    }
+    
+
     
     e1 <- rlang::exec(geom_point, data = data, inherit.aes = TRUE, !!!point.args) 
 
@@ -150,22 +170,6 @@ geom_rain <- function(mapping = NULL,
 # temp_subset10 |> dplyr::filter(time == "t1")
 
 
-
-
-
-
-
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain(#data = temp_subset10, 
-            id.long.var = 'id')
-
-
-
-
-
-
-
-
 # testing 
 library(ggplot2)
 temp <- lavaan::Demo.growth[,1:4]
@@ -179,12 +183,19 @@ temp2 <- temp[temp$variable %in% c("t1","t2"),]
 
 
 
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_rain(#data = temp_subset10, 
+    id.long.var = 'id')
+
+
+
 #### workspace
 # time is hardcoded; also not working atm
 
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain(data = temp_subset10, 
+  geom_rain(#data = temp_subset10, 
             id.long.var = 'id')
 
 ggplot(temp, aes(time, value, fill = time)) + 
