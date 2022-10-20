@@ -1,27 +1,26 @@
-#' Half-violin Half-dot plot
+#' Raincloud Plot
+#' Nicholas Judd (njudd), Jordy van Langen (jorvlan) & Rogier Kievit
+#' 19/10/2022
 #'
-#' Create a half-violin half-dot plot, useful for visualising the distribution
-#' and the sample size at the same time.
-#' @inheritParams geom_violinhalf
-#' @inheritParams ggplot2::geom_dotplot
-#' @param position_dots Position adjustment for dots, either as a string, or the
-#'   result of a call to a position adjustment function.
-#' @param size_dots,dots_size Size adjustment for dots.
-#' @param color_dots,dots_color Color adjustment for dots.
-#' @param fill_dots,dots_fill Fill adjustment for dots.
-#' @examples
-#' library(ggplot2)
-#' library(see)
 #'
-#' ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
-#'   geom_violindot() +
-#'   theme_modern()
-#' @import ggplot2
-#' @export
+#' https://github.com/easystats/see/blob/main/R/geom_violindot.R
+#' 
+#' 
+#' 
 
 #############################################################
 #############################################################
 # TO DO Major things denoted with *
+
+
+############# long (almost done)
+
+# I think the best thing would to make an 'identity_sorted' stat for geom_point()
+# it would be nice to edit the data from ggplot() that goes to the geom if possible
+# this would get rid of the data = arg which is nice
+# https://community.rstudio.com/t/what-is-the-difference-between-and-data/76330
+# https://stackoverflow.com/questions/63399011/what-is-the-difference-between-and-data
+
 
 ############## jittering (partially finished)
 # Issues of orientation is how to jitter & nudge?
@@ -45,15 +44,16 @@
 # ggplot(temp_g, aes(time, value, fill = g)) +
 #   geom_violin()
 
+############## make a paired option where you have them flanking
+
+
+
+############## supplementary features
+# 1. use https://github.com/LKremer/ggpointdensity
+# 2. make an easy arg for left sided
+
 #############################################################
 #############################################################
-
-
-
-
-# for two have them flanking but long should be the same direction
-# geom_rainAU()
-
 
 
 # so dots in center, with space for a left right arguement for the box & violin
@@ -61,40 +61,15 @@
 # the jitter arguement will scale with width!
 # or it is just a width argu for dots
 
-
 # See if you can nudge differently depending on the itteration
-
 
 # color & colour args
 # https://stackoverflow.com/questions/60348226/is-there-an-r-function-to-connect-grouped-data-points-created-by-a-geom-objec
 
-# this is just notes & working on stuff
 
 
-# detach("package:gghalves", unload=TRUE)
 
-
-# you need to think of what params you want to inheret
-
-# maybe just layer! (but violin & boxplot need geom_bar params; maybe they are competing tho)
-#' @inheritParams layer
-#' @inheritParams geom_bar
-#' 
-#' # only export the %||% from tidyverse 
-#' 
-#' @keywords internal
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-
-dev.off()
-
-geom_rain2 <- function(mapping = NULL,
+geom_rain <- function(mapping = NULL,
                     data = NULL,
                     trim = TRUE,
                     show.legend = NA,
@@ -109,6 +84,11 @@ geom_rain2 <- function(mapping = NULL,
                       ...
                     ),
                     line.args = rlang::list2(
+                      alpha = .2,
+                      position = position_jitter(
+                        width = .02, 
+                        height = NULL,
+                        seed = 42),
                       ...
                     ),
                     boxplot.args =  rlang::list2(
@@ -145,6 +125,8 @@ geom_rain2 <- function(mapping = NULL,
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
     
+    head(.)
+    
     if(is.null(data)){
       stop("WARNING you need to specify a data arg in geom_rain for longitudinally connected plots: \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
     }
@@ -167,6 +149,23 @@ geom_rain2 <- function(mapping = NULL,
 
 # temp_subset10 |> dplyr::filter(time == "t1")
 
+
+
+
+
+
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_rain(#data = temp_subset10, 
+            id.long.var = 'id')
+
+
+
+
+
+
+
+
 # testing 
 library(ggplot2)
 temp <- lavaan::Demo.growth[,1:4]
@@ -183,17 +182,22 @@ temp2 <- temp[temp$variable %in% c("t1","t2"),]
 #### workspace
 # time is hardcoded; also not working atm
 
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_rain(data = temp_subset10, 
+            id.long.var = 'id')
+
 ggplot(temp, aes(time, value, fill = time)) + 
-  geom_rain2(#data = temp,
+  geom_rain(data = temp,
              alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
   theme_minimal() +
   scale_fill_brewer(palette = "Dark2") +
-  scale_color_brewer(palette = "Dark2")
-
+  scale_color_brewer(palette = "Dark2") +
+  coord_flip()
 
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain2(data = temp_subset10,
+  geom_rain(data = temp_subset10,
              alpha = .3, id.long.var = 'id', 
              point.args = rlang::list2(
                alpha = .3,
