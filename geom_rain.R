@@ -16,6 +16,13 @@
 
 ############# long (almost done)
 
+
+#### essential stuff is right/legt
+# no hardcoded
+# and a geom_rainpaired() that would work in principle
+
+
+
 ###### PRIORITY
 
 # TIME IS HARDCODED LINE 152; 
@@ -247,6 +254,7 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 ggplot(temp, aes(x = variable, y = value, group = id)) +
   lemon::geom_pointline(linealpha = .3)
 
+# https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud/
 ggplot(temp, aes(variable, value, fill = variable)) + 
   geom_paired_raincloud()
 
