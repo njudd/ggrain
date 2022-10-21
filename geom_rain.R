@@ -1,6 +1,6 @@
 #' Raincloud Plot
 #' Nicholas Judd (njudd), Jordy van Langen (jorvlan) & Rogier Kievit
-#' 19/10/2022
+#' 21/10/2022
 #'
 #'
 #' https://github.com/easystats/see/blob/main/R/geom_violindot.R
@@ -26,7 +26,7 @@
 ###### PRIORITY
 
 # TIME IS HARDCODED LINE 152; 
-# I COULD MAKE AN EDIT TO THE STAT IDENTITY WHERE IT ORDERS BASED OF THE THE aes()
+# I COULD MAKE AN EDIT TO THE STAT IDENTITY WHERE IT ORDERS BASED OF THE aes()
 # @Jordy it would be cool to figure out how to edit the data and aes() that ggplot() passes???
 
 # I think the best thing would to make an 'identity_sorted' stat for geom_point()
@@ -49,13 +49,13 @@
 ############## orientation (incomplete)
 # currently hardcoded yet if you use a function you will have the default args issues again
 
-# idea do this with "width" have a default percentage 40/10/50 (dots ditter, box, vio)
+# idea do this with "width" have a default percentage 15/15/17 (dots ditter, box, vio)
 # tricky as jittering is now tied to it
 # than min & max widths; when max is hit break & tell about ggpointdensity
 
 
 ############## overlapping (not started)
-# your function doesn't support overlapping violins like in rainclouds_2x2_repmems
+# your function doesn't support overlapping violins like in rainclouds_2x2_repmes
 # neither does geom_violin atm
 # temp_g <- rbind(temp, temp)
 # temp_g$g <- c(rep("a", dim(temp_g)[1]/2), rep("b", dim(temp_g)[1]/2))
@@ -90,43 +90,44 @@
 
 
 geom_rain <- function(mapping = NULL,
-                    data = NULL,
-                    trim = TRUE,
-                    show.legend = NA,
-                    inherit.aes = TRUE,
-                    id.long.var = NULL,
-                    ...,
-                    # one con of doing it this way is when the user changes one it wipes them all out
-                    # yet its okay they can look at the function & copy the args
-                    # one issue is that we will have to interactively edit it for additional features (i.e., orientation)
-                    point.args = rlang::list2( 
-                      position = position_jitter(
-                        width = .02, 
-                        height = NULL,
-                        seed = 42),
-                      ...
-                    ),
-                    line.args = rlang::list2(
-                      alpha = .2,
-                      position = position_jitter(
-                        width = .02, 
-                        height = NULL,
-                        seed = 42),
-                      ...
-                    ),
-                    boxplot.args =  rlang::list2(
-                      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
-                      width = .08, position = position_nudge(x = .1),
-                      ...
-                    ),
-                    violin.args = rlang::list2(
-                      color = NA,
-                      position = position_nudge(x = .15), side = "r",
-                      ...
-                    )
+                      data = NULL,
+                      trim = TRUE,
+                      show.legend = NA,
+                      inherit.aes = TRUE,
+                      id.long.var = NULL,
+                      ...,
+                      # one con of doing it this way is when the user changes one it wipes them all out
+                      # yet its okay they can look at the function & copy the args
+                      # one issue is that we will have to interactively edit it for additional features (i.e., orientation)
+                      # Jordy: look at best settings for position_jitter()
+                      point.args = rlang::list2( 
+                        position = position_jitter(
+                          width = .02, 
+                          height = NULL,
+                          seed = 42),
+                        ...
+                      ),
+                      line.args = rlang::list2(
+                        alpha = .2,
+                        position = position_jitter(
+                          width = .02, 
+                          height = NULL,
+                          seed = 42),
+                        ...
+                      ),
+                      boxplot.args =  rlang::list2(
+                        center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+                        width = .08, position = position_nudge(x = .1),
+                        ...
+                      ),
+                      violin.args = rlang::list2(
+                        color = NA,
+                        position = position_nudge(x = .15), side = "r",
+                        ...
+                      )
 )
 {
-
+  
   
   e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
@@ -140,7 +141,7 @@ geom_rain <- function(mapping = NULL,
     e2 <- rlang::exec(geom_line, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!line.args)
     
     # you need false, but you need to take x & y with you!!!
-
+    
     # https://github.com/tidyverse/ggplot2/issues/3535
     # redoing geom_point with ordered data
     # I don't think this will work because data isn't passed
@@ -148,25 +149,25 @@ geom_rain <- function(mapping = NULL,
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
     
-    if(is.null(data)){
-      stop("WARNING you need to specify a data arg in geom_rain for longitudinally connected plots: 
-           \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
-    }
+    #if(is.null(data)){
+    #  stop("WARNING you need to specify a data arg in geom_rain() for longitudinally connected plots: 
+    #       \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
+    #}
     
     data_ordered = function(data){
       data <-
         data |>
-        dplyr::arrange(!!rlang::sym(id.long.var), time) # TIME IS HARDCODED
+        dplyr::arrange(!!rlang::sym(id.long.var), data %>% arrange(across(names(data)[2]))) #time #TIME IS HARDCODED #Jordy: !!dplyr::arrange(data, across(names(data)[2]))
       data
     }
     
-
+    
     
     e1 <- rlang::exec(geom_point, data = data, inherit.aes = TRUE, !!!point.args) 
-
+    
     list(e2, e4, e3, e1)
     # list(e2, e1)
-
+    
   }else{
     list(e4, e3, e1)
   }
@@ -186,47 +187,44 @@ temp$value_round <- round(temp$value,1)
 colnames(temp)[2] <- "time"
 
 temp_subset10 <- temp[temp$id %in% as.character(1:10),]
-temp2 <- temp[temp$variable %in% c("t1","t2"),]
-
-
-
-
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain(#data = temp_subset10, 
-    id.long.var = 'id')
-
-
+temp2 <- temp[temp$variable %in% c("t1","t2"),] 
+  #Jordy: View(temp2) results in -> "no data available in table"?
 
 #### workspace
 # time is hardcoded; also not working atm
 
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain(#data = temp_subset10, 
-            id.long.var = 'id')
+  geom_rain(id.long.var = 'id') #temp_subset10
 
 ggplot(temp, aes(time, value, fill = time)) + 
   geom_rain(data = temp,
-             alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
+            alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
   theme_minimal() +
   scale_fill_brewer(palette = "Dark2") +
-  scale_color_brewer(palette = "Dark2") +
-  coord_flip()
+  scale_color_brewer(palette = "Dark2") #+
+  #coord_flip()
 
+#Jordy:
+  # Violins on same axis-location (x-tic) so no lines overlap the violins?
+  # Trimming of violins in both figures (lines: 188-190 & 192-198) differs? Why?
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
   geom_rain(data = temp_subset10,
-             alpha = .3, id.long.var = 'id', 
-             point.args = rlang::list2(
-               alpha = .3,
-               position = position_jitter(
-                 width = .02, height = NULL, seed = 42)),
-             line.args = rlang::list2(
-               alpha = .3,
-               position = position_jitter(
-                 width = .02, height = NULL, seed = 42))
-             ) +
-  theme_minimal()
+            alpha = .3, id.long.var = 'id', 
+            point.args = rlang::list2(
+              alpha = .3,
+              position = position_jitter(
+                width = .02, height = NULL, seed = 42)),
+            line.args = rlang::list2(
+              alpha = .3,
+              position = position_jitter(
+                width = .02, height = NULL, seed = 42))
+  ) +
+  theme_minimal() #+
+  #theme_classic()
+  #Jordy:
+    # default option: theme_classic()? To avoid conflicting line perception?
 
 
 
@@ -252,7 +250,7 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 
 
 ggplot(temp, aes(x = variable, y = value, group = id)) +
-  lemon::geom_pointline(linealpha = .3)
+  lemon::geom_pointline(alpha = .3)
 
 # https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud/
 ggplot(temp, aes(variable, value, fill = variable)) + 
@@ -260,9 +258,24 @@ ggplot(temp, aes(variable, value, fill = variable)) +
 
 # exec(geom_point, data = ~ filter(.x, !isanoutlier), aes(color = {{ x }}), !!!point.args)
 
+# flips based on x & y arg
+
+## Iris dataset test 
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_rain() #+
+  #coord_flip()
+
+ggplot(iris, aes(x = Sepal.Length, y = Species, fill = Species)) +
+  geom_rain() #+
+#coord_flip()
 
 
+## mpg dataset test
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot() #+
+  #coord_flip()
 
-
-
-
+ggplot(data = mpg, mapping = aes(x = hwy, y = class)) + 
+  geom_boxplot()
+# potential resources:
+# https://stackoverflow.com/questions/68733790/why-is-coord-flip-better-than-switching-x-and-y-arguments-in-aes-in-ggpl
