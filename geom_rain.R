@@ -7,6 +7,9 @@
 #' 
 #' https://ggplot2-book.org/spring1.html
 #' https://testthat.r-lib.org/
+#' need library(grid)
+#' need library(rlang)
+#' need library(ggplot2)
 
 
 #############################################################
@@ -87,6 +90,9 @@
 # https://stackoverflow.com/questions/60348226/is-there-an-r-function-to-connect-grouped-data-points-created-by-a-geom-objec
 
 
+source("~/projects/rain/ggrain/geom-point-sorted.r")
+source("~/projects/rain/ggrain/utilities-grid.r")
+
 
 
 geom_rain <- function(mapping = NULL,
@@ -129,7 +135,7 @@ geom_rain <- function(mapping = NULL,
 {
   
   
-  e1 <- rlang::exec(geom_point, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
+  e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
   e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   
@@ -148,22 +154,6 @@ geom_rain <- function(mapping = NULL,
     # now it works but I need to pass the data arg
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
-    
-    #if(is.null(data)){
-    #  stop("WARNING you need to specify a data arg in geom_rain() for longitudinally connected plots: 
-    #       \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
-    #}
-    
-    data_ordered = function(data){
-      data <-
-        data |>
-        dplyr::arrange(!!rlang::sym(id.long.var), data %>% arrange(across(names(data)[2]))) #time #TIME IS HARDCODED #Jordy: !!dplyr::arrange(data, across(names(data)[2]))
-      data
-    }
-    
-    
-    
-    e1 <- rlang::exec(geom_point, data = data, inherit.aes = TRUE, !!!point.args) 
     
     list(e2, e4, e3, e1)
     # list(e2, e1)
