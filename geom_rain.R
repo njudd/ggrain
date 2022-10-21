@@ -142,15 +142,15 @@ geom_rain <- function(mapping = NULL,
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
     
-    if(is.null(data)){
-      stop("WARNING you need to specify a data arg in geom_rain() for longitudinally connected plots: 
-           \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
-    }
+    #if(is.null(data)){
+    #  stop("WARNING you need to specify a data arg in geom_rain() for longitudinally connected plots: 
+    #       \n(e.g., geom_rain(data = x, id.long.var = 'id', ...)")
+    #}
     
     data_ordered = function(data){
       data <-
         data |>
-        dplyr::arrange(!!rlang::sym(id.long.var), data %>% arrange(across(names(data)[2]))) # TIME IS HARDCODED #Jordy: !!dplyr::arrange(data, across(names(data)[2]))
+        dplyr::arrange(!!rlang::sym(id.long.var), data %>% arrange(across(names(data)[2]))) #time #TIME IS HARDCODED #Jordy: !!dplyr::arrange(data, across(names(data)[2]))
       data
     }
     
@@ -177,7 +177,7 @@ temp <- lavaan::Demo.growth[,1:4]
 temp$id <- as.factor(as.character(rep(1:dim(temp)[1])))
 temp <- reshape2::melt(temp, id.vars = "id")
 temp$value_round <- round(temp$value,1)
-#colnames(temp)[2] <- "time"
+colnames(temp)[2] <- "time"
 
 temp_subset10 <- temp[temp$id %in% as.character(1:10),]
 temp2 <- temp[temp$variable %in% c("t1","t2"),] 
@@ -188,8 +188,7 @@ temp2 <- temp[temp$variable %in% c("t1","t2"),]
 
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain(data = temp_subset10, 
-    id.long.var = 'id')
+  geom_rain(id.long.var = 'id') #temp_subset10
 
 ggplot(temp, aes(time, value, fill = time)) + 
   geom_rain(data = temp,
