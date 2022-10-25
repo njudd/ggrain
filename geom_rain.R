@@ -108,19 +108,20 @@ geom_rain <- function(mapping = NULL,
                       line.args = rlang::list2(
                         alpha = .2,
                         position = position_jitter(
-                          width = .02, 
+                          width = .04, 
                           height = NULL,
                           seed = 42),
                         ...
                       ),
                       boxplot.args =  rlang::list2(
                         center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
-                        width = .08, position = position_nudge(x = .1),
+                        side = "r",
+                        width = .08, position = position_nudge(x = .08),
                         ...
                       ),
                       violin.args = rlang::list2(
-                        color = NA,
-                        position = position_nudge(x = .15), side = "r",
+                        color = NA, side = "r",
+                        width = .7, position = position_nudge(x = .13), 
                         ...
                       )
 )
@@ -130,12 +131,14 @@ geom_rain <- function(mapping = NULL,
   # orient argument (sets what is 0)
   # rain width argument (needs to use normal width/jittersize & nudging)
   
+  # the width arguement might not make sense, since its always to the scale of the plot
+  
   
   
   if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
-    
     violin.args$side <- rain.side
-    
+    boxplot.args$side <- rain.side
+
     if(rain.side == "l"){
       violin.args$position$x <- -violin.args$position$x
       boxplot.args$position$x <- -boxplot.args$position$x
@@ -144,8 +147,6 @@ geom_rain <- function(mapping = NULL,
   } else if (!is.null(rain.side)) {
     stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING")
   }
-  
-  print(violin.args$position$x)
   
   e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
@@ -180,6 +181,7 @@ geom_rain <- function(mapping = NULL,
 # to trouble shoot turn off e3 &e4
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  # geom_rain()
   geom_rain(rain.side = 'l')
 
 
@@ -216,6 +218,52 @@ ggplot(temp, aes(time, value, fill = time)) +
   scale_fill_brewer(palette = "Dark2") +
   scale_color_brewer(palette = "Dark2") #+
   #coord_flip()
+
+
+# making a plot for the best default
+
+library(patchwork)
+
+plt_temp_oneTP <- ggplot(temp |> dplyr::filter(time == "t1"), aes(time, value, fill = time))
+plt_temp <- ggplot(temp, aes(time, value, fill = time))
+
+
+plt_vio_wd.7 <- 
+  geom_rain(
+    alpha = .3,
+    violin.args = rlang::list2(
+    color = NA, side = "r",
+    width = .7, position = position_nudge(x = .13)),
+    boxplot.args =  rlang::list2(
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      width = .08, position = position_nudge(x = .11)))
+
+plt_vio_wd.6 <- 
+  geom_rain(
+    alpha = .3,
+    violin.args = rlang::list2(
+      color = NA, side = "r",
+      width = .6, position = position_nudge(x = .13)),
+    boxplot.args =  rlang::list2(
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      width = .08, position = position_nudge(x = .11)))
+
+plt_vio_wd.5 <- 
+  geom_rain(
+    alpha = .3,
+    violin.args = rlang::list2(
+      color = NA, side = "r",
+      width = .5, position = position_nudge(x = .13)),
+    boxplot.args =  rlang::list2(
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      width = .08, position = position_nudge(x = .11)))
+
+plt_temp + plt_vio_wd.5 + plt_temp + plt_vio_wd.7
+
+plt_temp_oneTP + plt_vio_wd.5 + plt_temp_oneTP + plt_vio_wd.7
+
+
+
 
 #Jordy:
   # Violins on same axis-location (x-tic) so no lines overlap the violins?
