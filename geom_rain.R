@@ -89,6 +89,9 @@ geom_rain <- function(mapping = NULL,
                       show.legend = NA,
                       inherit.aes = TRUE,
                       id.long.var = NULL,
+                      
+                      rain.side = NULL,
+                      rain.center = NULL,
                       rain.width = NULL,
                       ...,
                       # one con of doing it this way is when the user changes one it wipes them all out
@@ -123,15 +126,26 @@ geom_rain <- function(mapping = NULL,
 )
 {
   
+  # rigth/left arguement
+  # orient argument (sets what is 0)
+  # rain width argument (needs to use normal width/jittersize & nudging)
   
   
-  if (!is.null(rain.width)){
+  
+  if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
     
+    violin.args$side <- rain.side
+    
+    if(rain.side == "l"){
+      violin.args$position$x <- -violin.args$position$x
+      boxplot.args$position$x <- -boxplot.args$position$x
+    }
+    
+  } else if (!is.null(rain.side)) {
+    stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING")
   }
   
-  
-  
-  print(line.args)
+  print(violin.args$position$x)
   
   e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
@@ -166,7 +180,7 @@ geom_rain <- function(mapping = NULL,
 # to trouble shoot turn off e3 &e4
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_rain()
+  geom_rain(rain.side = 'l')
 
 
 # testing 
@@ -195,12 +209,9 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 
 
 
-
-
-
 ggplot(temp, aes(time, value, fill = time)) + 
-  geom_rain(data = temp,
-            alpha = .3, id.long.var = 'id', line.args = list(alpha = .05)) +
+  geom_rain(id.long.var = 'id', rain.side = 'l',
+            line.args = list(alpha = .05), alpha = .3) +
   theme_minimal() +
   scale_fill_brewer(palette = "Dark2") +
   scale_color_brewer(palette = "Dark2") #+
