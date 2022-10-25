@@ -12,34 +12,21 @@
 #' need library(ggplot2)
 
 
+
 #############################################################
+###### PRIORITY###### PRIORITY###### PRIORITY###### PRIORITY
 #############################################################
 # TO DO Major things denoted with *
 
 
-############# long (almost done)
+# need a flanking geom_rainpaired() fucntion
+
+# needs to do left right automatically
 
 
-#### essential stuff is right/legt
-# no hardcoded
-# and a geom_rainpaired() that would work in principle
-
-
-
-###### PRIORITY
-
-# TIME IS HARDCODED LINE 152; 
-# I COULD MAKE AN EDIT TO THE STAT IDENTITY WHERE IT ORDERS BASED OF THE aes()
-# @Jordy it would be cool to figure out how to edit the data and aes() that ggplot() passes???
-
-# I think the best thing would to make an 'identity_sorted' stat for geom_point()
-# edit the compute_group()
-
-# it would be nice to edit the data from ggplot() that goes to the geom if possible
-# this would get rid of the data = arg which is nice
-# https://community.rstudio.com/t/what-is-the-difference-between-and-data/76330
-# https://stackoverflow.com/questions/63399011/what-is-the-difference-between-and-data
-
+############# longitudinal conencted jittered lines (DONE)
+# uses geom-point-sorted()
+# works with an arg for id.long.var
 
 ############## jittering (partially finished)
 # Issues of orientation is how to jitter & nudge?
@@ -52,7 +39,7 @@
 ############## orientation (incomplete)
 # currently hardcoded yet if you use a function you will have the default args issues again
 
-# idea do this with "width" have a default percentage 15/15/17 (dots ditter, box, vio)
+# idea do this with "width" have a default percentage 20/15/65 (dots ditter, box, vio)
 # tricky as jittering is now tied to it
 # than min & max widths; when max is hit break & tell about ggpointdensity
 
@@ -93,6 +80,7 @@
 source("~/projects/rain/ggrain/geom-point-sorted.r")
 source("~/projects/rain/ggrain/utilities-grid.r")
 
+library(rlang); library(grid)
 
 
 geom_rain <- function(mapping = NULL,
@@ -101,6 +89,7 @@ geom_rain <- function(mapping = NULL,
                       show.legend = NA,
                       inherit.aes = TRUE,
                       id.long.var = NULL,
+                      rain.width = NULL,
                       ...,
                       # one con of doing it this way is when the user changes one it wipes them all out
                       # yet its okay they can look at the function & copy the args
@@ -108,7 +97,7 @@ geom_rain <- function(mapping = NULL,
                       # Jordy: look at best settings for position_jitter()
                       point.args = rlang::list2( 
                         position = position_jitter(
-                          width = .02, 
+                          width = .04, 
                           height = NULL,
                           seed = 42),
                         ...
@@ -135,6 +124,15 @@ geom_rain <- function(mapping = NULL,
 {
   
   
+  
+  if (!is.null(rain.width)){
+    
+  }
+  
+  
+  
+  print(line.args)
+  
   e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   e3 <- rlang::exec(gghalves::geom_half_boxplot, inherit.aes = TRUE, !!!boxplot.args)
   e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
@@ -155,6 +153,8 @@ geom_rain <- function(mapping = NULL,
     # also the args are quite verbose, can you trim them down
     # CHECK OUT JITTER_NUDGE()
     
+    e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args) # bang, bang, bang
+    
     list(e2, e4, e3, e1)
     # list(e2, e1)
     
@@ -165,7 +165,8 @@ geom_rain <- function(mapping = NULL,
 
 # to trouble shoot turn off e3 &e4
 
-# temp_subset10 |> dplyr::filter(time == "t1")
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_rain()
 
 
 # testing 
@@ -186,6 +187,16 @@ temp2 <- temp[temp$variable %in% c("t1","t2"),]
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
   geom_rain(id.long.var = 'id') #temp_subset10
+
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_point_sorted(color = "blue", alpha = .5) +
+  geom_point(color = "red", alpha = .5)
+
+
+
+
+
 
 ggplot(temp, aes(time, value, fill = time)) + 
   geom_rain(data = temp,
