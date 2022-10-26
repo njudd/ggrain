@@ -77,11 +77,12 @@
 # https://stackoverflow.com/questions/60348226/is-there-an-r-function-to-connect-grouped-data-points-created-by-a-geom-objec
 
 
-source("~/projects/rain/ggrain/geom-point-sorted.r")
-source("~/projects/rain/ggrain/utilities-grid.r")
-
-library(rlang); library(grid)
-library(ggpp) # for position_jitternudge
+# uncomment to make the function work
+# source("~/projects/rain/ggrain/geom-point-sorted.r")
+# source("~/projects/rain/ggrain/utilities-grid.r")
+# 
+# library(rlang); library(grid)
+# library(ggpp) # for position_jitternudge
 
 
 geom_rain <- function(mapping = NULL,
