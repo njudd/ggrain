@@ -1,0 +1,166 @@
+---
+title: "Raincloud Plots"
+author:
+  - name: "Dr. Nicholas Judd"
+    url: https://njudd.com
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0002-0196-9871
+  - name: "Dr. Rogier Kievit"
+    url: https://www.rogierkievit.com/
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0003-0700-4568
+  - name: "Jordy van Langen"
+    url: https://github.com/jorvlan
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0003-2504-2381
+output:
+  distill::distill_article:
+    code_folding:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html
+if (!require(pacman)) {
+    install.packages("pacman")
+}
+
+pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves)
+
+# set your working dir
+setwd("~/projects/rain/ggrain")
+
+source("geom-point-sorted.r")
+source("utilities-grid.r") # from ggplot
+devtools::source_url("https://raw.githubusercontent.com/yjunechoe/geom_paired_raincloud/master/geom_paired_raincloud.R")
+
+
+# sourcing the raincloud functions
+source("geom_rain.R")
+source("geom_prain.R") # from ggplot
+
+```
+
+## Raincloud geom's
+
+There are two geom's at the moment:
+
+* `geom_rain()` handles as many rainclouds as you wish
+* `geom_prain()` is meant for paired comparisons (e.g., pre/post) between groups. It can only work with two-timepoints!
+
+## To do
+
+- make a warning or quit() on geom_prain if the user tries more than two
+- big to do list as text in the geom_rain() function
+
+
+
+```{r making dataset}
+
+temp <- Demo.growth[,1:4]
+temp$id <- as.factor(as.character(rep(1:dim(temp)[1])))
+temp <- reshape2::melt(temp, id.vars = "id")
+temp$value_round <- round(temp$value,1)
+colnames(temp)[2] <- "time"
+
+temp2 <- temp |>  dplyr::filter(time %in% c("t1", "t2"))
+
+temp2$group <- c(rep("old", 200), rep("young", 200), rep("old", 200), rep("young", 200))
+temp2$value[temp2$group == "young"] <- temp2$value[temp2$group == "young"] + 1
+temp2$value[temp2$group == "old" & temp2$time == "t2"] <- temp2$value[temp2$group == "old" & temp2$time == "t2"] -2
+
+
+temp2_n40 <- temp2 |> dplyr::filter(id %in% c(as.character(1:10), as.character(200:210), as.character(400:410), as.character(600:610)))
+
+```
+
+```{r showing datasets, echo = T}
+
+# add some fancy interactive dataset table here
+
+head(temp); head(temp2)
+
+str(temp); str(temp2)
+
+```
+
+```{r showing datasets, echo = T}
+
+ggplot(iris, aes(Species, Petal.Width, color = Species, group = Species)) +
+  geom_rain() +
+  theme_classic()
+
+```
+
+
+```{r showing iris, echo = T}
+
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+  geom_rain(alpha = .5) +
+  theme_classic()
+
+```
+
+```{r showing dataset temp, echo = T}
+
+ggplot(temp,  aes(time, value, fill = time)) +
+  geom_rain(alpha = .5) +
+  theme_classic() +
+  scale_fill_brewer(palette = "Dark2")
+
+```
+
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp,  aes(time, value, fill = time)) +
+  geom_rain(alpha = .5, id.long.var = 'id', rain.side = "l") +
+  theme_classic() +
+  scale_fill_brewer(palette = "Dark2")
+
+```
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2,  aes(time, value, fill = group)) +
+  geom_prain(id.long.var = 'id') +
+  theme_classic()
+
+```
+
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id') +
+  theme_classic()
+
+```
+
+
+Now say we want the lines to be black and solid. We can add these with `line.args`, crucially using this overrides the defaults so we need to copy the position_jittering again!
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id', 
+             line.args = list(
+                        alpha = 1, color = "black",
+                        
+                        position = position_jitter(
+                          width = .02, 
+                          height = NULL,
+                          seed = 42))) +
+  theme_classic()
+
+```
+
+
+
+
+
