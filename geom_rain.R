@@ -81,6 +81,7 @@ source("~/projects/rain/ggrain/geom-point-sorted.r")
 source("~/projects/rain/ggrain/utilities-grid.r")
 
 library(rlang); library(grid)
+library(ggpp) # for position_jitternudge
 
 
 geom_rain <- function(mapping = NULL,
@@ -178,6 +179,20 @@ geom_rain <- function(mapping = NULL,
   }
 }
 
+
+rain.center <- c("dots", "box", "violin") 
+
+
+
+ggplot(temp_subset10, aes(time, value, fill = time)) + 
+  geom_point(aes(time, value, group = id),
+             position = ggpp::position_jitternudge(width = .04,
+                                                   seed = 42, x = .1,
+                                                   nudge.from = "jittered"))
+
+
+
+
 # to trouble shoot turn off e3 &e4
 
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
@@ -265,6 +280,9 @@ plt_temp_oneTP + plt_vio_wd.5 + plt_temp_oneTP + plt_vio_wd.7
 
 
 
+
+
+
 #Jordy:
   # Violins on same axis-location (x-tic) so no lines overlap the violins?
   # Trimming of violins in both figures (lines: 188-190 & 192-198) differs? Why?
@@ -295,8 +313,7 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 ggplot(temp_subset10, aes(time, value, fill = time)) + 
   geom_line(aes(time, value, group = 'id'))
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
-  geom_line(aes(time, value, group = id))
+
 
 
 
