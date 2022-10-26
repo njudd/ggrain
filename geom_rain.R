@@ -122,7 +122,7 @@ geom_rain <- function(mapping = NULL,
                         ...
                       ),
                       violin.args = rlang::list2(
-                        color = NA, side = "r",
+                        side = "r", # color = NA, this default is bad incase they use group = x, or color = x
                         width = .7, position = position_nudge(x = .13), 
                         ...
                       )
