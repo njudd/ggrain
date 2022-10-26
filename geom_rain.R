@@ -24,6 +24,9 @@
 # needs to do left right automatically
 
 
+### you should make this use geom_boxplot...?
+
+
 ############# longitudinal conencted jittered lines (DONE)
 # uses geom-point-sorted()
 # works with an arg for id.long.var
@@ -100,31 +103,40 @@ geom_rain <- function(mapping = NULL,
                       # yet its okay they can look at the function & copy the args
                       # one issue is that we will have to interactively edit it for additional features (i.e., orientation)
                       # Jordy: look at best settings for position_jitter()
-                      point.args = rlang::list2( 
-                        position = position_jitter(
-                          width = .04, 
-                          height = NULL,
-                          seed = 42),
+                      point.args = rlang::list2(
                         ...
+                      ),
+                      point.args.pos = rlang::list2(
+                        position = position_jitter(
+                          width = .04,
+                          height = NULL,
+                          seed = 42)
                       ),
                       line.args = rlang::list2(
                         alpha = .2,
+                        ...
+                      ),
+                      line.args.pos = rlang::list2(
                         position = position_jitter(
-                          width = .04, 
+                          width = .04,
                           height = NULL,
                           seed = 42),
-                        ...
                       ),
                       boxplot.args =  rlang::list2(
                         center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
-                        side = "r",
-                        width = .08, position = position_nudge(x = .08),
+                        ...
+                      ),                      
+                      boxplot.args.pos =  rlang::list2(
+                        side = "r", width = .08,
+                        position = position_nudge(x = .08),
+                      ),
+                      
+                      violin.args = rlang::list2( # color = NA, this default is bad incase they use group = x, or color = x
                         ...
                       ),
-                      violin.args = rlang::list2(
-                        side = "r", # color = NA, this default is bad incase they use group = x, or color = x
-                        width = .7, position = position_nudge(x = .13), 
-                        ...
+                      violin.args.pos = rlang::list2(
+                        side = "r", width = .7, 
+                        position = position_nudge(x = .15), 
                       )
 )
 {
@@ -134,6 +146,12 @@ geom_rain <- function(mapping = NULL,
   # rain width argument (needs to use normal width/jittersize & nudging)
   
   # the width arguement might not make sense, since its always to the scale of the plot
+  
+  point.args <- c(point.args, point.args.pos)
+  line.args <- c(line.args, line.args.pos)
+  boxplot.args <- c(boxplot.args, boxplot.args.pos)
+  violin.args <- c(violin.args, violin.args.pos)
+  
   
   
   
