@@ -152,9 +152,6 @@ geom_rain <- function(mapping = NULL,
   boxplot.args <- c(boxplot.args, boxplot.args.pos)
   violin.args <- c(violin.args, violin.args.pos)
   
-  
-  
-  
   if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
     violin.args$side <- rain.side
     boxplot.args$side <- rain.side
