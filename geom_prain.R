@@ -1,4 +1,4 @@
-#' Raincloud Plot
+#' Paired Raincloud Plot
 #' Nicholas Judd (njudd), Jordy van Langen (jorvlan) & Rogier Kievit
 #' 21/10/2022
 #'
