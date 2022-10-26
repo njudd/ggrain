@@ -36,38 +36,49 @@ geom_prain <- function(mapping = NULL,
                       inherit.aes = TRUE,
                       id.long.var = NULL,
                       ...,
-
                       point.args = rlang::list2( 
                         alpha = .5,
+                        ...
+                      ),
+                      point.args.pos = rlang::list2( 
                         position = position_jitter(
                           width = .02, 
                           height = NULL,
-                          seed = 42),
-                        ...
+                          seed = 42)
                       ),
                       line.args = rlang::list2(
                         alpha = .2,
+                        ...
+                      ),
+                      line.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .02, 
                           height = NULL,
-                          seed = 42),
-                        ...
+                          seed = 42)
                       ),
                       boxplot.args =  rlang::list2(
-                        width = .1, color = "black", outlier.color = NA,
-                        position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)),
+                        color = "black", outlier.color = NA,
                         ...
+                      ),
+                      boxplot.args.pos =  rlang::list2(
+                        width = .1,
+                        position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1))
                       ),
                       violin.args = rlang::list2(
                         alpha = .3,
-                        position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),
-                                                        rep(.2, 256*2), rep(.2, 256*2))),
                         ...
+                      ),
+                      violin.args.pos = rlang::list2(
+                        position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),
+                                                        rep(.2, 256*2), rep(.2, 256*2)))
                       )
 )
 {
   
-  
+  point.args <- c(point.args, point.args.pos)
+  line.args <- c(line.args, line.args.pos)
+  boxplot.args <- c(boxplot.args, boxplot.args.pos)
+  violin.args <- c(violin.args, violin.args.pos)
   
   if (is.null(id.long.var)){
     print("WARNING: If you want lines please give a id.long.var argument")
