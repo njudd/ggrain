@@ -171,9 +171,12 @@ geom_rain <- function(mapping = NULL,
   } else if (!is.null(rain.side) && rain.side %in% c("f", "flanking")){
     
     if ("side" %in% names(violin.args.pos)){
-      print("Warning: Option 'flanking' is used with defaults violin position arguments (i.e., violin.args.pos) \n
-            therefore new flanking position defaults are being used. If you wish to set your own defaults make sure you do \n
-            not specify a side argument for violin.args.pos")
+      
+      # this shouldn't be by default yet only if side is there & position.nudge is somethign different!!! 
+      
+      # warning("Option 'flanking' is used with defaults violin position arguments (i.e., violin.args.pos)
+            # therefore new flanking position defaults are being used. If you wish to set your own defaults make sure you do
+            # not specify a side argument for violin.args.pos otherwise they will be overridden", call. = FALSE)
       
       boxplot.args.pos <- rlang::list2(
         width = .08,
@@ -184,7 +187,7 @@ geom_rain <- function(mapping = NULL,
                                         rep(.15, 256*2), rep(.15, 256*2))))
     }
   } else if (!is.null(rain.side)) {
-    stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING")
+    stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING", call. = FALSE)
   }
   # combining args with position args
   point.args <- c(point.args, point.args.pos)
