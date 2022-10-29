@@ -39,11 +39,9 @@ source("geom-point-sorted.r")
 source("utilities-grid.r") # from ggplot
 devtools::source_url("https://raw.githubusercontent.com/yjunechoe/geom_paired_raincloud/master/geom_paired_raincloud.R")
 
-
 # sourcing the raincloud functions
 source("geom_rain.R")
 source("geom_prain.R") # from ggplot
-
 ```
 
 ## Raincloud geom's
@@ -55,6 +53,7 @@ There are two geom's at the moment:
 
 ## To do
 
+- Get rid of `geom_prain()` just put a flanking argument, so people can choose, right, left & flanking (let them do "r", "l", "f")
 - make a warning or quit() on geom_prain if the user tries more than two
 - geom_prain() doesn't have position args seperated yet!! 
 - big to do list as text in the geom_rain() function
@@ -102,44 +101,70 @@ ggplot(iris, aes(Species, Petal.Width, color = Species, group = Species)) +
 
 ```{r showing iris, echo = T}
 
-ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+ggplot(iris[iris$Species == "virginica",], aes(Species, Sepal.Length, fill = Species)) +
   geom_rain(alpha = .5) +
-  theme_classic()
+  theme_classic() +
+  coord_flip()
+
 
 ```
 
 ```{r showing dataset temp, echo = T}
 
 ggplot(temp,  aes(time, value, fill = time)) +
-  geom_rain(alpha = .5, violin.args = list(color = NA)) +
+  geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_brewer(palette = "Dark2")
+
 
 ```
 
 
 ```{r showing dataset temp long, echo = T}
 
+ggplot(temp,  aes(time, value, fill = time, color = time)) +
+  geom_rain(alpha = .5, rain.side = "l", cov = "value_round")
+  # theme_classic() +
+  # scale_fill_brewer(palette = "Dark2") +
+  # scale_color_brewer(palette = "Dark2")
+
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
+  geom_rain(cov = "Sepal.Length")
+
+
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) + 
+  geom_rain(cov = "Sepal.Length")
+
+```
+```{r showing dataset temp long, echo = T}
+
 ggplot(temp,  aes(time, value, fill = time)) +
-  geom_rain(alpha = .5, id.long.var = 'id', rain.side = "l") +
+  geom_rain(alpha = .5, id.long.var = 'id', cov = "value") +
   theme_classic() +
   scale_fill_brewer(palette = "Dark2")
 
 ```
+
+
+
+
 
 ```{r showing dataset temp long, echo = T}
 
 ggplot(temp2,  aes(time, value, fill = group)) +
-  geom_prain(id.long.var = 'id') +
+  geom_rain(id.long.var = 'id', rain.side = "flanking") +
   theme_classic()
+
 
 ```
 
 
+
 ```{r showing dataset temp long, echo = T}
 
-ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
-  geom_prain(id.long.var = 'id') +
+ggplot(temp2,  aes(time, value, fill = group, color = group)) +
+  geom_rain(id.long.var = 'id', rain.side = "flanking", boxplot.args = list(color = "black", outlier.color = NA)) +
+  stat_summary(aes(group = group), fun = "mean", geom = "line", color = "black") +
   theme_classic()
 
 ```
@@ -150,13 +175,8 @@ Now say we want the lines to be black and solid. We can add these with `line.arg
 ```{r showing dataset temp long, echo = T}
 
 ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
-  geom_prain(id.long.var = 'id', 
-             line.args = list(
-                        alpha = 1, color = "black",
-                        position = position_jitter(
-                          width = .02, 
-                          height = NULL,
-                          seed = 42))) +
+  geom_rain(id.long.var = 'id', rain.side = "flanking" ,
+             line.args = list(alpha = .3, color = "black")) +
   theme_classic()
 
 ```
@@ -178,12 +198,24 @@ ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
 ```{r showing dataset temp long, echo = T}
 
 ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
-  geom_prain(id.long.var = 'id', violin.args = list(color = NA, alpha = .3)) +
+  geom_prain(id.long.var = 'id', 
+             boxplot.args = list(color = "black", outlier.shape = NA),
+             violin.args = list(color = NA, alpha = .3)) +
   theme_classic()
 
 ```
 
+### In small data we could drop the violins as there isn't enought to estimate them!
 
+```{r showing dataset temp long drop vio, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id',
+             boxplot.args = list(color = "black", outlier.shape = NA),
+             violin.args = list(color = NA, fill = NA)) +
+  theme_classic()
+
+```
 
 
 
