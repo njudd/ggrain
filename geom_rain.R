@@ -2,7 +2,7 @@
 #' Nicholas Judd (njudd), Jordy van Langen (jorvlan) & Rogier Kievit
 #' 21/10/2022
 #'
-#'
+#' @name geom_rain
 #' https://github.com/easystats/see/blob/main/R/geom_violindot.R
 #'
 #' https://ggplot2-book.org/spring1.html
@@ -11,7 +11,7 @@
 #' need library(rlang)
 #' need library(ggplot2)
 #' depends = ggplot2
-#' imports = gghalves
+#' @importFrom gghalves geom_half_boxplot geom_half_violin
 
 
 geom_rain <- function(mapping = NULL,
