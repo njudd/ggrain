@@ -118,10 +118,7 @@ GeomPointSorted <- ggproto("GeomPointSorted", Geom,
   ),
 
   setup_data = function(data, params) {
-    # data$flipped_aes <- params$flipped_aes
-    # data <- flip_data(data, params$flipped_aes)
     data <- data[order(data$PANEL, data$group, data$x), ]
-    # flip_data(data, params$flipped_aes)
   },
   
   
