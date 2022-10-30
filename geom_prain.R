@@ -57,7 +57,7 @@ geom_prain <- function(mapping = NULL,
                           seed = 42)
                       ),
                       boxplot.args =  rlang::list2(
-                        color = "black", outlier.color = NA,
+                        outlier.color = NA, # color = "black",
                         ...
                       ),
                       boxplot.args.pos =  rlang::list2(
