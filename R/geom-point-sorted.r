@@ -27,7 +27,6 @@
 #' `geom_point(alpha = 0.05)`) or very small (e.g.
 #' `geom_point(shape = ".")`).
 #'
-#' @eval rd_aesthetics("geom", "point")
 #' @inheritParams ggplot2::geom_point
 #' @param na.rm If `FALSE`, the default, missing values are removed with
 #'   a warning. If `TRUE`, missing values are silently removed.
