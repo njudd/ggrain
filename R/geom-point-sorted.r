@@ -28,14 +28,13 @@
 #' `geom_point(shape = ".")`).
 #'
 #' @eval rd_aesthetics("geom", "point")
-#' @inheritParams layer
+#' @inheritParams ggplot2::geom_point
 #' @param na.rm If `FALSE`, the default, missing values are removed with
 #'   a warning. If `TRUE`, missing values are silently removed.
 #' @param ... Other arguments passed on to [layer()]. These are
 #'   often aesthetics, used to set an aesthetic to a fixed value, like
 #'   `colour = "red"` or `size = 3`. They may also be parameters
 #'   to the paired geom/stat.
-#' @export
 #' @examples
 #' p <- ggplot(mtcars, aes(wt, mpg))
 #' p + geom_point()
@@ -109,10 +108,10 @@ geom_point_sorted <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @usage NULL
 #' @export
-GeomPointSorted <- ggproto("GeomPointSorted", Geom,
+GeomPointSorted <- ggplot2::ggproto("GeomPointSorted", ggplot2::Geom,
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "shape", "colour"),
-  default_aes = aes(
+  default_aes = ggplot2::aes(
     shape = 19, colour = "black", size = 1.5, fill = NA,
     alpha = NA, stroke = 0.5
   ),
@@ -120,8 +119,8 @@ GeomPointSorted <- ggproto("GeomPointSorted", Geom,
   setup_data = function(data, params) {
     data <- data[order(data$PANEL, data$group, data$x), ]
   },
-  
-  
+
+
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE) {
     if (is.character(data$shape)) {
       data$shape <- translate_shape_string(data$shape)
@@ -145,7 +144,7 @@ GeomPointSorted <- ggproto("GeomPointSorted", Geom,
     )
   },
 
-  draw_key = draw_key_point
+  draw_key = ggplot2::draw_key_point
 )
 
 translate_shape_string <- function(shape_string) {
