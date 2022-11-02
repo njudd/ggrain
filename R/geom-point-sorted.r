@@ -82,6 +82,18 @@
 #' ggplot(mtcars2, aes(wt, mpg)) +
 #'   geom_point(na.rm = TRUE)
 #' }
+#' @importFrom grid pointsGrob gpar grobName grob
+#' @importFrom ggplot2 ggproto aes draw_key_point
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+
+# ggplot2 utilites.grid.R
+ggname <- function(prefix, grob) { # yeah I know its not great practice to put it here, but its only for this
+  grob$name <- grobName(grob, prefix)
+  grob
+}
+
 geom_point_sorted <- function(mapping = NULL, data = NULL,
                        stat = "identity", position = "identity",
                        ...,
@@ -103,14 +115,10 @@ geom_point_sorted <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @rdname ggplot2-ggproto
-#' @format NULL
-#' @usage NULL
-#' @export
-GeomPointSorted <- ggplot2::ggproto("GeomPointSorted", ggplot2::Geom,
+GeomPointSorted <- ggproto("GeomPointSorted", ggplot2::Geom,
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "shape", "colour"),
-  default_aes = ggplot2::aes(
+  default_aes = aes(
     shape = 19, colour = "black", size = 1.5, fill = NA,
     alpha = NA, stroke = 0.5
   ),
@@ -143,7 +151,7 @@ GeomPointSorted <- ggplot2::ggproto("GeomPointSorted", ggplot2::Geom,
     )
   },
 
-  draw_key = ggplot2::draw_key_point
+  draw_key = draw_key_point
 )
 
 translate_shape_string <- function(shape_string) {
