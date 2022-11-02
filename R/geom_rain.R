@@ -3,17 +3,27 @@
 #' 21/10/2022
 #'
 #' @name geom_rain
-#' https://github.com/easystats/see/blob/main/R/geom_violindot.R
+#' @inheritParams ggplot2::geom_boxplot
+#' @param id.long.var A group to connect the lines by (e.g., "id).
+#' @param cov A covariate to color the dots by.
+#' @param rain.side How you want the rainclouds displayed, right (r), left (l) or flanking (f).
+#' @param point.args A list of args for the dots
+#' @param point.args.pos A list of positional args for the points
+#' @param line.args A list of args for the lines, you need to specify a group to connect them with id.long.var
+#' @param line.args.pos A list of positional args for the lines
+#' @param boxplot.args A list of args for the boxplot
+#' @param boxplot.args.pos A list of positional args for the boxplot
+#' @param violin.args A list of args for the violin
+#' @param violin.args.pos A list of positional args for the violin
 #'
-#' https://ggplot2-book.org/spring1.html
-#' https://testthat.r-lib.org/
-#' need library(grid)
 #' need library(rlang)
 #' need library(ggplot2)
 #' depends = ggplot2
+#' @importFrom ggplot2 aes
 #' @importFrom gghalves geom_half_violin
 #' @importFrom rlang list2 sym !! !!! exec
-
+#' @importFrom ggpp position_dodgenudge
+#' @export
 
 geom_rain <- function(mapping = NULL,
                       data = NULL,
@@ -65,8 +75,6 @@ geom_rain <- function(mapping = NULL,
 
   # if rain.side == "paired" check if the defaults are used;
   # if so rewrite to paired nudging args; else take their args
-
-  print(line.args)
 
   # rigth/left arguement
   # orient argument (sets what is 0)
