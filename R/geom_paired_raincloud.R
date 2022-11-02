@@ -13,9 +13,9 @@
 #' library(ggplot2)
 #'
 #' @seealso https://github.com/easystats/see/blob/master/R/geom_violinhalf.R
-#'
-#' @import ggplot2
-#' @export
+#' @importFrom grid grobName
+#' @importFrom ggplot2 ggproto Geom aes draw_key_polygon
+
 geom_paired_raincloud <- function(mapping = NULL, data = NULL, stat = "ydensity",
                                   position = "dodge", trim = TRUE, scale = "area",
                                   show.legend = NA, inherit.aes = TRUE, ...) {
@@ -50,7 +50,7 @@ GeomPairedRaincloud <-
           setup_data = function(data, params) {
             data$width <- data$width %||%
               params$width %||% (resolution(data$x, FALSE) * 0.9)
-                        
+
             # Warning if the grouping isn't a pair
             n_group <- length(unique(data$group))
 
@@ -58,7 +58,7 @@ GeomPairedRaincloud <-
               warning("geom_paired_raincloud is only useful for visualizing groupings of length 2.
                       Check out packages {vioplot} and {see} for alternative ways of plotting split violins/rainclouds")
             }
-            
+
             data <- do.call(rbind, lapply(split(data, data$group), function(.group) {
               .group$ymin <- min(.group$y)
               .group$ymax <- max(.group$y)
@@ -69,26 +69,26 @@ GeomPairedRaincloud <-
             }))
 
           },
-          
+
           draw_group = function(data, panel_scales, coord) {
             data$xminv <- data$x
             data$xmaxv <- data$x + data$violinwidth * (data$xmax - data$x)
-            
+
             newdata <- rbind(
               dplyr::arrange(dplyr::mutate(data, x = .data$xminv), .data$y),
               dplyr::arrange(dplyr::mutate(data, x = .data$xmaxv), dplyr::desc(.data$y))
             )
-            
+
             newdata <- rbind(newdata, newdata[1,])
-            
+
             .grobName("geom_paired_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
           },
-          
+
           draw_key = draw_key_polygon,
-          
+
           default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
                             alpha = NA, linetype = "solid"),
-          
+
           required_aes = c("x", "y")
   )
 
