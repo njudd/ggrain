@@ -11,7 +11,8 @@
 #' need library(rlang)
 #' need library(ggplot2)
 #' depends = ggplot2
-#' @importFrom gghalves geom_half_boxplot geom_half_violin
+#' @importFrom gghalves geom_half_violin
+#' @importFrom rlang list2 sym !! !!! exec
 
 
 geom_rain <- function(mapping = NULL,
