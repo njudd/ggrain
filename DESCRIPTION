@@ -1,10 +1,14 @@
 Package: ggrain
-Title: What the Package Does (One Line, Title Case)
+Title: A rainclouds add on to ggplot2 
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Authors@R: c(
+    person("Nicholas", "Judd", , "nickkjudd@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0196-9871"))
+    person("Jordy", "van Langen", , "jordyvanlangen@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2504-2381"))
+    person("Rogier", "Kievit", , "", role = c("aut"),
+           comment = c(ORCID = "0000-0003-0700-4568")))
+Description: 'gg_rain' function adds different geom's together using ggplot to create rainclouds. 
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
