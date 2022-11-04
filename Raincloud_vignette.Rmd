@@ -30,7 +30,7 @@ if (!require(pacman)) {
     install.packages("pacman")
 }
 
-pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves)
+pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves, patchwork)
 
 # set your working dir
 setwd("~/projects/rain/ggrain")
@@ -58,6 +58,10 @@ There are two geom's at the moment:
 - geom_prain() doesn't have position args seperated yet!! 
 - big to do list as text in the geom_rain() function
 - make it check that people supply a list for args?
+
+## pck notes
+depends = ggplot2
+imports = gghalves
 
 
 
@@ -90,24 +94,78 @@ str(temp); str(temp2)
 
 ```
 
-```{r showing datasets, echo = T}
 
-ggplot(iris, aes(Species, Petal.Width, color = Species, group = Species)) +
+```{r showing mpg hwy non norm, echo = T}
+
+ggplot(mpg, aes(1, hwy)) +
   geom_rain() +
+  theme_classic() +
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
+
+Wow, what an interesting bi-modal distribution!
+
+
+```{r lets check out toyota, echo = T}
+toyota_fill <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+toyota_col <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, color = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+toyota_colfill <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, color = manufacturer, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+
+toyota_fill + toyota_col + toyota_colfill
+
+```
+
+Interesting, toyota also shows this pattern! Let's check out the 4 largest manufacturer's
+
+```{r largest four manufacts, echo = T}
+
+top4 <- as.data.frame(table(mpg$manufacturer)) 
+top4 <- top4[order(top4$Freq, decreasing = TRUE),][1:4,1] |>
+  {\(x)(as.character(x))}() # changing a factor to a char
+  
+top4_rain <- ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() + theme(legend.position = "none")    
+
+# top4_rainflipped <- ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+#   geom_rain() +
+#   theme_classic() +
+#   coord_flip() + theme(legend.position = "none")    
+
+# top4_rainflipped + top4_rain
+
+top4_rain
+```
+
+Saw we were interested in seeing how cylinder affects this relationship?
+
+
+```{r 4man cyl, echo = T}
+
+ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain(cov = "cyl", alpha = .9) +
   theme_classic()
 
-```
-
-
-```{r showing iris, echo = T}
-
-ggplot(iris[iris$Species == "virginica",], aes(Species, Sepal.Length, fill = Species)) +
-  geom_rain(alpha = .5) +
-  theme_classic() +
-  coord_flip()
-
+cor(mpg$cyl, mpg$hwy, method = "spearman")
 
 ```
+
+
+
+
+
 
 ```{r showing dataset temp, echo = T}
 
@@ -115,8 +173,6 @@ ggplot(temp,  aes(time, value, fill = time)) +
   geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_brewer(palette = "Dark2")
-
-
 ```
 
 
@@ -143,6 +199,13 @@ ggplot(temp,  aes(time, value, fill = time)) +
   theme_classic() +
   scale_fill_brewer(palette = "Dark2")
 
+# put something random
+
+# ggplot(temp,  aes(time, value, fill = time)) +
+#   geom_rain(alpha = .5, boxplot.args = list(alpha = .3)) +
+#   theme_classic()
+# odd behaviour that this doesn't get a warning arg
+
 ```
 
 
@@ -154,8 +217,6 @@ ggplot(temp,  aes(time, value, fill = time)) +
 ggplot(temp2,  aes(time, value, fill = group)) +
   geom_rain(id.long.var = 'id', rain.side = "flanking") +
   theme_classic()
-
-
 ```
 
 
