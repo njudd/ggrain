@@ -1,6 +1,8 @@
-#' Raincloud Plot
-#' Nicholas Judd (njudd), Jordy van Langen (jorvlan) & Rogier Kievit
-#' 21/10/2022
+#' Raincloud Plots
+#'
+#' This function displays individual data points, a boxplot and half a violin plot.
+#' It also has the option to connect data points with lines across groups by specifying
+#' an id to connect by. Lastly, if desired one can color the dots based of another variable.
 #'
 #' @name geom_rain
 #' @inheritParams ggplot2::geom_boxplot
@@ -27,8 +29,7 @@
 
 geom_rain <- function(mapping = NULL,
                       data = NULL,
-                      trim = TRUE,
-                      show.legend = NA,
+                      #show.legend = NA, # you can put this in the args for geom's!
                       inherit.aes = TRUE,
                       id.long.var = NULL, # should lines be drawn & what should connect them?
                       cov = NULL, # should dots be colored due to a covariate?
