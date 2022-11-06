@@ -42,7 +42,6 @@ geom_paired_raincloud <- function(mapping = NULL, data = NULL, stat = "ydensity"
 #' @format NULL
 #' @usage NULL
 #' @import ggplot2
-#' @importFrom dplyr mutate group_by arrange desc
 #' @importFrom rlang .data
 #' @keywords internal
 GeomPairedRaincloud <-
@@ -74,11 +73,20 @@ GeomPairedRaincloud <-
             data$xminv <- data$x
             data$xmaxv <- data$x + data$violinwidth * (data$xmax - data$x)
 
+            temp1 <- data
+            temp1$x <- .data$xminv
+            temp2 <- data
+            temp2$x <- .data$xmaxv
+
             newdata <- rbind(
-              dplyr::arrange(dplyr::mutate(data, x = .data$xminv), .data$y),
-              dplyr::arrange(dplyr::mutate(data, x = .data$xmaxv), dplyr::desc(.data$y))
+              temp1[order(.data$y) ,],
+              temp1[order(.data$y, decreasing = TRUE) ,]
             )
 
+            # newdata <- rbind(
+            #   dplyr::arrange(dplyr::mutate(data, x = .data$xminv), .data$y),
+            #   dplyr::arrange(dplyr::mutate(data, x = .data$xmaxv), dplyr::desc(.data$y))
+            # )
             newdata <- rbind(newdata, newdata[1,])
 
             .grobName("geom_paired_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
