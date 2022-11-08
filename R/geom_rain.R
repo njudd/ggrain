@@ -42,7 +42,7 @@ geom_rain <- function(mapping = NULL,
                       point.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = NULL,
+                          height = 0,
                           seed = 42)
                       ),
                       line.args = rlang::list2(
@@ -52,7 +52,7 @@ geom_rain <- function(mapping = NULL,
                       line.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = NULL,
+                          height = 0,
                           seed = 42),
                       ),
                       boxplot.args =  rlang::list2(
