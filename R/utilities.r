@@ -345,8 +345,9 @@ seq_asc <- function(to, from) {
 }
 
 # Needed to trigger package loading
-#' @importFrom tibble tibble
-NULL
+# commiting off this trigger... possibly a very bad idea
+# #' @importFrom tibble tibble
+# NULL
 
 # Wrapping vctrs data_frame constructor with no name repair
 data_frame0 <- function(...) data_frame(..., .name_repair = "minimal")
