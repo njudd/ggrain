@@ -34,9 +34,11 @@ geom_rain <- function(mapping = NULL,
                       id.long.var = NULL, # should lines be drawn & what should connect them?
                       cov = NULL, # should dots be colored due to a covariate?
                       rain.side = NULL, # do you want the rainclouds (l)eft, (r)ight or (f)lanking
+                      # likert = FALSE,
                       # rain.center = NULL, currently not implimented
                       ...,
                       point.args = rlang::list2(
+                        #alpha = .8#,
                         ...
                       ),
                       point.args.pos = rlang::list2(
@@ -82,7 +84,7 @@ geom_rain <- function(mapping = NULL,
   # rain width argument (needs to use normal width/jittersize & nudging)
 
   # the width arguement might not make sense, since its always to the scale of the plot
-
+print(names(point.args))
 
   # doing positional changes based off user input
   if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
@@ -114,6 +116,15 @@ geom_rain <- function(mapping = NULL,
   } else if (!is.null(rain.side)) {
     stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING", call. = FALSE)
   }
+
+  # likert option doign y-jittering
+  # if (likert == TRUE && point.args.pos$position$height == 0) {
+  #   point.args.pos$position$height = .1}
+  # if (likert == TRUE && line.args.pos$position$height == 0) {
+  #   line.args.pos$position$height = .1}
+
+
+
   # combining args with position args
   point.args <- c(point.args, point.args.pos)
   line.args <- c(line.args, line.args.pos)
