@@ -7,7 +7,7 @@
 #' @name geom_rain
 #' @inheritParams ggplot2::geom_boxplot
 #' @param id.long.var A group to connect the lines by (e.g., "id).
-#' @param cov A covariate to color the dots by.
+#' @param cov A covariate to color the dots by. (currently not working)
 #' @param rain.side How you want the rainclouds displayed, right (r), left (l) or flanking (f).
 #' @param point.args A list of args for the dots
 #' @param point.args.pos A list of positional args for the points
@@ -130,6 +130,9 @@ print(names(point.args))
   line.args <- c(line.args, line.args.pos)
   boxplot.args <- c(boxplot.args, boxplot.args.pos)
   violin.args <- c(violin.args, violin.args.pos)
+
+  # does not work with new obj
+  # ggplot(iris, aes(Species, Sepal.Width, fill = Species)) + geom_rain(cov = Sepal.Length)
 
   if(!is.null(cov)){ # remap the color in e1; if a covariate is specified
     e1 <- rlang::exec(geom_point_sorted, aes(color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args) # bang, bang, bang
