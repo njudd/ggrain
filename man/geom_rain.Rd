@@ -51,9 +51,9 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{id.long.var}{A group to connect the lines by (e.g., "id).}
+\item{id.long.var}{A group to connect the lines by - must be a string (e.g., "id").}
 
-\item{cov}{A covariate to color the dots by. (currently not working)}
+\item{cov}{A covariate to color the dots by - must be as a string (e.g., "cov)}
 
 \item{rain.side}{How you want the rainclouds displayed, right (r), left (l) or flanking (f).}
 
