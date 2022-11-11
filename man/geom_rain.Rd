@@ -13,11 +13,11 @@ geom_rain(
   rain.side = NULL,
   ...,
   point.args = rlang::list2(...),
-  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = NULL,
-    seed = 42)),
+  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
+    = 42)),
   line.args = rlang::list2(alpha = 0.2, ...),
-  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = NULL,
-    seed = 42), ),
+  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
+    = 42), ),
   boxplot.args = rlang::list2(outlier.shape = NA, ...),
   boxplot.args.pos = rlang::list2(width = 0.05, position = position_nudge(x = 0.1), ),
   violin.args = rlang::list2(...),
@@ -26,10 +26,10 @@ geom_rain(
 )
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}} or
-\code{\link[ggplot2:aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
+\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
 
 \item{data}{The data to be displayed in this layer. There are three
 options:
@@ -53,7 +53,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{id.long.var}{A group to connect the lines by (e.g., "id).}
 
-\item{cov}{A covariate to color the dots by.}
+\item{cov}{A covariate to color the dots by. (currently not working)}
 
 \item{rain.side}{How you want the rainclouds displayed, right (r), left (l) or flanking (f).}
 
