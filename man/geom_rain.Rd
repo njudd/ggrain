@@ -11,6 +11,7 @@ geom_rain(
   id.long.var = NULL,
   cov = NULL,
   rain.side = NULL,
+  likert = FALSE,
   ...,
   point.args = rlang::list2(...),
   point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
@@ -115,7 +116,13 @@ e3 <- ggplot(sleep_dat, aes(group, extra, fill = sex))
 e3 + geom_rain(alpha = .6)
 
 # add likert example
+e4 <- ggplot(mpg, aes(1, hwy, fill = manufacturer))
+e4 + geom_rain(likert= TRUE)
 
+# lets make it look nicer
+e4 + geom_rain(likert= TRUE,
+     boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .095), width = .1),
+     violin.args = list(color = NA, alpha = .5))
 }
 \references{
 Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., van Langen, J., & Kievit, R. A.
