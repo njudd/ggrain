@@ -135,6 +135,8 @@ geom_rain <- function(mapping = NULL,
 
   } else if (!is.null(rain.side) && rain.side == "f"){
 
+    print(violin.args.pos)
+
     if ("side" %in% names(violin.args.pos)){
 
       warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
