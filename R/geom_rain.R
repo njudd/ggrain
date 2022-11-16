@@ -58,7 +58,13 @@
 #' e3 + geom_rain(alpha = .6)
 #'
 #' # add likert example
+#' e4 <- ggplot(mpg, aes(1, hwy, fill = manufacturer))
+#' e4 + geom_rain(likert= TRUE)
 #'
+#' # lets make it look nicer
+#' e4 + geom_rain(likert= TRUE,
+#'      boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .095), width = .1),
+#'      violin.args = list(color = NA, alpha = .5))
 
 
 geom_rain <- function(mapping = NULL,
@@ -68,7 +74,7 @@ geom_rain <- function(mapping = NULL,
                       id.long.var = NULL, # should lines be drawn & what should connect them?
                       cov = NULL, # should dots be colored due to a covariate?
                       rain.side = NULL, # The side to draw the violin/boxplot. "l" for left, "r" for right, "f" for flanking, defaults to "r"
-                      #likert = FALSE, #make sure you don't need to do more in the long for loop area
+                      likert = FALSE, #make sure you don't need to do more in the long for loop area
                       # rain.center = NULL, currently not implimented
                       ...,
                       point.args = rlang::list2(
@@ -152,10 +158,11 @@ geom_rain <- function(mapping = NULL,
   }
 
   # likert option doign y-jittering
-  # if (likert == TRUE && point.args.pos$position$height == 0) {
-  #   point.args.pos$position$height = .1}
-  # if (likert == TRUE && line.args.pos$position$height == 0) {
-  #   line.args.pos$position$height = .1}
+  if (likert == TRUE) {
+    point.args.pos$position$height = .1
+    line.args.pos$position$height = .1
+    print("Likert = T; setting y axis jittering for point & line to .1")
+    }
 
 
 
