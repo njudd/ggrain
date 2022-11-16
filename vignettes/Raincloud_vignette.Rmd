@@ -190,7 +190,7 @@ ggplot(aging, aes(time, value, fill = group)) +
 
 Let's color the dots by a covariate and use the viridis color palette!
 
-```{r rainclouds by time by group connected better, echo = T}
+```{r rainclouds by time by group connected better viridis cov, echo = T}
 
 ggplot(aging, aes(time, value, fill = group)) +
   geom_rain(cov = 'covariate', 
@@ -216,9 +216,30 @@ Let's take a step back and look if the groups are significantly different in the
 aging_subset <- aging[aging$time %in% c('t1', 't2'),]
 
 ggplot(aging_subset, aes(time, value, fill = group)) +
-  geom_rain(alpha = .5) +
+  geom_rain(alpha = .5, rain.side = 'f', id.long.var = 'id') +
+  theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
+
+```{r rainclouds aging two timepoints inference, echo = T}
+
+ggplot(aging_subset, aes(time, value, fill = group)) +
+  geom_rain(alpha = .5, rain.side = 'f') +
+  theme_classic() +
+  stat_summary(fun = median, geom = "line", aes(group = group, color = group)) +
+    stat_summary(fun = median, geom = "point",
+               aes(group = group, color = group)) +
+    scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+    scale_colour_manual(values = c("dodgerblue", "darkorange"))
+
+
+
+```
+
+
+
+
+
 
 
 
