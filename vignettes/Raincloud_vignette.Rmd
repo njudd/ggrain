@@ -1,0 +1,288 @@
+---
+title: "Raincloud Plots"
+author:
+  - name: "Dr. Nicholas Judd"
+    url: https://njudd.com
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0002-0196-9871
+  - name: "Dr. Rogier Kievit"
+    url: https://www.rogierkievit.com/
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0003-0700-4568
+  - name: "Jordy van Langen"
+    url: https://github.com/jorvlan
+    affiliation: Donders Institute
+    affiliation_url: https://www.ru.nl/donders/
+    orcid_id: 0000-0003-2504-2381
+output:
+  distill::distill_article:
+    code_folding:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html
+if (!require(pacman)) {
+    install.packages("pacman")
+}
+
+pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves, patchwork)
+
+# set your working dir
+setwd("~/projects/rain/ggrain")
+
+source("geom-point-sorted.r")
+source("utilities-grid.r") # from ggplot
+devtools::source_url("https://raw.githubusercontent.com/yjunechoe/geom_paired_raincloud/master/geom_paired_raincloud.R")
+
+# sourcing the raincloud functions
+source("geom_rain.R")
+source("geom_prain.R") # from ggplot
+```
+
+## Raincloud geom's
+
+There are two geom's at the moment:
+
+* `geom_rain()` handles as many rainclouds as you wish
+* `geom_prain()` is meant for paired comparisons (e.g., pre/post) between groups. It can only work with two-timepoints!
+
+## To do
+
+- Get rid of `geom_prain()` just put a flanking argument, so people can choose, right, left & flanking (let them do "r", "l", "f")
+- make a warning or quit() on geom_prain if the user tries more than two
+- geom_prain() doesn't have position args seperated yet!! 
+- big to do list as text in the geom_rain() function
+- make it check that people supply a list for args?
+
+## pck notes
+depends = ggplot2
+imports = gghalves
+
+
+
+```{r making dataset}
+
+temp <- Demo.growth[,1:4]
+temp$id <- as.factor(as.character(rep(1:dim(temp)[1])))
+temp <- reshape2::melt(temp, id.vars = "id")
+temp$value_round <- round(temp$value,1)
+colnames(temp)[2] <- "time"
+
+temp2 <- temp |>  dplyr::filter(time %in% c("t1", "t2"))
+
+temp2$group <- c(rep("old", 200), rep("young", 200), rep("old", 200), rep("young", 200))
+temp2$value[temp2$group == "young"] <- temp2$value[temp2$group == "young"] + 1
+temp2$value[temp2$group == "old" & temp2$time == "t2"] <- temp2$value[temp2$group == "old" & temp2$time == "t2"] -2
+
+
+temp2_n40 <- temp2 |> dplyr::filter(id %in% c(as.character(1:10), as.character(200:210), as.character(400:410), as.character(600:610)))
+
+```
+
+```{r showing datasets, echo = T}
+
+# add some fancy interactive dataset table here
+
+head(temp); head(temp2)
+
+str(temp); str(temp2)
+
+```
+
+
+```{r showing mpg hwy non norm, echo = T}
+
+ggplot(mpg, aes(1, hwy)) +
+  geom_rain() +
+  theme_classic() +
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
+
+Wow, what an interesting bi-modal distribution!
+
+
+```{r lets check out toyota, echo = T}
+toyota_fill <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+toyota_col <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, color = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+toyota_colfill <- ggplot(mpg[mpg$manufacturer == "toyota",], aes(manufacturer, hwy, color = manufacturer, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() +
+  labs(x = "") + theme(legend.position = "none")    
+
+
+toyota_fill + toyota_col + toyota_colfill
+
+```
+
+Interesting, toyota also shows this pattern! Let's check out the 4 largest manufacturer's
+
+```{r largest four manufacts, echo = T}
+
+top4 <- as.data.frame(table(mpg$manufacturer)) 
+top4 <- top4[order(top4$Freq, decreasing = TRUE),][1:4,1] |>
+  {\(x)(as.character(x))}() # changing a factor to a char
+  
+top4_rain <- ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain() +
+  theme_classic() + theme(legend.position = "none")    
+
+# top4_rainflipped <- ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+#   geom_rain() +
+#   theme_classic() +
+#   coord_flip() + theme(legend.position = "none")    
+
+# top4_rainflipped + top4_rain
+
+top4_rain
+```
+
+Saw we were interested in seeing how cylinder affects this relationship?
+
+
+```{r 4man cyl, echo = T}
+
+ggplot(mpg[mpg$manufacturer %in% top4,], aes(manufacturer, hwy, fill = manufacturer)) +
+  geom_rain(cov = "cyl", alpha = .9) +
+  theme_classic()
+
+cor(mpg$cyl, mpg$hwy, method = "spearman")
+
+```
+
+
+
+
+
+
+```{r showing dataset temp, echo = T}
+
+ggplot(temp,  aes(time, value, fill = time)) +
+  geom_rain(alpha = .5) +
+  theme_classic() +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp,  aes(time, value, fill = time, color = time)) +
+  geom_rain(alpha = .5, rain.side = "l", cov = "value_round")
+  # theme_classic() +
+  # scale_fill_brewer(palette = "Dark2") +
+  # scale_color_brewer(palette = "Dark2")
+
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
+  geom_rain(cov = "Sepal.Length")
+
+
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) + 
+  geom_rain(cov = "Sepal.Length")
+
+```
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp,  aes(time, value, fill = time)) +
+  geom_rain(alpha = .5, id.long.var = 'id', cov = "value") +
+  theme_classic() +
+  scale_fill_brewer(palette = "Dark2")
+
+# put something random
+
+# ggplot(temp,  aes(time, value, fill = time)) +
+#   geom_rain(alpha = .5, boxplot.args = list(alpha = .3)) +
+#   theme_classic()
+# odd behaviour that this doesn't get a warning arg
+
+```
+
+
+
+
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2,  aes(time, value, fill = group)) +
+  geom_rain(id.long.var = 'id', rain.side = "f", boxplot.args.pos = list(), violin.args.pos = list()) +
+  theme_classic()
+```
+
+
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2,  aes(time, value, fill = group, color = group)) +
+  geom_rain(id.long.var = 'id', rain.side = "flanking", boxplot.args = list(color = "black", outlier.color = NA)) +
+  stat_summary(aes(group = group), fun = "mean", geom = "line", color = "black") +
+  theme_classic()
+
+```
+
+
+Now say we want the lines to be black and solid. We can add these with `line.args`, crucially using this overrides the defaults so we need to copy the position_jittering again!
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_rain(id.long.var = 'id', rain.side = "flanking" ,
+             line.args = list(alpha = .3, color = "black")) +
+  theme_classic()
+
+```
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id', 
+             line.args = list(
+                        alpha = 1, color = "black",
+                        position = position_jitter(
+                          width = .02, 
+                          height = NULL,
+                          seed = 42))) +
+  theme_classic()
+
+```
+
+```{r showing dataset temp long, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id', 
+             boxplot.args = list(color = "black", outlier.shape = NA),
+             violin.args = list(color = NA, alpha = .3)) +
+  theme_classic()
+
+```
+
+### In small data we could drop the violins as there isn't enought to estimate them!
+
+```{r showing dataset temp long drop vio, echo = T}
+
+ggplot(temp2_n40,  aes(time, value, fill = group, color = group)) +
+  geom_prain(id.long.var = 'id',
+             boxplot.args = list(color = "black", outlier.shape = NA),
+             violin.args = list(color = NA, fill = NA)) +
+  theme_classic()
+
+```
+
+
+
+### explain positioning
+
+# since you don't know how to take defaults we are making positioning its own arg
+
+
+
