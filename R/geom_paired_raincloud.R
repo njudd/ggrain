@@ -15,6 +15,7 @@
 #' @seealso https://github.com/easystats/see/blob/master/R/geom_violinhalf.R
 #' @importFrom grid grobName
 #' @importFrom ggplot2 ggproto Geom aes draw_key_polygon
+#' @export
 
 geom_paired_raincloud <- function(mapping = NULL, data = NULL, stat = "ydensity",
                                   position = "dodge", trim = TRUE, scale = "area",
@@ -74,19 +75,20 @@ GeomPairedRaincloud <-
             data$xmaxv <- data$x + data$violinwidth * (data$xmax - data$x)
 
             temp1 <- data
-            temp1$x <- .data$xminv
+            temp1$x <- data$xminv
             temp2 <- data
-            temp2$x <- .data$xmaxv
+            temp2$x <- data$xmaxv
 
             newdata <- rbind(
-              temp1[order(.data$y) ,],
-              temp1[order(.data$y, decreasing = TRUE) ,]
+              temp1[order(data$y) ,],
+              temp2[order(data$y, decreasing = TRUE) ,]
             )
 
             # newdata <- rbind(
             #   dplyr::arrange(dplyr::mutate(data, x = .data$xminv), .data$y),
             #   dplyr::arrange(dplyr::mutate(data, x = .data$xmaxv), dplyr::desc(.data$y))
             # )
+
             newdata <- rbind(newdata, newdata[1,])
 
             .grobName("geom_paired_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
