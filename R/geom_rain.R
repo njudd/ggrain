@@ -26,6 +26,40 @@
 #' @importFrom rlang list2 sym !! !!! exec
 #' @importFrom ggpp position_dodgenudge
 #' @export
+#' @references Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., van Langen, J., & Kievit, R. A.
+#' Raincloud plots: a multi-platform tool for robust data visualization
+#' Wellcome Open Research 2021, 4:63. https://doi.org/10.12688/wellcomeopenres.15191.2
+#'
+#' @examples
+#' e1 <- ggplot(iris, aes(Species, Sepal.Width, fill = Species))
+#' e1 + geom_rain()
+#'
+#' # x must be the discrete variable, orinetation can be changed with coord_flip()
+#' e1 + geom_rain(alpha = .5) + coord_flip()
+#'
+#' # we can color the dots by a covariate
+#' e1 + geom_rain(cov = "Sepal.Length")
+#'
+#' # we can edit elements individually
+#' e1 + geom_rain(violin.args = list(alpha = .3, color = NA))
+#'
+#' # we can flip them
+#' e1 + geom_rain(rain.side = 'l')
+#' # and move them
+#' e1 + geom_rain(boxplot.args.pos = list(width = .1, position = position_nudge(x = -.2)))
+#'
+#' # they also work longitudinally
+#' e2 <- ggplot(sleep, aes(group, extra, fill = group))
+#' e2 + geom_rain(id.long.var = "ID")
+#'
+#' # we can add groups
+#' sleep_dat <- cbind(sleep, data.frame(sex = c(rep("male", 5), rep("female", 5), rep("male", 5), rep("female", 5))))
+#' e3 <- ggplot(sleep_dat, aes(group, extra, fill = sex))
+#' e3 + geom_rain(alpha = .6)
+#'
+#' # add likert example
+#'
+
 
 geom_rain <- function(mapping = NULL,
                       data = NULL,
@@ -33,8 +67,8 @@ geom_rain <- function(mapping = NULL,
                       inherit.aes = TRUE,
                       id.long.var = NULL, # should lines be drawn & what should connect them?
                       cov = NULL, # should dots be colored due to a covariate?
-                      rain.side = NULL, # do you want the rainclouds (l)eft, (r)ight or (f)lanking
-                      # likert = FALSE,
+                      rain.side = NULL, # The side to draw the violin/boxplot. "l" for left, "r" for right, "f" for flanking, defaults to "r"
+                      #likert = FALSE, #make sure you don't need to do more in the long for loop area
                       # rain.center = NULL, currently not implimented
                       ...,
                       point.args = rlang::list2(
@@ -83,8 +117,6 @@ geom_rain <- function(mapping = NULL,
   # orient argument (sets what is 0)
   # rain width argument (needs to use normal width/jittersize & nudging)
 
-  # the width arguement might not make sense, since its always to the scale of the plot
-print(names(point.args))
 
   # doing positional changes based off user input
   if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
@@ -95,15 +127,17 @@ print(names(point.args))
       boxplot.args.pos$position$x <- -boxplot.args.pos$position$x
     }
 
-  } else if (!is.null(rain.side) && rain.side %in% c("f", "flanking")){
+  } else if (!is.null(rain.side) && rain.side == "f"){
+
+    stop("ERROR: Flanking is currently not supported, working on fixing it \n STOPPING", call. = FALSE)
+
 
     if ("side" %in% names(violin.args.pos)){
 
-      # this shouldn't be by default yet only if side is there & position.nudge is somethign different!!!
-
-      # warning("Option 'flanking' is used with defaults violin position arguments (i.e., violin.args.pos)
-            # therefore new flanking position defaults are being used. If you wish to set your own defaults make sure you do
-            # not specify a side argument for violin.args.pos otherwise they will be overridden", call. = FALSE)
+      warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
+      This means 1) you have not supplied position arguments for flanking rainclouds or 2) have accidentally included side in the position args.
+      Therefore, positioning of the boxplots (boxplot.args.pos) and violins (violin.args.pos) will be overwritten in favor of a 2-group 2 timepoint flanking raincloud.
+      This will cause an error if you have a different type of raincloud, yet you can fix it by providing position args.", call. = FALSE)
 
       boxplot.args.pos <- rlang::list2(
         width = .08,
@@ -114,7 +148,7 @@ print(names(point.args))
                                         rep(.15, 256*2), rep(.15, 256*2))))
     }
   } else if (!is.null(rain.side)) {
-    stop("ERROR: the rain.side arguement only accepts 'l' for left and 'r' for right \n STOPPING", call. = FALSE)
+    stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f' for flanking \n STOPPING", call. = FALSE)
   }
 
   # likert option doign y-jittering
@@ -139,9 +173,9 @@ print(names(point.args))
 
   e3 <- rlang::exec(geom_boxplot, inherit.aes = TRUE, !!!boxplot.args)
 
-  if(!is.null(rain.side) && rain.side %in% c("f", "flanking")){
+  if(!is.null(rain.side) && rain.side == "f"){
 
-    e4 <- rlang::exec(geom_paired_raincloud,inherit.aes = TRUE, !!!violin.args)
+    e4 <- rlang::exec(geom_paired_raincloud, inherit.aes = TRUE, !!!violin.args)
   }else{
     e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   }
