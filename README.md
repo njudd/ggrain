@@ -57,21 +57,24 @@ e1 +
 - **Example 1.1:** Let's flip it & pass a color to the violin fill
 
 ```r
-e1 +    geom_rain() + 
+e1 +
+    geom_rain() + 
     coord_flip() #flipping it
 ```
 
 - **Example 1.2:** Let's pass a fill color to the violin and change its transparancy
 
 ```r 
-e1 +    geom_rain(violin.args = list(fill = "blue", alpha = .4))
+e1 +
+    geom_rain(violin.args = list(fill = "blue", alpha = .4))
 ```
 
 
 - **Example 1.3:** Let's change the smoothing of the violin
 
 ```r
-e1 +    geom_rain(violin.args = list(fill = "blue", adjust = .2)) + 
+e1 +
+    geom_rain(violin.args = list(fill = "blue", adjust = .2)) + 
     coord_flip()
 ```
 #### Example 2
