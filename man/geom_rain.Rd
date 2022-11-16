@@ -87,3 +87,38 @@ This function displays individual data points, a boxplot and half a violin plot.
 It also has the option to connect data points with lines across groups by specifying
 an id to connect by. Lastly, if desired one can color the dots based of another variable.
 }
+\examples{
+e1 <- ggplot(iris, aes(Species, Sepal.Width, fill = Species))
+e1 + geom_rain()
+
+# x must be the discrete variable, orinetation can be changed with coord_flip()
+e1 + geom_rain(alpha = .5) + coord_flip()
+
+# we can color the dots by a covariate
+e1 + geom_rain(cov = "Sepal.Length")
+
+# we can edit elements individually
+e1 + geom_rain(violin.args = list(alpha = .3, color = NA))
+
+# we can flip them
+e1 + geom_rain(rain.side = 'l')
+# and move them
+e1 + geom_rain(boxplot.args.pos = list(width = .1, position = position_nudge(x = -.2)))
+
+# they also work longitudinally
+e2 <- ggplot(sleep, aes(group, extra, fill = group))
+e2 + geom_rain(id.long.var = "ID")
+
+# we can add groups
+sleep_dat <- cbind(sleep, data.frame(sex = c(rep("male", 5), rep("female", 5), rep("male", 5), rep("female", 5))))
+e3 <- ggplot(sleep_dat, aes(group, extra, fill = sex))
+e3 + geom_rain(alpha = .6)
+
+# add likert example
+
+}
+\references{
+Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., van Langen, J., & Kievit, R. A.
+Raincloud plots: a multi-platform tool for robust data visualization
+Wellcome Open Research 2021, 4:63. https://doi.org/10.12688/wellcomeopenres.15191.2
+}
