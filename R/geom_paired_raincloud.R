@@ -15,7 +15,6 @@
 #' @seealso https://github.com/easystats/see/blob/master/R/geom_violinhalf.R
 #' @importFrom grid grobName
 #' @importFrom ggplot2 ggproto Geom aes draw_key_polygon
-#' @export
 
 geom_paired_raincloud <- function(mapping = NULL, data = NULL, stat = "ydensity",
                                   position = "dodge", trim = TRUE, scale = "area",
