@@ -79,7 +79,6 @@ uniquecols <- function(df) {
 #' @param name Optional function name to improve error message.
 #' @param finite If `TRUE`, will also remove non-finite values.
 #' @keywords internal
-#' @export
 remove_missing <- function(df, na.rm = FALSE, vars = names(df), name = "",
                            finite = FALSE) {
   if (!is.logical(na.rm)) {
@@ -145,7 +144,6 @@ is_complete <- function(x) {
 #' Used in examples to illustrate when errors should occur.
 #'
 #' @param expr code to evaluate.
-#' @export
 #' @keywords internal
 #' @examples
 #' should_stop(stop("Hi!"))
@@ -166,7 +164,6 @@ should_stop <- function(expr) {
 #' functions to distinguish between displaying nothing (`NULL`) and
 #' displaying a default value calculated elsewhere (`waiver()`)
 #'
-#' @export
 #' @keywords internal
 waiver <- function() structure(list(), class = "waiver")
 
@@ -193,7 +190,6 @@ binned_pal <- function(palette) {
 #'   (in other words, the last version where it was not deprecated).
 #' @param msg The message to print.
 #' @keywords internal
-#' @export
 gg_dep <- function(version, msg) {
   deprecate_warn0("3.3.0", "gg_dep()")
   .Deprecated()
@@ -483,7 +479,6 @@ switch_orientation <- function(aesthetics) {
 #' `flipped_names(FALSE)$x == "x"` and if `flip = TRUE` it will correspond to
 #' the flipped name, e.g. `flipped_names(FALSE)$x == "y"`
 #'
-#' @export
 #' @keywords internal
 #' @name bidirection
 #'
@@ -563,7 +558,6 @@ has_flipped_aes <- function(data, params = list(), main_is_orthogonal = NA,
   FALSE
 }
 #' @rdname bidirection
-#' @export
 flip_data <- function(data, flip = NULL) {
   flip <- flip %||% any(data$flipped_aes) %||% FALSE
   if (isTRUE(flip)) {
@@ -572,7 +566,6 @@ flip_data <- function(data, flip = NULL) {
   data
 }
 #' @rdname bidirection
-#' @export
 flipped_names <- function(flip = FALSE) {
   x_aes <- ggplot_global$x_aes
   y_aes <- ggplot_global$y_aes
