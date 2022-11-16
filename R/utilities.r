@@ -1,4 +1,3 @@
-#' @export
 #' @examples
 #' ggplot(mpg, aes(displ, hwy)) +
 #'   geom_point(alpha = 0.5, colour = "blue")
