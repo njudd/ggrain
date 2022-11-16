@@ -1,6 +1,6 @@
 # ggrain - Raincloud Plots
 
-`geom_rain()` is a R function for raincloud plots that is highly customizable, connects longitudinal observations, handle Likert data and allows mapping of a covariate.
+`geom_rain()` is an R function for raincloud plots that is highly customizable, connects longitudinal observations, handles Likert data, and allows mapping of a covariate.
 
 ```
 ggplot(iris, aes(x = 1, y = Sepal.Length)) +
@@ -36,7 +36,7 @@ library(ggrain)
 
 Specific geom arguments can be passed with a list to any of the 4 geom's with the argument `{point/line/boxplot/violin}.args`. For a list of arguments that can be passed see the help files of the respective geom's (e.g., `?gghalves::geom_half_violin`).
 
-Position related arguments (e.g., jittering, nudging & width) can be passed with `{point/line/boxplot/violin}.args.pos`, see the help file of `?geom_rain` for defaults
+Position-related arguments (e.g., jittering, nudging & width) can be passed with `{point/line/boxplot/violin}.args.pos`, see the help file of `?geom_rain` for defaults
 
 
 ### Basic examples
