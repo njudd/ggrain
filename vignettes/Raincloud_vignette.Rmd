@@ -1,19 +1,19 @@
 ---
-title: "Raincloud Plots"
+title: "Raincloud Plots with the ggrain package"
 author:
   - name: "Dr. Nicholas Judd"
     url: https://njudd.com
-    affiliation: Donders Institute
+    affiliation: Donders Institute for brain, cognition and behaviour
     affiliation_url: https://www.ru.nl/donders/
     orcid_id: 0000-0002-0196-9871
   - name: "Dr. Rogier Kievit"
     url: https://www.rogierkievit.com/
-    affiliation: Donders Institute
+    affiliation: Donders Institute for brain, cognition and behaviour
     affiliation_url: https://www.ru.nl/donders/
     orcid_id: 0000-0003-0700-4568
   - name: "Jordy van Langen"
     url: https://github.com/jorvlan
-    affiliation: Donders Institute
+    affiliation: Donders Institute for brain, cognition and behaviour
     affiliation_url: https://www.ru.nl/donders/
     orcid_id: 0000-0003-2504-2381
 output:
@@ -30,28 +30,29 @@ if (!require(pacman)) {
     install.packages("pacman")
 }
 
-pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves, patchwork, remotes)
+pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves, patchwork, remotes, DT)
 
 remotes::install_github('njudd/ggrain')
 
 library(ggrain)
-
 ```
 
-## geom_rain()
+## The `geom_rain()` function
 
 * handles as many rainclouds as you wish and can overlap them by a group
 * connects observations longitudinally with lines using `id.long.var` argument
 * colors dots by a covariate using the `cov` argument
 * handles likert data by adding y-jittering with `likert = TRUE`
 
+All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplot's can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
 
+## Introduction 
 ```{r making dataset}
 
 aging <- Demo.growth[,1:4]
 aging$id <- as.factor(as.character(rep(1:dim(aging)[1])))
 aging <- reshape2::melt(aging, id.vars = "id")
-aging$value_round <- round(aging$value,1)
+# aging$value_round <- round(aging$value,1)
 colnames(aging)[2] <- "time"
 
 aging$covariate <- -aging$value*2
@@ -73,13 +74,15 @@ aging$value[aging$group == "old" & aging$time == "t2"] <- aging$value[aging$grou
 
 ```
 
-```{r showing datasets, echo = T}
+We will look at some aging data that has two groups (young and old) measured four times.
 
-# add some fancy interactive dataset table here
+```{r showing datasets}
 
-head(aging)
-
+DT::datatable(aging, rownames = F, class = 'cell-border stripe')
 ```
+
+
+Here is our first plot that is just simply all the values in the aging data set. For the function to work the value you want to plot must be given to the y argument in ggplot, changing the orientation is done with `+ coord_flip()`.
 
 
 ```{r most basic raincloud possible, echo = T}
@@ -94,20 +97,50 @@ Let's see what is happening over the four time points
 ```{r rainclouds by time, echo = T}
 
 ggplot(aging, aes(time, value, fill = time)) +
-  geom_rain(alpha = .3) +
-  theme_classic()
+  geom_rain(alpha = .5) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2')
 ```
 
-Let's color the dots by time, we need to add a `boxplot.args` for color to be black as this makes the median and IQR visable along with re-adding the default for no outliers.
-
+Let's color the dots by time, we do this by adding `color = time` to ggplot. The default behavior of `geom_boxplot` is to color the lines showing the median and IQR. Therefore, we need to add a `boxplot.args` for color to be black along with re-adding the default to show no outliers.
 
 ```{r rainclouds by time colored, echo = T}
 
 ggplot(aging, aes(time, value, fill = time, color = time)) +
   geom_rain(alpha = .3,
             boxplot.args = list(color = "black", outlier.shape = NA)) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  scale_color_brewer(palette = 'Dark2')
 ```
+
+We can flip the plots by adding `coord_flip()`
+
+```{r rainclouds by time flip, echo = T}
+
+ggplot(aging, aes(time, value, fill = time)) +
+  geom_rain(alpha = .5) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  coord_flip()
+```
+
+This plot is a bit crammed, lets spread stuff out using the `boxplot.args.pos` & `violin.args.pos` arguments.
+
+```{r rainclouds by time flip nudged, echo = T}
+
+ggplot(aging, aes(time, value, fill = time)) +
+  geom_rain(alpha = .5, 
+            boxplot.args.pos = list(
+              width = 0.05, position = position_nudge(x = 0.13)),
+            violin.args.pos = list(
+              side = "r",
+              width = 0.7, position = position_nudge(x = 0.2))) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  coord_flip()
+```
+
 
 Instead of coloring the dots by time, lets see how our two groups are doing (old & young people).
 We can do this by adding them as a covariate with the `cov` arg.
@@ -117,7 +150,10 @@ We can do this by adding them as a covariate with the `cov` arg.
 ggplot(aging, aes(time, value, fill = time)) +
   geom_rain(alpha = .3,
             cov = "group") +
-  theme_classic()
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  scale_color_manual(values=c("dodgerblue", "darkorange"))
+
 ```
 
 
@@ -127,7 +163,9 @@ These are distinct groups it would be much more informative to plot them separat
 
 ggplot(aging, aes(time, value, fill = group)) +
   geom_rain(alpha = .3) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+
 ```
 
 We can't really see the boxplots so lets dodge them while also nudging, we can do this with the boxplot position arg `boxplot.args.pos`. Remember to readd the defaults if you would like to keep them!
@@ -139,7 +177,8 @@ ggplot(aging, aes(time, value, fill = group)) +
             boxplot.args.pos = list(
               position = ggpp::position_dodgenudge(x = .1), width = 0.05
             )) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
 
 Lets flip them, while keeping the boxplots dodging.
@@ -151,11 +190,13 @@ ggplot(aging, aes(time, value, fill = group)) +
             boxplot.args.pos = list(
               position = ggpp::position_dodgenudge(x = .1), width = 0.05
             )) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
 As you can see the `rain.side` arg negates the x position argument you give `geom_rain`.
 
-Lets connect the individuals across time! We can do this with `id.long.var`
+Lets connect the individuals across time! 
+We can do this with `id.long.var`
 
 ```{r rainclouds by time by group connected, echo = T}
 
@@ -165,7 +206,8 @@ ggplot(aging, aes(time, value, fill = group)) +
             boxplot.args.pos = list(
               position = ggpp::position_dodgenudge(x = .1), width = 0.05
             )) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
 
 
@@ -232,14 +274,69 @@ ggplot(aging_subset, aes(time, value, fill = group)) +
     scale_fill_manual(values=c("dodgerblue", "darkorange")) +
     scale_colour_manual(values = c("dodgerblue", "darkorange"))
 
+```
 
+#### Advanced flanking
+
+To do advanced flanking we need to supply positioning arguments for each element/group of the boxplot & violin.
+
+
+```{r rainclouds aging 4 timepoints inference, echo = T}
+
+ggplot(aging, aes(time, value, fill = group)) +
+  geom_rain(alpha = .5, rain.side = 'f',
+            boxplot.args.pos = list(width = .1,
+                                     position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
+                                                                                -.12, -.12, 
+                                                                                .12, .12, # t3 old, t3 young
+                                                                                .12, .12))),
+            violin.args.pos = list(width = .7,
+                                    position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
+                                                                    rep(-.17, 256*2), rep(-.17, 256*2), # t2
+                                                                    rep(.17, 256*2), rep(.17, 256*2),# t3
+                                                                    rep(.17, 256*2), rep(.17, 256*2))))) +# t4
+  theme_classic() +
+  stat_summary(fun = median, geom = "line", aes(group = group, color = group)) +
+    stat_summary(fun = median, geom = "point",
+               aes(group = group, color = group)) +
+    scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+    scale_colour_manual(values = c("dodgerblue", "darkorange"))
 
 ```
 
+Let's add a covariate on top of this all!
+
+```{r rainclouds aging 4 timepoints inference with cov, echo = F, eval=F}
+
+g1 <- ggplot(aging, aes(time, value, fill = group)) +
+  geom_rain(alpha = .5, rain.side = 'f', cov = "covariate",
+            boxplot.args.pos = list(width = .1,
+                                     position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
+                                                                                -.12, -.12, 
+                                                                                .12, .12, # t3 old, t3 young
+                                                                                .12, .12))),
+            violin.args.pos = list(width = .7,
+                                    position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
+                                                                    rep(-.17, 256*2), rep(-.17, 256*2), # t2
+                                                                    rep(.17, 256*2), rep(.17, 256*2),# t3
+                                                                    rep(.17, 256*2), rep(.17, 256*2))))) +# t4
+  theme_classic() +
+  scale_color_viridis_c() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+
+
+g1 + stat_summary(data = aging, aes(time, value, group = group, color = group), fun = median, geom = "line", inherit.aes = FALSE)
 
 
 
 
+
+  # stat_summary(data = aging, fun = median, geom = "line", aes(group = group, color = group)) +
+  #   stat_summary(data = aging, fun = median, geom = "point",
+  #              aes(group = group, color = group)) +
+  #   scale_colour_manual(values = c("dodgerblue", "darkorange"))
+
+```
 
 
 
