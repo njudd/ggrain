@@ -12,7 +12,7 @@ Current dev goals:
 - orientation error when the user tries to plot discrete data in the y-axis
 - fix flanking option
 
-[img](!https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
+![img](https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
 
 ### Installation
 
