@@ -12,7 +12,6 @@ Current dev goals:
 - orientation error when the user tries to plot discrete data in the y-axis
 - fix flanking option
 
-![img](https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
 
 ### Installation
 
@@ -39,6 +38,7 @@ Specific geom arguments can be passed with a list to any of the 4 geom's with th
 
 Position-related arguments (e.g., jittering, nudging & width) can be passed with `{point/line/boxplot/violin}.args.pos`, see the help file of `?geom_rain` for defaults
 
+![img](https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
 
 ### Basic examples
 
