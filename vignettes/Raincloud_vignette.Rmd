@@ -40,9 +40,10 @@ library(ggrain)
 ## The `geom_rain()` function
 
 * handles as many rainclouds as you wish and can overlap them by a group
-* connects observations longitudinally with lines using `id.long.var` argument
+* connects within-subject observations longitudinally with lines using `id.long.var` argument
 * colors dots by a covariate using the `cov` argument
 * handles likert data by adding y-jittering with `likert = TRUE`
+* changes orientation with `+ coord_flip()`
 
 All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplot's can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
 
@@ -82,7 +83,7 @@ DT::datatable(aging, rownames = F, class = 'cell-border stripe')
 ```
 
 
-Here is our first plot that is just simply all the values in the aging data set. For the function to work the value you want to plot must be given to the y argument in ggplot, changing the orientation is done with `+ coord_flip()`.
+Here is our first plot that is just simply all the values in the aging data set. For the function to work the value you want to plot **must be given to the y argument** in ggplot. You can than flip the plot with `+ coord_flip()` as we demonstrate below.
 
 
 ```{r most basic raincloud possible, echo = T}
@@ -143,7 +144,7 @@ ggplot(aging, aes(time, value, fill = time)) +
 
 
 Instead of coloring the dots by time, lets see how our two groups are doing (old & young people).
-We can do this by adding them as a covariate with the `cov` arg.
+We can do this by adding them as a covariate with the `cov` argument.
 
 ```{r rainclouds by time colored by group, echo = T}
 
@@ -249,7 +250,7 @@ ggplot(aging, aes(time, value, fill = group)) +
   scale_color_viridis_c()
 ```
 
-### Inference (incomplete) waiting for flanking
+### Inference with flanking
 
 Let's take a step back and look if the groups are significantly different in the first two time points!
 
@@ -262,6 +263,20 @@ ggplot(aging_subset, aes(time, value, fill = group)) +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
+
+We can color the lines & dots as well!
+
+```{r rainclouds aging two timepoints dots and lines colored, echo = T}
+
+ggplot(aging_subset, aes(time, value, fill = group, color = group)) +
+  geom_rain(alpha = .5, rain.side = 'f', id.long.var = 'id') +
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+  scale_color_manual(values=c("dodgerblue", "darkorange"))
+
+```
+
+
 
 ```{r rainclouds aging two timepoints inference, echo = T}
 
