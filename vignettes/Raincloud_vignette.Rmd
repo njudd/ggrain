@@ -363,8 +363,40 @@ pre <- c(1,1,4,1,1,2,1,1,2,2,1,3,2,1,2,2,2,3,2,4,5,2,3,3,4,4,2,2,5,3,4,3,5,3,3,4
 
 post <- c(1,1,1,1,1,1,1,2,2,1,1,2,2,3,2,2,2,2,2,2,3,3,2,3,1,4,1,2,3,3,5,2,4,3,4,2,3,2,3,2,3,3,3,3,3,3,4,3,5,3,1,3,2,3,3,2,2,3,3,3,4,3,3,3,3,3,3,4,3,3,3,4,3,4,3,3,2,3,3,3,3,3,1,3,3,2,2,4,5,3,3,4,3,3,2,3,3,4,3,4,1,3,4,2,3,2,4,2,3,3,3,3,4,1,3,4,3,3,3,4,3,3,3,3,3,3,3,4,4,5)
 
-test_data = data.frame(pre,post)
+likert_data = data.frame(pre,post)
+
+likert_data$id <- as.factor(as.character(rep(1:dim(likert_data)[1])))
+likert_data <- reshape2::melt(likert_data, id.vars = "id")
+colnames(likert_data)[2] <- "time"
+likert_data$covariate <- -likert_data$value*2
+
+likert_data$group <- c(rep("old", 65), rep("young", 65), rep("old", 65), rep("young", 65))#,
+                # rep("old", 65), rep("young", 200), rep("old", 200), rep("young", 200))
+
+likert_data$value[likert_data$group == "young"] <- likert_data$value[likert_data$group == "young"] + 1
+likert_data$value[likert_data$group == "old" & likert_data$time == "t2"] <- likert_data$value[likert_data$group == "old" & likert_data$time == "t2"] -2
+
+likert_data$jit <- jitter(likert_data$value, amount = .2)
 
 
+# Plot the object with `likert = TRUE`
+f1 <- ggplot(likert_data, aes(time, value, fill = group, color = group)) +
+  geom_rain(alpha = .5, rain.side = 'f', id.long.var = 'id', likert = T) +
+  theme_classic() +
+  scale_fill_manual(values=c("lightgrey", "grey")) +
+  scale_colour_manual(values = c("lightgrey", "grey"))
 
+f2 <- ggplot(likert_data) + 
+ geom_bar(aes(x = time, fill = as.factor(value)), position = 'fill')+
+  ylab('value')+
+  xlab('time')+
+  scale_y_continuous(position = 'right')+
+  theme_classic()#+
+  #coord_flip()
+
+#install.packages("patchwork")
+library(patchwork)
+
+f3 <- f1 + f2
+f3
 ```
