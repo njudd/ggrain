@@ -1,6 +1,6 @@
 #' Paired raincloud plot
 #'
-#' ripped from https://raw.githubusercontent.com/yjunechoe/geom_paired_raincloud/master/geom_paired_raincloud.R
+#' Taking from https://raw.githubusercontent.com/yjunechoe/geom_paired_raincloud/master/geom_paired_raincloud.R
 #' on 30-10-22 attribution to https://yjunechoe.github.io/
 #'
 #' Create a paired raincloud plot (useful for visualizing difference between experimental conditions tested on the same subjects or items).
