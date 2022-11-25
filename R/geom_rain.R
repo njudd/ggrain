@@ -137,7 +137,7 @@ geom_rain <- function(mapping = NULL,
 
     if ("side" %in% names(violin.args.pos)){
 
-      warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
+      warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!! Using the default 2by2:
       This means 1) you have not supplied position arguments for flanking rainclouds or 2) have accidentally included side in the position args.
       Therefore, positioning of the boxplots (boxplot.args.pos) and violins (violin.args.pos) will be overwritten in favor of a 2-group 2 timepoint flanking raincloud.
       This will cause an error if you have a different type of raincloud, yet you can fix it by providing position args.", call. = FALSE)
