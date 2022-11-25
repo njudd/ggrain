@@ -303,14 +303,14 @@ ggplot(aging, aes(time, value, fill = group)) +
   geom_rain(alpha = .5, rain.side = 'f',
             boxplot.args.pos = list(width = .1,
                                      position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
-                                                                                -.12, -.12, 
-                                                                                .12, .12, # t3 old, t3 young
-                                                                                .12, .12))),
+                                                                                -.13, -.13, 
+                                                                                .13, .13, # t3 old, t3 young
+                                                                                .13, .13))),
             violin.args.pos = list(width = .7,
                                     position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
-                                                                    rep(-.17, 256*2), rep(-.17, 256*2), # t2
-                                                                    rep(.17, 256*2), rep(.17, 256*2),# t3
-                                                                    rep(.17, 256*2), rep(.17, 256*2))))) +# t4
+                                                                    rep(-.2, 256*2), rep(-.2, 256*2), # t2
+                                                                    rep(.2, 256*2), rep(.2, 256*2),# t3
+                                                                    rep(.2, 256*2), rep(.2, 256*2))))) +# t4
   theme_classic() +
   stat_summary(fun = median, geom = "line", aes(group = group, color = group)) +
     stat_summary(fun = median, geom = "point",
