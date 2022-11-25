@@ -297,21 +297,20 @@ ggplot(aging_subset, aes(time, value, fill = group)) +
 
 To do advanced flanking we need to supply positioning arguments for each element/group of the boxplot & violin.
 
-
 ```{r rainclouds aging 4 timepoints inference, echo = T}
 
 ggplot(aging, aes(time, value, fill = group)) +
   geom_rain(alpha = .5, rain.side = 'f',
             boxplot.args.pos = list(width = .1,
                                      position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
-                                                                                -.13, -.13, 
-                                                                                .13, .13, # t3 old, t3 young
-                                                                                .13, .13))),
+                                                                                -.12, -.12, 
+                                                                                .12, .12, # t3 old, t3 young
+                                                                                .12, .12))),
             violin.args.pos = list(width = .7,
                                     position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
-                                                                    rep(-.2, 256*2), rep(-.2, 256*2), # t2
-                                                                    rep(.2, 256*2), rep(.2, 256*2),# t3
-                                                                    rep(.2, 256*2), rep(.2, 256*2))))) +# t4
+                                                                    rep(-.17, 256*2), rep(-.17, 256*2), # t2
+                                                                    rep(.17, 256*2), rep(.17, 256*2),# t3
+                                                                    rep(.17, 256*2), rep(.17, 256*2))))) +# t4
   theme_classic() +
   stat_summary(fun = median, geom = "line", aes(group = group, color = group)) +
     stat_summary(fun = median, geom = "point",
@@ -355,5 +354,17 @@ g1 + stat_summary(data = aging, aes(time, value, group = group, color = group), 
 
 ```
 
+Finally, let's create a raincloudplot with `likert` data.
+
+```{r rainclouds , echo = F, eval=T}
+
+#Create fake data
+pre <- c(1,1,4,1,1,2,1,1,2,2,1,3,2,1,2,2,2,3,2,4,5,2,3,3,4,4,2,2,5,3,4,3,5,3,3,4,3,2,2,2,4,2,3,2,3,4,4,3,5,1,2,5,2,3,3,5,5,3,1,3,4,2,3,4,3,3,2,3,4,5,3,3,3,4,2,2,4,3,3,5,3,3,2,2,3,3,1,4,4,2,3,4,2,2,1,2,3,3,3,2,1,2,3,3,3,2,3,4,3,4,3,1,4,2,3,2,4,3,3,4,3,3,2,3,4,3,4,3,3,3)
+
+post <- c(1,1,1,1,1,1,1,2,2,1,1,2,2,3,2,2,2,2,2,2,3,3,2,3,1,4,1,2,3,3,5,2,4,3,4,2,3,2,3,2,3,3,3,3,3,3,4,3,5,3,1,3,2,3,3,2,2,3,3,3,4,3,3,3,3,3,3,4,3,3,3,4,3,4,3,3,2,3,3,3,3,3,1,3,3,2,2,4,5,3,3,4,3,3,2,3,3,4,3,4,1,3,4,2,3,2,4,2,3,3,3,3,4,1,3,4,3,3,3,4,3,3,3,3,3,3,3,4,4,5)
+
+test_data = data.frame(pre,post)
 
 
+
+```
