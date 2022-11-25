@@ -10,7 +10,7 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
 Current dev goals:
 
 - orientation error when the user tries to plot discrete data in the y-axis
-- fix flanking option
+- Likert True shouldn't override peoples own jitter options, also add the likert boxplot
 
 
 ### Installation
