@@ -9,8 +9,7 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
 
 Current dev goals:
 
-- orientation error when the user tries to plot discrete data in the y-axis
-- Likert True shouldn't override peoples own jitter options, also add the likert boxplot
+- Develop the likert option
 
 
 ### Installation
@@ -23,6 +22,30 @@ remotes::install_github('njudd/ggrain')
 
 library(ggrain)
 ```
+
+### Basic examples
+
+For more examples such as 2-by-2 and multiple repeated measerues see the vignette.
+
+1.  Raincloud per group
+
+	```
+	ggplot(iris, aes(x = Species, y = Sepal.Length, fill = 	Species)) +
+		geom_rain(rain.side = 'l')
+	```
+
+2.  Different groups overlapped
+
+	```
+	ggplot(iris, aes(x = 1, y = Sepal.Length, fill = Species)) +
+		geom_rain(alpha = .5)
+	```
+
+
+
+![img](https://raw.githubusercontent.com/njudd/ggrain/main/basic_rain.png)
+
+
 
 ### Features
 
@@ -40,19 +63,4 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
 
-### Basic examples
 
-Different groups overlapped
-
-```
-ggplot(iris, aes(x = 1, y = Sepal.Length, fill = Species)) +
-	geom_rain(alpha = .5)
-```
-A raincloud per group
-
-```
-ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
-	geom_rain(rain.side = 'l')
-```
-
-**for more examples see the vignette** 
