@@ -7,6 +7,8 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
   geom_rain()
 ```
 
+We welcome all contribution. Please make a pull request if you would like to add a new feature!
+
 Current dev goals:
 
 - Develop the likert option
