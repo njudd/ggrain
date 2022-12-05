@@ -296,13 +296,18 @@ ggplot(aging_subset, aes(time, value, fill = group, color = group)) +
 
 \newpage
 
+#### Mean trend lines:
+<br>
+Here we add mean trend lines using stat_summary!
+
+
 ```{r rainclouds aging two timepoints inference, echo = T}
 
 ggplot(aging_subset, aes(time, value, fill = group)) +
   geom_rain(alpha = .5, rain.side = 'f') +
   theme_classic() +
-  stat_summary(fun = median, geom = "line", aes(group = group, color = group)) +
-    stat_summary(fun = median, geom = "point",
+  stat_summary(fun = mean, geom = "line", aes(group = group, color = group)) +
+    stat_summary(fun = mean, geom = "point",
                aes(group = group, color = group)) +
     scale_fill_manual(values=c("dodgerblue", "darkorange")) +
     scale_colour_manual(values = c("dodgerblue", "darkorange"))
@@ -311,20 +316,21 @@ ggplot(aging_subset, aes(time, value, fill = group)) +
 
 
 \newpage
+#### Significance testing:
+<br>
+Now we add a significance test between the two timepoints using the package ggsignif for young participants!
 
-```{r rainclouds aging two timepoints inference, echo = T}
-
-
-
+```{r rainclouds aging two timepoints sig inference, echo = T}
 
 ggplot(aging_subset |> dplyr::filter(group == 'young'), aes(time, value, fill = time)) +
   geom_rain(alpha = .5, rain.side = 'f',
-            boxplot.args.pos = list(width = .1, position = position_nudge(x = c(-.13, .13))),
-            violin.args.pos = list(width = .3, position = position_nudge(x = c(rep(-.2, 256*2), rep(.2, 256*2))))) +
+            boxplot.args.pos = list(width = .1, 
+                                    position = position_nudge(x = c(-.13, .13))),
+            violin.args.pos = list(width = .3, 
+                                   position = position_nudge(x = c(rep(-.2, 256*2), rep(.2, 256*2))))) +
   geom_signif(
     comparisons = list(c("t1", "t2")),
-    map_signif_level = TRUE
-  ) +
+    map_signif_level = TRUE) +
   scale_fill_manual(values=c("darkorange", "darkorange")) +
   theme_classic()
 
