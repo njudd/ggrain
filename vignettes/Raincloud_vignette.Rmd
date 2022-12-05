@@ -267,7 +267,7 @@ ggplot(aging, aes(time, value, fill = group)) +
 
 
 \newpage
-### Inference with flanking
+## Inference with flanking
 
 Let's take a step back and look if the groups are significantly different in the first two time points!
 
