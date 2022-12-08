@@ -97,7 +97,7 @@ ggplot(aging, aes(1, value)) +
 ```
 
 \newpage
-Let's see what is happening over the four time points
+Let's see what is happening over the four time points. The x value must be a factor or a character vector!
 
 ```{r rainclouds by time, echo = T}
 
@@ -447,4 +447,73 @@ library(patchwork)
 
 f3 <- f1 + f2
 f3
+
+
+
+proportions <- table(likert_data$pre)/length(likert_data$pre)
+
+4*0.107 + 1 + 4*0.261
+
+abs_range <- abs(min(likert_data$pre)) + abs(max(likert_data$pre))
+
+4*0.107 + 1 + 4*0.261 + 4*.37 + 4*.18 + 4*.07 #(you don't need the last boundary)
+
+
+bounds <- function(x){
+  
+  l_unique_min1 <- length(unique(likert_data$pre))-1
+  vec <- as.numeric(rep(0, l_unique_min1))
+  proportions <- as.numeric(table(likert_data$pre)/length(likert_data$pre))
+
+  s <- 0
+  for (i in 1:l_unique_min1){
+    vec[i] <- proportions[i]*l_unique_min1 + s
+    s <- vec[i]
+  }
+
+  vec <- vec + min(likert_data$pre)
+  
+  return(vec)
+}
+
+bounds <- function(x, ...){
+  
+  l_unique_min1 <- length(unique(x))-1
+  vec <- as.numeric(rep(0, l_unique_min1))
+  proportions <- as.numeric(table(x)/length(x))
+
+  s <- 0
+  for (i in 1:l_unique_min1){
+    vec[i] <- proportions[i]*l_unique_min1 + s
+    s <- vec[i]
+  }
+
+  vec <- vec + min(x)
+  
+  return(vec)
+}
+
+m <- function(x, ...){
+  m <- mean(x, na.rm = T)
+  return(m)
+}
+
+
+
+ct <- reshape2::melt(likert_data)
+
+
+ggplot(ct, aes(x = value, y = variable, fill = variable)) +
+  geom_density_ridges(scale = .2,
+    quantile_lines = T, quantile_fun = m) +
+  geom_boxplot(width = .2, position = position_nudge(y = -.2))
+
+
+ggplot(likert_data) +
+  geom_density_ridges(
+    aes(x = 1, y = pre),
+    quantile_lines = T, quantile_fun = bounds)
+
+
+
 ```
