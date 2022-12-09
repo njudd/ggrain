@@ -31,7 +31,7 @@ if (!require(pacman)) {
     install.packages("pacman")
 }
 
-pacman::p_load(ggplot, rlang, grid, ggpp, lavaan, gghalves, patchwork, remotes, DT, ggsignif)
+pacman::p_load(ggplot2, rlang, grid, ggpp, lavaan, gghalves, patchwork, remotes, DT, ggsignif, reshape2)
 
 remotes::install_github('njudd/ggrain')
 
@@ -49,7 +49,7 @@ library(ggrain)
 All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplot's can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
 
 ## Introduction 
-```{r making dataset}
+```{r making dataset, echo = T}
 
 aging <- Demo.growth[,1:4]
 aging$id <- as.factor(as.character(rep(1:dim(aging)[1])))
@@ -64,16 +64,6 @@ aging$group <- c(rep("old", 200), rep("young", 200), rep("old", 200), rep("young
 
 aging$value[aging$group == "young"] <- aging$value[aging$group == "young"] + 1
 aging$value[aging$group == "old" & aging$time == "t2"] <- aging$value[aging$group == "old" & aging$time == "t2"] -2
-
-# aging2 <- aging |>  dplyr::filter(time %in% c("t1", "t2"))
-# 
-# aging2$group <- c(rep("old", 200), rep("young", 200), rep("old", 200), rep("young", 200))
-# aging2$value[aging2$group == "young"] <- aging2$value[aging2$group == "young"] + 1
-# aging2$value[aging2$group == "old" & aging2$time == "t2"] <- aging2$value[aging2$group == "old" & aging2$time == "t2"] -2
-# 
-# 
-# aging2_n40 <- aging2 |> dplyr::filter(id %in% c(as.character(1:10), as.character(200:210), as.character(400:410), as.character(600:610)))
-
 ```
 
 We will look at some aging data that has two groups (young and old) measured four times.
@@ -271,12 +261,24 @@ ggplot(aging, aes(time, value, fill = group)) +
 
 Let's take a step back and look if the groups are significantly different in the first two time points!
 
-```{r rainclouds aging two timepoints, echo = T}
+```{r rainclouds aging two timepoints, echo = T, warning = T}
 
 aging_subset <- aging[aging$time %in% c('t1', 't2'),]
 
 ggplot(aging_subset, aes(time, value, fill = group)) +
   geom_rain(alpha = .5, rain.side = 'f', id.long.var = 'id') +
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+```
+
+
+\newpage
+The last graph throws a warning since option `'f'` is being used with a `side` argument in `violin.args.pos` (default) which comes from `gghalves::geom_half_violin`. Yet, since we are flanking giving a `side` doesn't make sense. It defaults to a 2-by-2 flanking raincloud yet if you wish to not have the warning you can either give specific `violin.args.pos` or use the handy `rain.side = `'f2x2'`. There is alos a `'f1x1'` option if you would like default nudging for one-by-one flanking rainclouds.
+
+```{r rainclouds aging two timepoints with f2x2, echo = T}
+
+ggplot(aging_subset, aes(time, value, fill = group)) +
+  geom_rain(alpha = .5, rain.side = 'f2x2', id.long.var = 'id') +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange"))
 ```
@@ -318,7 +320,7 @@ ggplot(aging_subset, aes(time, value, fill = group)) +
 \newpage
 #### Significance testing:
 <br>
-Now we add a significance test between the two timepoints using the package ggsignif for young participants!
+Now we add a significance test between the two timepoints using the package ggsignif for young participants! In this case we could have used `rain.side = 'f1x1'` yet we use manual nudging.
 
 ```{r rainclouds aging two timepoints sig inference, echo = T}
 
@@ -344,7 +346,7 @@ ggplot(aging_subset |> dplyr::filter(group == 'young'), aes(time, value, fill = 
 
 #### Advanced flanking
 <br>
-To do advanced flanking we need to supply positioning arguments for each element/group of the boxplot & violin.
+To do advanced flanking we need to supply positioning arguments for each element/group of the boxplot & violin. There are only `rain.side` defaults for 1-by-1 (i.e., `'f1x1'`) and 2-by-2 (i.e., `'f2x2'`) flanking rain clouds!
 
 ```{r rainclouds aging 4 timepoints inference, echo = T}
 
