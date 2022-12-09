@@ -54,9 +54,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{id.long.var}{A group to connect the lines by - must be a string (e.g., "id").}
 
-\item{cov}{A covariate to color the dots by - must be as a string (e.g., "cov)}
+\item{cov}{A covariate to color the dots by - must be as a string (e.g., "cov")}
 
-\item{rain.side}{How you want the rainclouds displayed, right (r), left (l) or flanking (f).}
+\item{rain.side}{How you want the rainclouds displayed, right ("r"), left ("l") or flanking ("f"), for a 1-by-1 flanking raincloud use ("f1x1") and for a 2-by-2 use ("f2x2").}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
