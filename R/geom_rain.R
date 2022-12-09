@@ -172,7 +172,7 @@ geom_rain <- function(mapping = NULL,
                                         rep(.15, 256*2), rep(.15, 256*2))))
 
   } else if (!is.null(rain.side)) {
-    stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f' for flanking \n STOPPING", call. = FALSE)
+    stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f', 'f1x1', or 'f2x2' for flanking \n STOPPING", call. = FALSE)
   }
 
   # likert option doign y-jittering
