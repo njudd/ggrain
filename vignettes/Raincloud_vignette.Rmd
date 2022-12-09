@@ -499,20 +499,40 @@ m <- function(x, ...){
 }
 
 
-
 ct <- reshape2::melt(likert_data)
-
 
 ggplot(ct, aes(x = value, y = variable, fill = variable)) +
   geom_density_ridges(scale = .2,
     quantile_lines = T, quantile_fun = m) +
   geom_boxplot(width = .2, position = position_nudge(y = -.2))
 
-
 ggplot(likert_data) +
   geom_density_ridges(
     aes(x = 1, y = pre),
     quantile_lines = T, quantile_fun = bounds)
+
+ggplot(ct, aes(x = value, y = variable, fill = variable)) +
+  geom_density_ridges(
+    quantile_lines = T, quantile_fun = bounds) +
+  geom_boxplot(width = .2, position = position_nudge(y= -.2)) +
+ scale_x_continuous(limits=c(-15, 20))
+
+ggplot(likert_data, aes(x=value, y=time, fill=time)) +
+  geom_density_ridges(scale = .2,
+    quantile_lines = T, quantile_fun = bounds) +
+  geom_boxplot(width = .2, position = position_nudge(y= -.2)) +
+  geom_point(aes(x=jit))
+
+## see if gghalves can do quantile_fun
+
+ggplot(ct, aes(x = value, y = variable, fill = variable)) +
+  geom_violin(
+    quantile_lines = T, quantile_fun = bounds) +
+  geom_boxplot(width = .2, position = position_nudge(y= -.2)) +
+ scale_x_continuous(limits=c(-15, 20))
+
+
+#?stat_density_ridges
 
 
 
