@@ -133,7 +133,8 @@ geom_rain <- function(mapping = NULL,
       boxplot.args.pos$position$x <- -boxplot.args.pos$position$x
     }
 
-  } else if (!is.null(rain.side) && rain.side == "f"){
+  }
+  else if (!is.null(rain.side) && rain.side == "f"){
 
     if ("side" %in% names(violin.args.pos)){
 
@@ -174,6 +175,7 @@ geom_rain <- function(mapping = NULL,
   } else if (!is.null(rain.side)) {
     stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f', 'f1x1', or 'f2x2' for flanking \n STOPPING", call. = FALSE)
   }
+  else
 
   # likert option doign y-jittering
   if (likert == TRUE) {
