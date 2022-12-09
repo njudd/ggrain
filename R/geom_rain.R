@@ -124,46 +124,46 @@ geom_rain <- function(mapping = NULL,
   # rain width argument (needs to use normal width/jittersize & nudging)
 
 
-  # doing positional changes based off user input
-  if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
-    violin.args.pos$side <- rain.side
+  # if it is not null go through options, if it is none that throw error
+  # yet if it is null just continue...
 
-    if(rain.side == "l"){
+  if (!is.null(rain.side)) {
+    if (rain.side == "r") {
+      violin.args.pos$side <- rain.side # this is not needed as it is default
+    }
+    else if (rain.side == "l") {
+      violin.args.pos$side <- rain.side
       violin.args.pos$position$x <- -violin.args.pos$position$x
       boxplot.args.pos$position$x <- -boxplot.args.pos$position$x
     }
+    else if (rain.side == "f") {
+      if ("side" %in% names(violin.args.pos)){
 
-  }
-  else if (!is.null(rain.side) && rain.side == "f"){
-
-    if ("side" %in% names(violin.args.pos)){
-
-      warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
+        warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
       \n
       If you want the nudging position defaults for a flanking 1-by-1 raincloud use (rain.side = 'f1x1')\n
       If you want the nudging position defaults for a flanking 2-by-2 raincloud use (rain.side = 'f2x2')\n
 
       Now defaulting to a 2-by-2", call. = FALSE)
 
-      boxplot.args.pos <- rlang::list2(
-        width = .08,
-        position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
-      violin.args.pos <- rlang::list2(
-        width = .7,
-        position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
-                                        rep(.15, 256*2), rep(.15, 256*2))))
+        boxplot.args.pos <- rlang::list2(
+          width = .08,
+          position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
+        violin.args.pos <- rlang::list2(
+          width = .7,
+          position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
+                                          rep(.15, 256*2), rep(.15, 256*2))))
+      }
     }
-  } else if (!is.null(rain.side) && rain.side == "f1x1"){
-
+    else if (rain.side == "f1x1") {
       boxplot.args.pos <- rlang::list2(
         width = .08,
         position = ggpp::position_dodgenudge(x = c(-.1, .1)))
       violin.args.pos <- rlang::list2(
         width = .7,
         position = position_nudge(x = c(rep(-.15, 256*2), rep(.15, 256*2))))
-
-  } else if (!is.null(rain.side) && rain.side == "f2x2"){
-
+    }
+    else if (rain.side == "f2x2") {
       boxplot.args.pos <- rlang::list2(
         width = .08,
         position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
@@ -171,11 +171,63 @@ geom_rain <- function(mapping = NULL,
         width = .7,
         position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
                                         rep(.15, 256*2), rep(.15, 256*2))))
-
-  } else if (!is.null(rain.side)) {
-    stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f', 'f1x1', or 'f2x2' for flanking \n STOPPING", call. = FALSE)
+    } else
+      stop("the rain.side arguement only accepts: \n 'l' for left \n 'r' for right \n 'f', 'f1x1', or 'f2x2' for flanking
+           \n STOPPING", call. = FALSE)
   }
-  else
+
+  # doing positional changes based off user input
+  # if (!is.null(rain.side) && rain.side %in% c("r", "l")) {
+  #   violin.args.pos$side <- rain.side
+  #
+  #   if(rain.side == "l"){
+  #     violin.args.pos$position$x <- -violin.args.pos$position$x
+  #     boxplot.args.pos$position$x <- -boxplot.args.pos$position$x
+  #   }
+  #
+  # }
+  # else if (!is.null(rain.side) && rain.side == "f"){
+  #
+  #   if ("side" %in% names(violin.args.pos)){
+  #
+  #     warning("Option rain.side 'flanking' is being used with a side argument in violin.args.pos!!!
+  #     \n
+  #     If you want the nudging position defaults for a flanking 1-by-1 raincloud use (rain.side = 'f1x1')\n
+  #     If you want the nudging position defaults for a flanking 2-by-2 raincloud use (rain.side = 'f2x2')\n
+  #
+  #     Now defaulting to a 2-by-2", call. = FALSE)
+  #
+  #     boxplot.args.pos <- rlang::list2(
+  #       width = .08,
+  #       position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
+  #     violin.args.pos <- rlang::list2(
+  #       width = .7,
+  #       position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
+  #                                       rep(.15, 256*2), rep(.15, 256*2))))
+  #   }
+  # } else if (!is.null(rain.side) && rain.side == "f1x1"){
+  #
+  #     boxplot.args.pos <- rlang::list2(
+  #       width = .08,
+  #       position = ggpp::position_dodgenudge(x = c(-.1, .1)))
+  #     violin.args.pos <- rlang::list2(
+  #       width = .7,
+  #       position = position_nudge(x = c(rep(-.15, 256*2), rep(.15, 256*2))))
+  #
+  # } else if (!is.null(rain.side) && rain.side == "f2x2"){
+  #
+  #     boxplot.args.pos <- rlang::list2(
+  #       width = .08,
+  #       position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
+  #     violin.args.pos <- rlang::list2(
+  #       width = .7,
+  #       position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
+  #                                       rep(.15, 256*2), rep(.15, 256*2))))
+  #
+  # } else if (!is.null(rain.side)) {
+  #   stop("ERROR: the rain.side arguement only accepts 'l' for left, 'r' for right and 'f', 'f1x1', or 'f2x2' for flanking \n STOPPING", call. = FALSE)
+  # }
+  # else
 
   # likert option doign y-jittering
   if (likert == TRUE) {
@@ -194,7 +246,8 @@ geom_rain <- function(mapping = NULL,
 
   if(!is.null(cov)){ # remap the color in e1; if a covariate is specified
     e1 <- rlang::exec(geom_point_sorted, aes(color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args) # bang, bang, bang
-  }else{
+  }
+  else {
     e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
   }
 
@@ -203,7 +256,8 @@ geom_rain <- function(mapping = NULL,
   if(!is.null(rain.side) && rain.side %in% c("f", "f1x1", "f2x2")){
 
     e4 <- rlang::exec(geom_paired_raincloud, inherit.aes = TRUE, !!!violin.args)
-  }else{
+  }
+  else {
     e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   }
 
@@ -224,13 +278,13 @@ geom_rain <- function(mapping = NULL,
 
     if(!is.null(cov)){ # remap the color in e1 to the covariate
       e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var), color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
-    }else{
+    }
+    else {
       e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args)
     }
-
     list(e2, e4, e3, e1)
-
-  }else{
+  }
+  else {
     list(e4, e3, e1)
   }
 }
