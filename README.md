@@ -11,6 +11,7 @@ We welcome all contribution. Please make a pull request if you would like to add
 
 Current dev goals:
 
+- Get on CRAN (because of this the vignette must only be in .Rmd; download the package to see the vignette)
 - Develop the likert option
 
 
