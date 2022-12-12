@@ -16,16 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-if (!require(pacman)) {
-    install.packages("pacman")
-}
-
-pacman::p_load(ggplot2, rlang, grid, ggpp, lavaan, gghalves, patchwork, remotes, DT, ggsignif, reshape2)
-
-remotes::install_github('njudd/ggrain')
-
 library(ggrain)
-
 ```
 
 ## The `geom_rain()` function
@@ -38,67 +29,65 @@ library(ggrain)
 
 All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplot's can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
 
-## Introduction 
-```{r making dataset}
+## Introduction
 
-aging <- Demo.growth[,1:4]
-aging$id <- as.factor(as.character(rep(1:dim(aging)[1])))
-aging <- reshape2::melt(aging, id.vars = "id")
-# aging$value_round <- round(aging$value,1)
-colnames(aging)[2] <- "time"
-
-aging$covariate <- -aging$value*2
-
-aging$group <- c(rep("old", 200), rep("young", 200), rep("old", 200), rep("young", 200),
-                 rep("old", 200), rep("young", 200), rep("old", 200), rep("young", 200))
-
-aging$value[aging$group == "young"] <- aging$value[aging$group == "young"] + 1
-aging$value[aging$group == "old" & aging$time == "t2"] <- aging$value[aging$group == "old" & aging$time == "t2"] -2
-```
-
-We will look at some aging data that has two groups (young and old) measured four times.
-
-```{r showing datasets, eval=T}
-
-DT::datatable(aging, rownames = F, class = 'cell-border stripe')
-```
-
-Here is our first plot that is just simply all the values in the aging data set. For the function to work the value you want to plot **must be given to the y argument** in ggplot. You can than flip the plot with `+ coord_flip()` as we demonstrate below.
+Here is our first plot that is just simply all the values of Sepal.Width in the iris dataset. For the function to work the value you want to plot **must be given to the y argument** in ggplot. You can than flip the plot with `+ coord_flip()` as we demonstrate below.
 
 ```{r most basic raincloud possible}
-ggplot(aging, aes(1, value)) +
+ggplot(iris, aes(1, Sepal.Width)) +
   geom_rain() +
   theme_classic() +
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
 
-Let's see what is happening over the four time points. The x value must be a factor or a character vector!
+Let's see what is happening over the 3 Species of flowers. The x value must be a factor or a character vector!
 
-```{r rainclouds by time}
-
-ggplot(aging, aes(time, value, fill = time)) +
+```{r rainclouds by species grouped}
+ggplot(iris, aes(1, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2')
 ```
 
-Let's color the dots by time, we do this by adding `color = time` to ggplot. The default behavior of `geom_boxplot` is to color the lines showing the median and IQR. Therefore, we need to add a `boxplot.args` for color to be black along with re-adding the default to show no outliers.
+Let's color the dots by Species, we do this by adding `color = Species` to ggplot. The default behavior of `geom_boxplot` is to color the lines in the boxplot showing the median and IQR. Therefore, we need to add a `boxplot.args` list to re-color the boxplot to be black. When we do this all defaults are lost therefore we readd the options to not show outliers.
 
-```{r rainclouds by time colored}
-
-ggplot(aging, aes(time, value, fill = time, color = time)) +
-  geom_rain(alpha = .3,
+```{r rainclouds by Species colored}
+ggplot(iris, aes(1, Sepal.Width, fill = Species, color = Species)) +
+  geom_rain(alpha = .6,
             boxplot.args = list(color = "black", outlier.shape = NA)) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-We can flip the plots by adding `coord_flip()`
+It is also possible to nudge the box plots so they are not overlapping with `boxplot.args.pos`. We will also flip them by setting the rain.side argument to left (i.e., `'l'`).
+
+```{r rainclouds by Species colored dogded}
+ggplot(iris, aes(1, Sepal.Width, fill = Species, color = Species)) +
+  geom_rain(alpha = .5, rain.side = 'l',
+            boxplot.args = list(color = "black", outlier.shape = NA),
+            boxplot.args.pos = list(
+              position = ggpp::position_dodgenudge(x = .1), width = 0.1
+            )) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  scale_color_brewer(palette = 'Dark2')
+```
+
+It could be even more useful to see the different species of flowers side by side rather than overlapping!
+
+```{r rainclouds by species}
+ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .5) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2')
+```
+
+We can flip the plots by adding `coord_flip()`.
 
 ```{r rainclouds by time flip}
-ggplot(aging, aes(time, value, fill = time)) +
+ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
@@ -109,7 +98,7 @@ This plot is a bit crammed, lets spread stuff out using the `boxplot.args.pos` &
 
 ```{r rainclouds by time flip nudged}
 
-ggplot(aging, aes(time, value, fill = time)) +
+ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, 
             boxplot.args.pos = list(
               width = 0.05, position = position_nudge(x = 0.13)),
@@ -121,30 +110,112 @@ ggplot(aging, aes(time, value, fill = time)) +
   coord_flip()
 ```
 
-Instead of coloring the dots by time, lets see how our two groups are doing (old & young people).
-We can do this by adding them as a covariate with the `cov` argument.
+Instead of coloring the dots by Species, the package offers the ability to color to another variable such as `Sepal.Length`. This will allow us to visualize how `Sepal.Width` and `Sepal.Length` relate to each other in each `Species` of flower.
+
+We can do this by adding them as a covariate with the `cov` argument. At the current time the argument must be given as a string.
 
 ```{r rainclouds by time colored by group}
-
-ggplot(aging, aes(time, value, fill = time)) +
-  geom_rain(alpha = .3,
-            cov = "group") +
+ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .6,
+            cov = "Sepal.Length") +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
-  scale_color_manual(values=c("dodgerblue", "darkorange"))
-
+  scale_color_viridis_c(option =  "A", direction = -1)
 ```
 
-These are distinct groups it would be much more informative to plot them separately!
+We will now take the species versicolor and virginica and make longitudinal data, we are going to see what fertilizer does to the Sepal.Width of both species!
+
+```{r making long iris data}
+set.seed(42) # the magic number
+iris.long <- iris[iris$Species %in% c('versicolor', 'virginica'),]
+iris.long$time <- rep('pre', dim(iris.long)[1])
+iris.long$id <- rep(1:dim(iris.long)[1])
+
+iris.long2 <- iris.long
+iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] <- iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] + .5 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'versicolor']), sd = .2)
+iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] <- iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] -.2 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'virginica']), sd = .2)
+iris.long2$time <- rep('post', dim(iris.long2)[1])
+
+iris.long <- rbind(iris.long, iris.long2) # binding the two timepoints
+iris.long$Sepal.Width <- round(iris.long$Sepal.Width, 1) # rounding Sepal.Width so t2 data is on the same resolution
+
+
+iris.long$time <- factor(iris.long$time, levels = c('pre', 'post'))
+```
+
+Here we plot the species overlapping in each time point.
 
 ```{r rainclouds by time by group}
-
-ggplot(aging, aes(time, value, fill = group)) +
-  geom_rain(alpha = .3) +
+ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange"))
-
 ```
+
+We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e., `'f2x2'`). This also automatically uses `ggpp::position_dodgenudge` to dodge the boxplots.
+
+```{r rainclouds by time by group flipped}
+ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .5, rain.side = 'f2x2') +
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+```
+
+We can connect each plant with lines using the `id.long.var` argument. As with the `cov` argument it must be a string linking the id's of each observation across time.
+
+```{r rainclouds by time by group flipped long id}
+ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .5, rain.side = 'f2x2', id.long.var = "id") +
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+```
+
+
+####### left off here, you need to describe the flanking option
+###### probably at the first flank
+
+
+
+# add colors to the dots and lines in the above graph
+# than end with a stat summary line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 We can't really see the boxplots so lets dodge them while also nudging, we can do this with the boxplot position arg `boxplot.args.pos`. Remember to readd the defaults if you would like to keep them!
 
