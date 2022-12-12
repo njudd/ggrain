@@ -1,0 +1,10 @@
+bibentry(
+  "Article",
+  title = "Raincloud plots: a multi-platform tool for robust data visualization [version 2; peer review: 2 approved]",
+  author = "Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen, Rogier A. Kievit", 
+  year = 2021,
+  journal = "Wellcome Open Research",
+  volume = 4,
+  number = 63,
+  doi = "10.12688/wellcomeopenres.15191.2",
+)
