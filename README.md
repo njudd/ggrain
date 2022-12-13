@@ -46,7 +46,7 @@ For more examples such as 2-by-2 and multiple repeated measerues see the vignett
 
 
 
-![img](https://raw.githubusercontent.com/njudd/ggrain/main/basic_rain.png)
+![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/basic_rain.png)
 
 
 
@@ -64,6 +64,6 @@ Specific geom arguments can be passed with a list to any of the 4 geom's with th
 
 Position-related arguments (e.g., jittering, nudging & width) can be passed with `{point/line/boxplot/violin}.args.pos`, see the help file of `?geom_rain` for defaults
 
-![img](https://raw.githubusercontent.com/njudd/ggrain/main/time_group_cov.png)
+![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/time_group_cov.png)
 
 
