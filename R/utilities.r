@@ -1,3 +1,8 @@
+#' @importFrom cli cli_abort cli_warn
+#' @importFrom lifecycle badge deprecate_soft deprecate_warn
+#' @importFrom withr with_seed defer_parent
+
+
 #' @examples
 #' ggplot(mpg, aes(displ, hwy)) +
 #'   geom_point(alpha = 0.5, colour = "blue")
@@ -341,8 +346,8 @@ seq_asc <- function(to, from) {
 
 # Needed to trigger package loading
 # commiting off this trigger... possibly a very bad idea
-# #' @importFrom tibble tibble
-# NULL
+#' @importFrom tibble tibble
+NULL
 
 # Wrapping vctrs data_frame constructor with no name repair
 data_frame0 <- function(...) data_frame(..., .name_repair = "minimal")
