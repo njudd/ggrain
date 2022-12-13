@@ -1,6 +1,8 @@
 #' @importFrom cli cli_abort cli_warn
 #' @importFrom lifecycle badge deprecate_soft deprecate_warn
 #' @importFrom withr with_seed defer_parent
+#' @importFrom rlang caller_env is_call current_env is_null zap format_error_call
+#' @importFrom vctrs data_frame vec_cast vec_ptype2 vec_unique vec_rbind
 
 
 #' @examples
