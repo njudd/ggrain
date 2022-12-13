@@ -27,11 +27,11 @@ library(ggrain)
 * handles likert data by adding y-jittering with `likert = TRUE`
 * changes orientation with `+ coord_flip()`
 
-All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplot's can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
+All individual elements of the plots can be edited, these are split into aesthetic and positioning arguments that are supplied by lists. For example the boxplots can be edited with `boxplot.args` and `boxplot.args.pos`, yet the others can also be edited by substituting for their name, i.e. `point/violin/line`. When you supply a list the defaults are overwritten so you may need to re-add them. To see the defaults run `?geom_rain`.
 
 ## Introduction
 
-Here is our first plot that is just simply all the values of Sepal.Width in the iris dataset. For the function to work the value you want to plot **must be given to the y argument** in ggplot. You can than flip the plot with `+ coord_flip()` as we demonstrate below.
+Here is our first plot which is just simply all the values of Sepal.Width in the iris dataset. For the function to work the value you want to plot **must be given to the y argument** in ggplot. You can then flip the plot with `+ coord_flip()` as we demonstrate below.
 
 ```{r most basic raincloud possible}
 ggplot(iris, aes(1, Sepal.Width)) +
@@ -41,7 +41,7 @@ ggplot(iris, aes(1, Sepal.Width)) +
         axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
 
-Let's see what is happening over the 3 Species of flowers. The x value must be a factor or a character vector!
+Let's see what is happening over the 3 Species of flowers. The fill must be a factor or a character vector!
 
 ```{r rainclouds by species grouped}
 ggplot(iris, aes(1, Sepal.Width, fill = Species)) +
@@ -50,7 +50,7 @@ ggplot(iris, aes(1, Sepal.Width, fill = Species)) +
   scale_fill_brewer(palette = 'Dark2')
 ```
 
-Let's color the dots by Species, we do this by adding `color = Species` to ggplot. The default behavior of `geom_boxplot` is to color the lines in the boxplot showing the median and IQR. Therefore, we need to add a `boxplot.args` list to re-color the boxplot to be black. When we do this all defaults are lost therefore we readd the options to not show outliers.
+Let's color the dots by Species, we do this by adding `color = Species` to ggplot. The default behavior of `geom_boxplot` is to color the lines in the boxplot showing the median and IQR. Therefore, we need to add a `boxplot.args` list to re-color the boxplot to black. When we do this all defaults are lost therefore we must add the options to not show outliers.
 
 ```{r rainclouds by Species colored}
 ggplot(iris, aes(1, Sepal.Width, fill = Species, color = Species)) +
@@ -72,16 +72,18 @@ ggplot(iris, aes(1, Sepal.Width, fill = Species, color = Species)) +
             )) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
-  scale_color_brewer(palette = 'Dark2')
+  scale_color_brewer(palette = 'Dark2') +
+  guides(fill = 'none', color = 'none')
 ```
 
-It could be even more useful to see the different species of flowers side by side rather than overlapping!
+It could be even more useful to see the different species of flowers side by side rather than overlapping. The y value must be a factor or a character vector!
 
 ```{r rainclouds by species}
 ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
-  scale_fill_brewer(palette = 'Dark2')
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none', color = 'none')
 ```
 
 We can flip the plots by adding `coord_flip()`.
@@ -91,6 +93,7 @@ ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none', color = 'none') +
   coord_flip()
 ```
 
@@ -106,6 +109,7 @@ ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
               width = 0.7, position = position_nudge(x = 0.2))) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none', color = 'none') +
   coord_flip()
 ```
 
@@ -119,39 +123,41 @@ ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
             cov = "Sepal.Length") +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none', color = 'none') +
   scale_color_viridis_c(option =  "A", direction = -1)
 ```
 
-We will now take the species versicolor and virginica and make longitudinal data, we are going to see what fertilizer does to the Sepal.Width of both species!
+We will now take the species versicolor and virginica and make longitudinal data. We are going to see what fertilizer does to the Sepal.Width of both species!
 
 ```{r making long iris data}
 set.seed(42) # the magic number
-iris.long <- iris[iris$Species %in% c('versicolor', 'virginica'),]
-iris.long$time <- rep('pre', dim(iris.long)[1])
-iris.long$id <- rep(1:dim(iris.long)[1])
+iris.long <- iris[iris$Species %in% c('versicolor', 'virginica'),] # select flowers
+iris.long$time <- rep('pre', dim(iris.long)[1]) # rep a timepoint pre
+iris.long$id <- rep(1:dim(iris.long)[1]) # making an ID vector for each obs
 
 iris.long2 <- iris.long
+# now we add .5 and some noise to the versicolor species
 iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] <- iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] + .5 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'versicolor']), sd = .2)
+# now we subtract -.2 and some noise to the virginica species
 iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] <- iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] -.2 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'virginica']), sd = .2)
-iris.long2$time <- rep('post', dim(iris.long2)[1])
+iris.long2$time <- rep('post', dim(iris.long2)[1])# rep a timepoint post
 
 iris.long <- rbind(iris.long, iris.long2) # binding the two timepoints
 iris.long$Sepal.Width <- round(iris.long$Sepal.Width, 1) # rounding Sepal.Width so t2 data is on the same resolution
-
-
 iris.long$time <- factor(iris.long$time, levels = c('pre', 'post'))
 ```
 
-Here we plot the species overlapping in each time point. We can see fertilizer caused the Sepal Width of the versicolor species to increase while the virginica species decreased slightly! 
+Here we plot the species overlapping at each time point. We can see fertilizer caused the Sepal Width of the versicolor species to increase while the virginica species decreased slightly! 
 
 ```{r rainclouds by time by group}
 ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
-  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+  scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+  guides(fill = 'none', color = 'none')
 ```
 
-We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e., `'f2x2'`). This also automatically uses `ggpp::position_dodgenudge` to dodge the boxplots. Yet, for descriptive purposes with will use the flanking argument `rain.side = 'f'` with the defaults from `'f2x2'`. The `rain.side = 'f'` argument defaults to a 2-by-2 yet throws a warning if you don't remap the `violin.args.pos`. When using flanking with more groups or more time points you must give specific `boxplot.args.pos` and `violin.args.pos` for each element. The left elements must have negative x-axis nudging values with the right ones have positive x-axis nudging values.
+We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e., `'f2x2'`). This also automatically uses `ggpp::position_dodgenudge` to dodge the boxplots. Yet, for descriptive purposes with will use the flanking argument `rain.side = 'f'` with the defaults from `'f2x2'`. The `rain.side = 'f'` argument defaults to a 2-by-2 yet throw a warning if you don't remap the `violin.args.pos`. When using flanking with more groups or more time points you must give specific `boxplot.args.pos` and `violin.args.pos` for each element. The left elements must have negative x-axis nudging values with the right ones have positive x-axis nudging values.
 
 ```{r rainclouds by time by group flipped}
 ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
@@ -164,19 +170,21 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
              position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# pre; pre
                                              rep(.2, 256*2), rep(.2, 256*2))))) + #post; post
   theme_classic() +
-  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+  scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+  guides(fill = 'none', color = 'none')
 ```
 
-We can connect each plant with lines using the `id.long.var` argument, we will also use the convient `rain.side = 'f2x2'`. As with the `cov` argument it must be a string linking the id's of each observation across time.
+We can connect each plant with lines using the `id.long.var` argument, we will also use the convient `rain.side = 'f2x2'`. As with the `cov` argument, it must be a string linking the ids of each observation across time.
 
 ```{r rainclouds by time by group flipped long id}
 ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f2x2', id.long.var = "id") +
   theme_classic() +
-  scale_fill_manual(values=c("dodgerblue", "darkorange"))
+  scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+  guides(fill = 'none', color = 'none')
 ```
 
-We can color the dotes and the connecting lines by Species! We will also remove the lines around the violins by specifying their `color = NA`, yet we now must re-add the alpha argument.
+We can color the dots and the connecting lines by Species! We will also remove the lines around the violins by specifying their `color = NA`, yet we now must re-add the alpha argument.
 
 ```{r rainclouds by time by group flipped long id colored}
 ggplot(iris.long, aes(time, Sepal.Width, fill = Species, color = Species)) +
@@ -184,10 +192,11 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species, color = Species)) +
             violin.args = list(color = NA, alpha = .7)) +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
-  scale_color_manual(values=c("dodgerblue", "darkorange"))
+  scale_color_manual(values=c("dodgerblue", "darkorange")) +
+  guides(fill = 'none', color = 'none')
 ```
 
-Lastly, we can add a mean trend line using `stat_summary`. Here it is really obviously the opposite effects fertalizer had on the two species of flowers!
+Lastly, we can add a mean trend line using `stat_summary`. Accentuating the opposite effects fertilizers had on the two species of flowers!
 
 ```{r rainclouds by time by group flipped long id colored mean}
 ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
@@ -197,7 +206,8 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
   stat_summary(fun = mean, geom = "point",
                aes(group = Species, color = Species)) +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
-  scale_color_manual(values=c("dodgerblue", "darkorange"))
+  scale_color_manual(values=c("dodgerblue", "darkorange")) +
+  guides(fill = 'none', color = 'none')
 ```
 
 Here is some sample code on how to do a significance test on a 1-by-1 flanking raincloud with the package `ggsignif`. We will not run it as we don't want to add `ggsignif` as a package dependency.
