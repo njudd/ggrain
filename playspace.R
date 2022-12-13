@@ -1,6 +1,38 @@
 #######play space #########
 
 
+### package building
+
+
+
+devtools::document()
+devtools::load_all()
+
+
+# devtools::build_vignettes(ggrain)
+
+devtools::check()
+
+usethis::use_mit_license("Nicholas Judd")
+
+
+
+
+
+
+# making likert violin
+
+
+
+# needs to work with neg numbers/
+
+
+
+
+
+
+
+
 
 ##### random code debugging #####
 
@@ -12,11 +44,11 @@ lemon::geom_pointline()
 
 
 
-rain.center <- c("dots", "box", "violin") 
+rain.center <- c("dots", "box", "violin")
 
 
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   geom_point(aes(time, value, group = id),
              position = ggpp::position_jitternudge(width = .04,
                                                    seed = 42, x = .1,
@@ -27,12 +59,12 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 
 # to trouble shoot turn off e3 &e4
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   # geom_rain()
   geom_rain(rain.side = 'l')
 
 
-# testing 
+# testing
 library(ggplot2)
 temp <- lavaan::Demo.growth[,1:4]
 temp$id <- as.factor(as.character(rep(1:dim(temp)[1])))
@@ -41,24 +73,24 @@ temp$value_round <- round(temp$value,1)
 colnames(temp)[2] <- "time"
 
 temp_subset10 <- temp[temp$id %in% as.character(1:10),]
-temp2 <- temp[temp$variable %in% c("t1","t2"),] 
+temp2 <- temp[temp$variable %in% c("t1","t2"),]
 #Jordy: View(temp2) results in -> "no data available in table"?
 
 #### workspace
 # time is hardcoded; also not working atm
 
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   geom_rain(id.long.var = 'id') #temp_subset10
 
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   geom_point_sorted(color = "blue", alpha = .5) +
   geom_point(color = "red", alpha = .5)
 
 
 
-ggplot(temp, aes(time, value, fill = time)) + 
+ggplot(temp, aes(time, value, fill = time)) +
   geom_rain(id.long.var = 'id', rain.side = 'l',
             line.args = list(alpha = .05), alpha = .3) +
   theme_minimal() +
@@ -75,34 +107,34 @@ plt_temp_oneTP <- ggplot(temp |> dplyr::filter(time == "t1"), aes(time, value, f
 plt_temp <- ggplot(temp, aes(time, value, fill = time))
 
 
-plt_vio_wd.7 <- 
+plt_vio_wd.7 <-
   geom_rain(
     alpha = .3,
     violin.args = rlang::list2(
       color = NA, side = "r",
       width = .7, position = position_nudge(x = .13)),
     boxplot.args =  rlang::list2(
-      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA,
       width = .08, position = position_nudge(x = .11)))
 
-plt_vio_wd.6 <- 
+plt_vio_wd.6 <-
   geom_rain(
     alpha = .3,
     violin.args = rlang::list2(
       color = NA, side = "r",
       width = .6, position = position_nudge(x = .13)),
     boxplot.args =  rlang::list2(
-      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA,
       width = .08, position = position_nudge(x = .11)))
 
-plt_vio_wd.5 <- 
+plt_vio_wd.5 <-
   geom_rain(
     alpha = .3,
     violin.args = rlang::list2(
       color = NA, side = "r",
       width = .5, position = position_nudge(x = .13)),
     boxplot.args =  rlang::list2(
-      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA, 
+      center = TRUE, errorbar.draw = FALSE, outlier.shape = NA,
       width = .08, position = position_nudge(x = .11)))
 
 plt_temp + plt_vio_wd.5 + plt_temp + plt_vio_wd.7
@@ -119,9 +151,9 @@ plt_temp_oneTP + plt_vio_wd.5 + plt_temp_oneTP + plt_vio_wd.7
 # Violins on same axis-location (x-tic) so no lines overlap the violins?
 # Trimming of violins in both figures (lines: 188-190 & 192-198) differs? Why?
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   geom_rain(data = temp_subset10,
-            alpha = .3, id.long.var = 'id', 
+            alpha = .3, id.long.var = 'id',
             point.args = rlang::list2(
               alpha = .3,
               position = position_jitter(
@@ -142,7 +174,7 @@ ggplot(temp_subset10, aes(time, value, fill = time)) +
 
 # current issue
 
-ggplot(temp_subset10, aes(time, value, fill = time)) + 
+ggplot(temp_subset10, aes(time, value, fill = time)) +
   geom_line(aes(time, value, group = 'id'))
 
 
@@ -162,14 +194,14 @@ ggplot(temp, aes(x = variable, y = value, group = id)) +
   lemon::geom_pointline(alpha = .3)
 
 # https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud/
-ggplot(temp, aes(variable, value, fill = variable)) + 
+ggplot(temp, aes(variable, value, fill = variable)) +
   geom_paired_raincloud()
 
 # exec(geom_point, data = ~ filter(.x, !isanoutlier), aes(color = {{ x }}), !!!point.args)
 
 # flips based on x & y arg
 
-## Iris dataset test 
+## Iris dataset test
 ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
   geom_rain() #+
 #coord_flip()
@@ -180,11 +212,11 @@ ggplot(iris, aes(x = Sepal.Length, y = Species, fill = Species)) +
 
 
 ## mpg dataset test
-ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
   geom_boxplot() #+
 #coord_flip()
 
-ggplot(data = mpg, mapping = aes(x = hwy, y = class)) + 
+ggplot(data = mpg, mapping = aes(x = hwy, y = class)) +
   geom_boxplot()
 # potential resources:
 # https://stackoverflow.com/questions/68733790/why-is-coord-flip-better-than-switching-x-and-y-arguments-in-aes-in-ggpl
