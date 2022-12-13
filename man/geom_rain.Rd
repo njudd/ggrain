@@ -94,7 +94,8 @@ an id to connect by. Lastly, if desired one can color the dots based of another 
 e1 <- ggplot(iris, aes(Species, Sepal.Width, fill = Species))
 e1 + geom_rain()
 
-# x must be the discrete variable, orinetation can be changed with coord_flip()
+# x must be the discrete variable
+# orinetation can be changed with coord_flip()
 e1 + geom_rain(alpha = .5) + coord_flip()
 
 # we can color the dots by a covariate
@@ -106,14 +107,16 @@ e1 + geom_rain(violin.args = list(alpha = .3, color = NA))
 # we can flip them
 e1 + geom_rain(rain.side = 'l')
 # and move them
-e1 + geom_rain(boxplot.args.pos = list(width = .1, position = position_nudge(x = -.2)))
+e1 +
+geom_rain(boxplot.args.pos = list(width = .1, position = position_nudge(x = -.2)))
 
 # they also work longitudinally
 e2 <- ggplot(sleep, aes(group, extra, fill = group))
 e2 + geom_rain(id.long.var = "ID")
 
 # we can add groups
-sleep_dat <- cbind(sleep, data.frame(sex = c(rep("male", 5), rep("female", 5), rep("male", 5), rep("female", 5))))
+sleep_dat <- cbind(sleep, data.frame(sex = c(rep("male", 5),
+rep("female", 5), rep("male", 5), rep("female", 5))))
 e3 <- ggplot(sleep_dat, aes(group, extra, fill = sex))
 e3 + geom_rain(alpha = .6)
 
@@ -123,11 +126,13 @@ e4 + geom_rain(likert= TRUE)
 
 # lets make it look nicer
 e4 + geom_rain(likert= TRUE,
-     boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .095), width = .1),
-     violin.args = list(color = NA, alpha = .5))
+ boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .095), width = .1),
+ violin.args = list(color = NA, alpha = .5))
 }
 \references{
-Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., van Langen, J., & Kievit, R. A.
+Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R.,
+van Langen, J., & Kievit, R. A.
 Raincloud plots: a multi-platform tool for robust data visualization
-Wellcome Open Research 2021, 4:63. https://doi.org/10.12688/wellcomeopenres.15191.2
+Wellcome Open Research 2021, 4:63.
+https://doi.org/10.12688/wellcomeopenres.15191.2
 }
