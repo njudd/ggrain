@@ -28,7 +28,7 @@ library(ggrain)
 
 ### Basic examples
 
-For more examples such as 2-by-2 and multiple repeated measerues see the vignette.
+For more examples such as 2-by-2 and multiple repeated measerues see the [vignette](https://www.njudd.com/raincloud-ggrain/).
 
 1.  Raincloud per group
 
