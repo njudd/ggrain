@@ -1,13 +1,15 @@
 # ggrain - Raincloud Plots
 
-`geom_rain()` is an R function for raincloud plots that is highly customizable, connects longitudinal observations, handles Likert data, and allows mapping of a covariate.
+`r
+geom_rain()
+` is an R function for raincloud plots that is highly customizable, connects longitudinal observations, handles Likert data, and allows mapping of a covariate.
 
-```
+```r
 ggplot(iris, aes(x = 1, y = Sepal.Length)) +
   geom_rain()
 ```
 
-We welcome all contributions. Please make a pull request if you would like to add a new feature!
+We welcome all contributions. Please make a pull request if you would like to add something new!
 
 Current dev goals:
 
@@ -28,23 +30,21 @@ library(ggrain)
 
 ### Basic examples
 
-For more examples such as 2-by-2 and multiple repeated measerues see the [vignette](https://www.njudd.com/raincloud-ggrain/).
-
 1.  Raincloud per group
 
-	```
+	```r
 	ggplot(iris, aes(x = Species, y = Sepal.Length, fill = 	Species)) +
 		geom_rain(rain.side = 'l')
 	```
 
 2.  Different groups overlapped
 
-	```
+	```r
 	ggplot(iris, aes(x = 1, y = Sepal.Length, fill = Species)) +
 		geom_rain(alpha = .5)
 	```
 
-
+For more examples such as a 2-by-2 plot and multiple repeated measures, please see our [Vignette](https://www.njudd.com/raincloud-ggrain/).
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/basic_rain.png)
 
