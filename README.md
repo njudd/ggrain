@@ -100,6 +100,8 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
 
 ### Raincloud Plots 
 
+Raincloud plots were created and developed by Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen and Rogier Kievit.
+
 **Paper**
 <br>
 <pre>
@@ -110,13 +112,11 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
 
 There are now ***3*** ways to make it rain in R: through a series of specific easy to modify scripts, through our initial `raincloudplots` package, and now through the newest R-package `ggrain`. 
 
-Raincloud plots were created and developed by Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen and Rogier Kievit.
-
-*Across scientific disciplines, there is a rapidly growing recognition of the need for more statistically robust, transparent approaches to data visualization. Complementary to this, many scientists have called for plotting tools that accurately and transparently convey key aspects of statistical effects and raw data with minimal distortion. Previously common approaches, such as plotting conditional mean or median barplots together with error-bars have been criticized for distorting effect size, hiding underlying patterns in the raw data, and obscuring the assumptions upon which the most commonly used statistical tests are based. We describe a data visualization approach which overcomes these issues, providing maximal statistical information while preserving the desired ‘inference at a glance’ nature of barplots and other similar visualization devices. These “raincloud plots” can visualize raw data, probability density, and key summary statistics such as median, mean, and relevant confidence intervals in an appealing and flexible format with minimal redundancy. We created and shared our open-source code for raincloudplots implementation in R, Python and Matlab* 
+- Across scientific disciplines, there is a rapidly growing recognition of the need for more statistically robust, transparent approaches to data visualization. Complementary to this, many scientists have called for plotting tools that accurately and transparently convey key aspects of statistical effects and raw data with minimal distortion. Previously common approaches, such as plotting conditional mean or median barplots together with error-bars have been criticized for distorting effect size, hiding underlying patterns in the raw data, and obscuring the assumptions upon which the most commonly used statistical tests are based. We describe a data visualization approach which overcomes these issues, providing maximal statistical information while preserving the desired ‘inference at a glance’ nature of barplots and other similar visualization devices. These “raincloud plots” can visualize raw data, probability density, and key summary statistics such as median, mean, and relevant confidence intervals in an appealing and flexible format with minimal redundancy. We created and shared our open-source code for raincloudplots implementation in R, Python and Matlab
 <a href="https://github.com/RainCloudPlots/RainCloudPlots">https://github.com/RainCloudPlots/RainCloudPlots</a>.
 
 <img src="https://github.com/njudd/ggrain/blob/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
 
-*In addition to this step-by-step tutorial, we have created our first [`raincloudplots`](https://github.com/jorvlan/raincloudplots) R-package. This package is tailored towards easy visualization of grouped and repeated measures data. Moreover, it also provides individually linked repeated measures visualizations, which add detail and richness to a multitude of within-subject designs. Here, we have chosen to depict the two most common repeated measures designs: 1 * 1 and 2 * 2. Basically, it wraps complex arguments into 1 single data and plotting function that does all the magic for you.*
+- In addition to this step-by-step tutorial, we have created our first [`raincloudplots`](https://github.com/jorvlan/raincloudplots) R-package. This package is tailored towards easy visualization of grouped and repeated measures data. Moreover, it also provides individually linked repeated measures visualizations, which add detail and richness to a multitude of within-subject designs. Here, we have chosen to depict the two most common repeated measures designs: 1 * 1 and 2 * 2. Basically, it wraps complex arguments into 1 single data and plotting function that does all the magic for you.
 
 
