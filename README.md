@@ -69,7 +69,7 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 ### Contributions
 
 We warmly welcome all contributions. 
-Please make a pull request if you would like to add something new!
+You can open an issue or make a pull request if you would like to add something new!
 
 
 ### Citation
