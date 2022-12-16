@@ -73,4 +73,6 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/time_group_cov.png)
 
+### Citation
+
 
