@@ -98,7 +98,7 @@ In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Scienc
 You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011 or you can watch the online webinar hosted by NWO about our project: [![Webinar Open Science series S1E2: Open tools for data enrichment and visualization](https://github.com/njudd/ggrain/blob/main/inst/git_pics/raincloudplots_NWO_webinar.png)](https://youtu.be/Kvcyh_9KSbw?t=1910 "Webinar Open Science series S1E2: Open tools for data enrichment and visualization")
 
 
-### Raincloud Plots <img src="https://github.com/njudd/ggrain/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
+### Raincloud Plots <img src="https://github.com/njudd/ggrain/blob/main/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
 
 There are two ways to make it rain in R: through a series of specific easy to modify scripts, and through our new tailored package, raincloudplots. The former provides a step-by-step walkthrough with individual scripts which can be modified as needed. The latter provides an easy-to-use set of functions for the most common experimental designs and data formats.
 
