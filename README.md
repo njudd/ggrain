@@ -78,6 +78,8 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Citation
 
+`ggrain` was developed by Nicholas Judd, Jordy van Langen and Rogier Kievit. 
+
 <pre>
 - Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
     ggrain: a ggplot2 extension package to create Raincloud Plots in R
@@ -117,6 +119,6 @@ There are now ***3*** ways to make it rain in R: through a series of specific ea
 
 <img src="https://github.com/njudd/ggrain/blob/main/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
 
-- In addition to this step-by-step tutorial, we have created our first [`raincloudplots`](https://github.com/jorvlan/raincloudplots) R-package. This package is tailored towards easy visualization of grouped and repeated measures data. Moreover, it also provides individually linked repeated measures visualizations, which add detail and richness to a multitude of within-subject designs. Here, we have chosen to depict the two most common repeated measures designs: 1 * 1 and 2 * 2. Basically, it wraps complex arguments into 1 single data and plotting function that does all the magic for you.
+- In addition to this step-by-step tutorial, we have created our first [`raincloudplots`](https://github.com/jorvlan/raincloudplots) R-package which  is tailored towards easy visualization of grouped and repeated measures data. Moreover, it also provides individually linked repeated measures visualizations, which add detail and richness to a multitude of within-subject designs.Basically, it wraps complex arguments into 1 single data and plotting function that does all the magic for you.
 
 
