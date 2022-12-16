@@ -102,8 +102,6 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
 
 ### Raincloud Plots 
 
-Raincloud plots were created and developed by Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen and Rogier Kievit.
-
 **Paper**
 <br>
 <pre>
