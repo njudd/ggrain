@@ -1,3 +1,5 @@
+[![R-CMD-check](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml)
+
 # ggrain - Raincloud Plots
 
 `ggrain` is an R-package that allow you to create Raincloud plots according to the 'Grammar of Graphics' (ggplot2) that are: 
