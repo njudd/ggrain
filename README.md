@@ -91,6 +91,6 @@ In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Scienc
 - Integrating Raincloudplots in [JASP Statistics](https://jasp-stats.org)
 - Organzing [globally accessible, online workshops](https://github.com/jorvlan/raincloudplots-workshops) to help people create raincloudplots and improve their data visualizations in general.
 
-You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011 or you can watch the online webinar hosted by NWO about our project: [![Webinar Open Science series S1E2: Open tools for data enrichment and visualization](http://i.imgur.com/Ot5DWAW.png)](https://www.youtube.com/watch?v=Kvcyh_9KSbw "Webinar Open Science series S1E2: Open tools for data enrichment and visualization")
+You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011 or you can watch the online webinar hosted by NWO about our project: [![Webinar Open Science series S1E2: Open tools for data enrichment and visualization](https://github.com/jorvlan/raincloudplots-workshops/blob/main/other/raincloudplots_NWO_webinar.png)](https://www.youtube.com/watch?v=Kvcyh_9KSbw "Webinar Open Science series S1E2: Open tools for data enrichment and visualization")
 
-You can watch 
+
