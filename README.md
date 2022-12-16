@@ -82,6 +82,7 @@ Please make a pull request if you would like to add something new!
 </pre>
 
 ### Funding
+<img src="https://github.com/jorvlan/raincloudplots-workshops/blob/main/other/nwo_openscience.jpg" width="150" height="160" align="right"/>
 
 In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Science Fund](https://www.nwo.nl/en/researchprogrammes/open-science/open-science-fund). The Open Science Fund aims to support researchers to develop, test and implement innovative ways of making research open, accessible, transparent and reusable, covering the whole range of Open Science. The Raincloud plots team was awarded this fantastic initiative and is specifically working on:
 
