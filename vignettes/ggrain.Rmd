@@ -1,9 +1,8 @@
 ---
 title: "Raincloud vignette"
-output:
-  html_document:
-    df_print: paged
-vignette: "%\\VignetteIndexEntry{Raincloud_vignette} %\\VignetteEngine{knitr::rmarkdown}
+output: rmarkdown::html_vignette
+vignette: >
+  %\\VignetteIndexEntry{Raincloud_vignette}                 %\\VignetteEngine{knitr::rmarkdown}
   %\\VignetteEncoding{UTF-8}\n"
 ---
 
