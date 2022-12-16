@@ -76,4 +76,10 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 ### Citation
 
+<pre>
+- Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
+    ggrain: a ggplot2 extension package to create Raincloud Plots 
+    <b>GitHub</b> 2022, 
+    <a href="https://github.com/njudd/ggrain">https://github.com/njudd/ggrain</a>
+</pre>
 
