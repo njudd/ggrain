@@ -83,11 +83,11 @@ Please make a pull request if you would like to add something new!
 
 ### Funding
 
-In 2021, NWO (Dutch research council) announced their inaugural ['NWO Open Science Fund'](https://www.nwo.nl/en/researchprogrammes/open-science/open-science-fund). "The Open Science Fund aims to support researchers to develop, test and implement innovative ways of making research open, accessible, transparent and reusable, covering the whole range of Open Science." The Raincloud plots team was awarded this fantastic initiative and is specifically working on:
+In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Science Fund](https://www.nwo.nl/en/researchprogrammes/open-science/open-science-fund). The Open Science Fund aims to support researchers to develop, test and implement innovative ways of making research open, accessible, transparent and reusable, covering the whole range of Open Science. The Raincloud plots team was awarded this fantastic initiative and is specifically working on:
 
 - Creating `ggrain` R-package
 - Creating a ShinyApp Raincloudplots
 - Integrating Raincloudplots in [JASP Statistics](https://jasp-stats.org)
-- Organzing [global online workshops](https://github.com/jorvlan/raincloudplots-workshops) to help people create raincloudplots and improve their data visualizations in general.
+- Organzing [globally accessible, online workshops](https://github.com/jorvlan/raincloudplots-workshops) to help people create raincloudplots and improve their data visualizations in general.
 
 You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011
