@@ -113,4 +113,4 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
 There are now ***3*** ways to make it rain in R: 
 - through a series of specific easy to modify scripts [https://github.com/RainCloudPlots/RainCloudPlots](https://github.com/RainCloudPlots/RainCloudPlots)
 - through our initial [`raincloudplots`](https://github.com/jorvlan/raincloudplots) package
-- through the newest R-package `ggrain`. 
+- through the newest R-package `ggrain`
