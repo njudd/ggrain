@@ -5,7 +5,7 @@
 
 # `ggrain` - [Raincloud Plots](https://wellcomeopenresearch.org/articles/4-63/v2)
 
-`ggrain` is an R-package that allows you to create Raincloud plots according to the 'Grammar of Graphics' (i.e., ggplot2) that are: 
+`ggrain` is an R-package that allows you to create Raincloud plots - according to the 'Grammar of Graphics' (i.e., ggplot2) - that are: 
 
 - Highly customizable
 - Connect longitudinal observations
