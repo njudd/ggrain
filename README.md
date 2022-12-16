@@ -19,14 +19,6 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
   geom_rain()
 ```
 
-We welcome all contributions. Please make a pull request if you would like to add something new!
-
-Current dev goals:
-
-- Get on CRAN (because of this the vignette must only be in .Rmd; download the package to see the vignette)
-- Develop the likert option
-
-
 ### Installation
 
 ```r
@@ -74,12 +66,22 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/time_group_cov.png)
 
+### Contributions
+
+We warmly welcome all contributions. 
+Please make a pull request if you would like to add something new!
+
+
 ### Citation
 
 <pre>
 - Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
-    ggrain: a ggplot2 extension package to create Raincloud Plots 
+    ggrain: a ggplot2 extension package to create Raincloud Plots in R
     <b>GitHub</b> 2022, 
     <a href="https://github.com/njudd/ggrain">https://github.com/njudd/ggrain</a>
 </pre>
+
+### Funding
+
+
 
