@@ -2,13 +2,14 @@
 
 # ggrain - Raincloud Plots
 
-`ggrain` is an R-package that allow you to create Raincloud plots according to the 'Grammar of Graphics' (ggplot2) that are: 
+`ggrain` is an R-package that allows you to create Raincloud plots according to the 'Grammar of Graphics' (i.e., ggplot2) that are: 
 
 - Highly customizable
 - Connect longitudinal observations
 - Handles Likert data
 - Allows mapping of a covariate.
 	
+### Example 
 
 ```r
 ggplot(iris, aes(x = 1, y = Sepal.Length)) +
@@ -34,7 +35,7 @@ remotes::install_github('njudd/ggrain')
 library(ggrain)
 ```
 
-### Basic examples
+###  Simple examples
 
 1.  Raincloud per group
 
@@ -50,14 +51,12 @@ library(ggrain)
 		geom_rain(alpha = .5)
 	```
 
-For more examples such as a 2-by-2 plot and multiple repeated measures, please see our [Vignette](https://www.njudd.com/raincloud-ggrain/).
+For more extensive examples such as a 2-by-2 raincloud plot or multiple repeated measures, please see our [Vignette](https://www.njudd.com/raincloud-ggrain/).
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/basic_rain.png)
 
 
-
-### Features
-
+### `ggrain` specific features
 
 `geom_rain` is a combination of 4 different ggplot2 geom's (i.e., point, line, boxplot & violin).
 
