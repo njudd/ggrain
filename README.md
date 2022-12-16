@@ -3,7 +3,7 @@
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/ggrain)](https://CRAN.R-project.org/package=ggrain)
 <!---[![License: ]()](https://github.com/njudd/ggrain/LICENSE)--->
 
-# ggrain - Raincloud Plots
+# `ggrain` - Raincloud Plots
 
 `ggrain` is an R-package that allows you to create Raincloud plots according to the 'Grammar of Graphics' (i.e., ggplot2) that are: 
 
