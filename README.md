@@ -98,17 +98,25 @@ In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Scienc
 You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011 or you can watch the online webinar hosted by NWO about our project: [![Webinar Open Science series S1E2: Open tools for data enrichment and visualization](https://github.com/njudd/ggrain/blob/main/inst/git_pics/raincloudplots_NWO_webinar.png)](https://youtu.be/Kvcyh_9KSbw?t=1910 "Webinar Open Science series S1E2: Open tools for data enrichment and visualization")
 
 
-### Raincloud Plots <img src="https://github.com/njudd/ggrain/blob/main/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
+### Raincloud Plots 
 
-There are two ways to make it rain in R: through a series of specific easy to modify scripts, and through our new tailored package, raincloudplots. The former provides a step-by-step walkthrough with individual scripts which can be modified as needed. The latter provides an easy-to-use set of functions for the most common experimental designs and data formats.
+**Paper**
+<br>
+<pre>
+- Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., van Langen, J., & Kievit, R. A.
+    Raincloud plots: a multi-platform tool for robust data visualization [version 2; peer review: 2 approved] 
+    <b>Wellcome Open Research</b> 2021, 4:63. <a href="https://doi.org/10.12688/wellcomeopenres.15191.2">https://doi.org/10.12688/wellcomeopenres.15191.2</a>
+</pre>
 
-raincloudplots - R package 
+There are now ***3*** ways to make it rain in R: through a series of specific easy to modify scripts, through our initial `raincloudplots` package, and now through the newest R-package `ggrain`. 
 
-Here's how to install the R-package raincloudplots.
+Raincloud plots were created and developed by Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen and Rogier Kievit.
 
-if (!require(remotes)) {
-    install.packages("remotes")
-}
-remotes::install_github('jorvlan/raincloudplots')
+*Across scientific disciplines, there is a rapidly growing recognition of the need for more statistically robust, transparent approaches to data visualization. Complementary to this, many scientists have called for plotting tools that accurately and transparently convey key aspects of statistical effects and raw data with minimal distortion. Previously common approaches, such as plotting conditional mean or median barplots together with error-bars have been criticized for distorting effect size, hiding underlying patterns in the raw data, and obscuring the assumptions upon which the most commonly used statistical tests are based. We describe a data visualization approach which overcomes these issues, providing maximal statistical information while preserving the desired ‘inference at a glance’ nature of barplots and other similar visualization devices. These “raincloud plots” can visualize raw data, probability density, and key summary statistics such as median, mean, and relevant confidence intervals in an appealing and flexible format with minimal redundancy. We created and shared our open-source code for raincloudplots implementation in R, Python and Matlab* 
+<a href="https://github.com/RainCloudPlots/RainCloudPlots">https://github.com/RainCloudPlots/RainCloudPlots</a>.
 
-library(raincloudplots)
+<img src="https://github.com/njudd/ggrain/blob/inst/git_pics/rainclouds_highres.png" width="150" height="160" align="right"/>
+
+*In addition to this step-by-step tutorial, we have created our first [`raincloudplots`](https://github.com/jorvlan/raincloudplots) R-package. This package is tailored towards easy visualization of grouped and repeated measures data. Moreover, it also provides individually linked repeated measures visualizations, which add detail and richness to a multitude of within-subject designs. Here, we have chosen to depict the two most common repeated measures designs: 1 * 1 and 2 * 2. Basically, it wraps complex arguments into 1 single data and plotting function that does all the magic for you.*
+
+
