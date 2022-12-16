@@ -92,4 +92,3 @@ In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Scienc
 - Organzing [globally accessible, online workshops](https://github.com/jorvlan/raincloudplots-workshops) to help people create raincloudplots and improve their data visualizations in general.
 
 You can read more about our awarded project here: https://www.nwo.nl/en/projects/203001011
-Or you can watch the online webinar about our project hosted by NWO: https://www.youtube.com/watch?v=Kvcyh_9KSbw
