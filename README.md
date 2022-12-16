@@ -1,12 +1,12 @@
 # ggrain - Raincloud Plots
 
-`geom_rain()` is a function in the `ggrain` R-package that creates Raincloud plots that are: 
+`ggrain` is an R-package that allow you to create Raincloud plots according to the 'Grammar of Graphics' (ggplot2) that are: 
 
-	- Highly customizable, 
-	- Connect longitudinal observations, 
-	- Handles Likert data,
-	- Allows mapping of a covariate,
-	- All according to the 'Grammar of Graphics' (ggplot2)
+- Highly customizable
+- Connect longitudinal observations
+- Handles Likert data
+- Allows mapping of a covariate.
+	
 
 ```r
 ggplot(iris, aes(x = 1, y = Sepal.Length)) +
