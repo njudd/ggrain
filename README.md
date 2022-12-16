@@ -1,8 +1,7 @@
 [![R-CMD-check](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Release_Badge](http://www.r-pkg.org/badges/version-ago/ggrain)](https://CRAN.R-project.org/package=ggrain)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/ggrain)](https://CRAN.R-project.org/package=ggrain)
-!#[![License: ]()](https://github.com/njudd/ggrain/LICENSE)
-# open-visualizations
+<!---[![License: ]()](https://github.com/njudd/ggrain/LICENSE)--->
 
 # ggrain - Raincloud Plots
 
