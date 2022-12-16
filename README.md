@@ -50,7 +50,7 @@ library(ggrain)
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/basic_rain.png)
 
 ### Vignette
-For more extensive examples such as a 2-by-2 raincloud plot or multiple repeated measures, please see our [Vignette](https://www.njudd.com/raincloud-ggrain/).
+For a complete overview of `ggrain` such as a 2-by-2 raincloud plot or multiple repeated measures, please see our [Vignette](https://www.njudd.com/raincloud-ggrain/).
 
 ### `ggrain` specific features
 
