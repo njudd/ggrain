@@ -110,7 +110,7 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
     <b>Wellcome Open Research</b> 2021, 4:63. <a href="https://doi.org/10.12688/wellcomeopenres.15191.2">https://doi.org/10.12688/wellcomeopenres.15191.2</a>
 </pre>
 
-There are now ***3*** ways to make it rain in R: 
+There are now ***3*** ways you can use our Raincloud Plots: 
 - through a series of specific easy to modify scripts [https://github.com/RainCloudPlots/RainCloudPlots](https://github.com/RainCloudPlots/RainCloudPlots)
 - through our initial [`raincloudplots`](https://github.com/jorvlan/raincloudplots) package
 - through the newest R-package `ggrain`
