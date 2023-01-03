@@ -113,4 +113,4 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
 There are now ***3*** ways in which you can use our Raincloud Plots tools: 
 - through a series of specific easy to modify scripts [https://github.com/RainCloudPlots/RainCloudPlots](https://github.com/RainCloudPlots/RainCloudPlots)
 - through our initial [`raincloudplots`](https://github.com/jorvlan/raincloudplots) package
-- through the newest R-package `ggrain`
+- through the newest R-package [`ggrain`](https://github.com/njudd/ggrain)
