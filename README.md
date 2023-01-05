@@ -78,12 +78,12 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Citation
 
-`ggrain` was developed by Nicholas Judd, Jordy van Langen and Rogier Kievit. 
+[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen and Rogier Kievit. 
 
 <pre>
 - Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
     ggrain: a ggplot2 extension package to create Raincloud Plots in R
-    <b>GitHub</b> 2022, 
+    <b>GitHub</b> 2023, 
     <a href="https://github.com/njudd/ggrain">https://github.com/njudd/ggrain</a>
 </pre>
 
