@@ -211,3 +211,5 @@ ggplot(iris.long[iris.long$Species == 'versicolor',], aes(time, Sepal.Width, fil
 scale_fill_manual(values=c("darkorange", "darkorange")) +
 theme_classic()
 ```
+
+![](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/geom_signif_image.png)
