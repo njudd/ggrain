@@ -84,6 +84,7 @@
 #' }
 #' @importFrom grid pointsGrob gpar grobName grob
 #' @importFrom ggplot2 ggproto aes draw_key_point
+#' @importFrom vctrs vec_unique
 #' @rdname ggplot2-ggproto
 #' @format NULL
 #' @usage NULL
@@ -93,6 +94,9 @@ ggname <- function(prefix, grob) { # yeah I know its not great practice to put i
   grob$name <- grobName(grob, prefix)
   grob
 }
+
+unique0 <- function(x, ...) if (is.null(x)) x else vec_unique(x, ...)
+
 
 geom_point_sorted <- function(mapping = NULL, data = NULL,
                        stat = "identity", position = "identity",
