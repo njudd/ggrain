@@ -124,24 +124,32 @@ We will now take the species versicolor and virginica and make longitudinal data
 
 ```{r making long iris data}
 set.seed(42) # the magic number
-iris.long <- iris[iris$Species %in% c('versicolor', 'virginica'),] # select flowers
-iris.long$time <- rep('pre', dim(iris.long)[1]) # rep a timepoint pre
-iris.long$id <- rep(1:dim(iris.long)[1]) # making an ID vector for each obs
-iris.long2 <- iris.long
-# now we add .5 and some noise to the versicolor species
-iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] <- iris.long2$Sepal.Width[iris.long2$Species == 'versicolor'] + .5 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'versicolor']), sd = .2)
+
+iris_subset <- iris[iris$Species %in% c('versicolor', 'virginica'),]
+
+iris.long <- cbind(rbind(iris_subset, iris_subset, iris_subset), 
+                   data.frame(time = c(rep("t1", dim(iris_subset)[1]), rep("t2", dim(iris_subset)[1]), rep("t3", dim(iris_subset)[1])),
+                              id = c(rep(1:dim(iris_subset)[1]), rep(1:dim(iris_subset)[1]), rep(1:dim(iris_subset)[1]))))
+
+# adding .5 and some noise to the versicolor species in t2
+iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t2"] <- iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t2"] + .5 + rnorm(length(iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t2"]), sd = .2)
+# adding .8 and some noise to the versicolor species in t3
+iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t3"] <- iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t3"] + .8 + rnorm(length(iris.long$Sepal.Width[iris.long$Species == 'versicolor' & iris.long$time == "t3"]), sd = .2)
+
 # now we subtract -.2 and some noise to the virginica species
-iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] <- iris.long2$Sepal.Width[iris.long2$Species == 'virginica'] -.2 + rnorm(length(iris.long2$Sepal.Width[iris.long2$Species == 'virginica']), sd = .2)
-iris.long2$time <- rep('post', dim(iris.long2)[1])# rep a timepoint post
-iris.long <- rbind(iris.long, iris.long2) # binding the two timepoints
+iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t2"] <- iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t2"] - .2 + rnorm(length(iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t2"]), sd = .2)
+
+# now we subtract -.4 and some noise to the virginica species
+iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t3"] <- iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t3"] - .4 + rnorm(length(iris.long$Sepal.Width[iris.long$Species == 'virginica' & iris.long$time == "t3"]), sd = .2)
+
 iris.long$Sepal.Width <- round(iris.long$Sepal.Width, 1) # rounding Sepal.Width so t2 data is on the same resolution
-iris.long$time <- factor(iris.long$time, levels = c('pre', 'post'))
+iris.long$time <- factor(iris.long$time, levels = c('t1', 't2', 't3'))
 ```
 
 Here we plot the species overlapping at each time point. We can see fertilizer caused the Sepal Width of the versicolor species to increase while the virginica species decreased slightly! 
 
 ```{r rainclouds by time by group}
-ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5) +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
@@ -151,7 +159,7 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
 We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e., `'f2x2'`). This also automatically uses `ggpp::position_dodgenudge` to dodge the boxplots. Yet, for descriptive purposes with will use the flanking argument `rain.side = 'f'` with the defaults from `'f2x2'`. The `rain.side = 'f'` argument defaults to a 2-by-2 yet throw a warning if you don't remap the `violin.args.pos`. When using flanking with more groups or more time points you must give specific `boxplot.args.pos` and `violin.args.pos` for each element. The left elements must have negative x-axis nudging values with the right ones have positive x-axis nudging values.
 
 ```{r rainclouds by time by group flipped}
-ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f',
              boxplot.args.pos = list(width = .1,
                 position = ggpp::position_dodgenudge(
@@ -168,7 +176,7 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
 We can connect each plant with lines using the `id.long.var` argument, we will also use the convient `rain.side = 'f2x2'`. As with the `cov` argument, it must be a string linking the ids of each observation across time.
 
 ```{r rainclouds by time by group flipped long id}
-ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f2x2', id.long.var = "id") +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
@@ -178,7 +186,7 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
 We can color the dots and the connecting lines by Species! We will also remove the lines around the violins by specifying their `color = NA`, yet we now must re-add the alpha argument.
 
 ```{r rainclouds by time by group flipped long id colored}
-ggplot(iris.long, aes(time, Sepal.Width, fill = Species, color = Species)) +
+ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species, color = Species)) +
   geom_rain(alpha = .5, rain.side = 'f2x2', id.long.var = "id",
             violin.args = list(color = NA, alpha = .7)) +
   theme_classic() +
@@ -187,10 +195,31 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species, color = Species)) +
   guides(fill = 'none', color = 'none')
 ```
 
+We can start to combine aspects, for example here is three timepoints with subjects connected, special flanking and a covariate mapped!
+
+```{r rainclouds long cov}
+ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+  geom_rain(alpha = .5, rain.side = 'f', id.long.var = "id", cov = "Sepal.Length",
+            boxplot.args = list(outlier.shape = NA, alpha = .8),
+            violin.args = list(alpha = .8, color = NA),
+            boxplot.args.pos = list(width = .1,
+             position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
+                                                        -.13, .13, 
+                                                         .13, .13))),
+            violin.args.pos = list(width = .7,
+             position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
+                                             rep(-.2, 256*2), rep(.2, 256*2), # t2
+                                             rep(.2, 256*2), rep(.2, 256*2))))) +
+  theme_classic() +
+  scale_fill_manual(values=c("dodgerblue", "darkorange")) +
+  scale_color_viridis_c(option =  "A", direction = -1) +
+  guides(fill = 'none', color = 'none')
+```
+
 Lastly, we can add a mean trend line using `stat_summary`. Accentuating the opposite effects fertilizers had on the two species of flowers!
 
 ```{r rainclouds by time by group flipped long id colored mean}
-ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
+ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f2x2') +
   theme_classic() +
   stat_summary(fun = mean, geom = "line", aes(group = Species, color = Species)) +
@@ -203,10 +232,10 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
 
 Here is some sample code on how to do a significance test on a 1-by-1 flanking raincloud with the package `ggsignif`. We will not run it as we don't want to add `ggsignif` as a package dependency.
 ```{r rainclouds sig, eval = F, echo = T}
-ggplot(iris.long[iris.long$Species == 'versicolor',], aes(time, Sepal.Width, fill = "Species")) +
+ggplot(iris.long[iris.long$Species == 'versicolor' & iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = "Species")) +
   geom_rain(alpha = .5, rain.side = 'f1x1') +
  ggsignif::geom_signif(
-  comparisons = list(c("pre", "post")),
+  comparisons = list(c("t1", "t1")),
   map_signif_level = TRUE) +
 scale_fill_manual(values=c("darkorange", "darkorange")) +
 theme_classic()
