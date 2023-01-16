@@ -1,4 +1,5 @@
 [![R-CMD-check](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml)
+[![Bugs](https://img.shields.io/github/issues/njudd/ggrain/bug?label=Bugs&logo=github&logoColor=%23FFF&color=brightgreen)](https://github.com/njudd/ggrain/issues?q=is%3Aopen+is%3Aissue)
 [![CRAN_Release_Badge](http://www.r-pkg.org/badges/version-ago/ggrain)](https://CRAN.R-project.org/package=ggrain)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/ggrain)](https://CRAN.R-project.org/package=ggrain)
 [![](http://cranlogs.r-pkg.org/badges/ggrain)](https://cran.r-project.org/package=ggrain)
@@ -70,11 +71,10 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/time_group_cov_vin.png)
 
-### Contributions
+### Contributions / Issues
 
 We warmly welcome all contributions. 
 You can open an issue or make a pull request if you would like to add something new!
-
 
 ### Citation
 

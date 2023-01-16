@@ -240,3 +240,4 @@ ggplot(iris.long[iris.long$Species == 'versicolor' & iris.long$time %in% c('t1',
 scale_fill_manual(values=c("darkorange", "darkorange")) +
 theme_classic()
 ```
+![](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/geom_signif_image.png)
