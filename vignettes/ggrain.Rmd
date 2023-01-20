@@ -232,10 +232,10 @@ ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fil
 
 Here is some sample code on how to do a significance test on a 1-by-1 flanking raincloud with the package `ggsignif`. We will not run it as we don't want to add `ggsignif` as a package dependency.
 ```{r rainclouds sig, eval = F, echo = T}
-ggplot(iris.long[iris.long$Species == 'versicolor' & iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = "Species")) +
+ggplot(iris.long[iris.long$Species == 'versicolor' & iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f1x1') +
  ggsignif::geom_signif(
-  comparisons = list(c("t1", "t1")),
+  comparisons = list(c("t1", "t2")),
   map_signif_level = TRUE) +
 scale_fill_manual(values=c("darkorange", "darkorange")) +
 theme_classic()
