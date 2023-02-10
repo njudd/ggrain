@@ -1,5 +1,5 @@
 Package: ggrain
-Title: A rainclouds geom for ggplot2 
+Title: A Rainclouds Geom for ggplot2 
 Version: 0.0.1
 Authors@R: c(
     person("Nicholas", "Judd", , "nickkjudd@gmail.com", role = c("aut", "cre"),
@@ -8,7 +8,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-2504-2381")),
     person("Rogier", "Kievit", , "", role = c("aut"),
            comment = c(ORCID = "0000-0003-0700-4568")))
-Description: 'gg_rain' function adds different geom's together using ggplot to create rainclouds. 
+Description: 'gg_rain' function adds different geoms together using ggplot2 to create raincloud plots. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
