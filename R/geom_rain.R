@@ -18,7 +18,9 @@
 #' @param boxplot.args.pos A list of positional args for the boxplot
 #' @param violin.args A list of args for the violin
 #' @param violin.args.pos A list of positional args for the violin
-#'
+#' @return Returns a list of three environments to be used with the 'ggplot()' function in the 'ggplot2' package.
+#' @return If the id.long.var argument is used the output will be a list of 4 environments.
+#' @return These 4 environments have a similar structure to 'geom_boxplot()', 'geom_violin()', 'geom_point()' and 'geom_line()' from 'ggplot2'.
 #' need library(rlang)
 #' need library(ggplot2)
 #' depends = ggplot2
@@ -90,8 +92,7 @@ geom_rain <- function(mapping = NULL,
                       point.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = 0,
-                          seed = 42)
+                          height = 0)
                       ),
                       line.args = rlang::list2(
                         alpha = .2,
@@ -100,8 +101,7 @@ geom_rain <- function(mapping = NULL,
                       line.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = 0,
-                          seed = 42),
+                          height = 0),
                       ),
                       boxplot.args =  rlang::list2(
                         outlier.shape = NA,
@@ -239,7 +239,7 @@ geom_rain <- function(mapping = NULL,
   if (likert == TRUE) {
     point.args.pos$position$height = .1
     line.args.pos$position$height = .1
-    print("Likert = T; setting y axis jittering for point & line to .1")
+    message("Likert = T; setting y axis jittering for point & line to .1")
     }
 
 
