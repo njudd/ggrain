@@ -14,11 +14,9 @@ geom_rain(
   likert = FALSE,
   ...,
   point.args = rlang::list2(...),
-  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
-    = 42)),
+  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0)),
   line.args = rlang::list2(alpha = 0.2, ...),
-  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
-    = 42), ),
+  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0), ),
   boxplot.args = rlang::list2(outlier.shape = NA, ...),
   boxplot.args.pos = rlang::list2(width = 0.05, position = position_nudge(x = 0.1), ),
   violin.args = rlang::list2(...),
@@ -79,11 +77,17 @@ to the paired geom/stat.}
 
 \item{violin.args}{A list of args for the violin}
 
-\item{violin.args.pos}{A list of positional args for the violin
+\item{violin.args.pos}{A list of positional args for the violin}
+}
+\value{
+Returns a list of three environments to be used with the 'ggplot()' function in the 'ggplot2' package.
 
+If the id.long.var argument is used the output will be a list of 4 environments.
+
+These 4 environments have a similar structure to 'geom_boxplot()', 'geom_violin()', 'geom_point()' and 'geom_line()' from 'ggplot2'.
 need library(rlang)
 need library(ggplot2)
-depends = ggplot2}
+depends = ggplot2
 }
 \description{
 This function displays individual data points, a boxplot and half a violin plot.
