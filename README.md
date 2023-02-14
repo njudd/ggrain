@@ -22,8 +22,16 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
   geom_rain()
 ```
 
-### Installation
+### Installation 
 
+1. Download through CRAN
+```r
+install.packages("ggrain")
+
+library(ggrain)
+```
+
+2. Download through GitHub
 ```r
 if (!require(remotes)) {
     install.packages("remotes")
