@@ -1,6 +1,6 @@
 Package: ggrain
 Title: A Rainclouds Geom for 'ggplot2' 
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person("Nicholas", "Judd", , "nickkjudd@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0196-9871")),
