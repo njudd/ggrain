@@ -6,9 +6,11 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-0196-9871")),
     person("Jordy", "van Langen", , "jordyvanlangen@gmail.com", role = c("aut"),
            comment = c(ORCID = "0000-0003-2504-2381")),
+    person("Micah", "Allen", , "", role = c("ctb"),
+           comment = c(ORCID = "0000-0001-9399-4179")))
     person("Rogier", "Kievit", , "", role = c("aut"),
            comment = c(ORCID = "0000-0003-0700-4568")))
-Description: The 'gg_rain()' function adds different geoms together using 'ggplot2' to create raincloud plots. 
+Description: The 'geom_rain()' function adds different geoms together using 'ggplot2' to create raincloud plots. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
