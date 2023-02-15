@@ -22,8 +22,16 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
   geom_rain()
 ```
 
-### Installation
+### Installation 
 
+1. Download through CRAN
+```r
+install.packages("ggrain")
+
+library(ggrain)
+```
+
+2. Download through GitHub
 ```r
 if (!require(remotes)) {
     install.packages("remotes")
@@ -81,9 +89,10 @@ You can open an issue or make a pull request if you would like to add something 
 
 <pre>
 - Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
-    <i>ggrain: a ggplot2 extension package to create Raincloud Plots in R.</i>
-    <b>GitHub</b> 2023,
-    <a href="https://github.com/njudd/ggrain">https://github.com/njudd/ggrain</a>
+    <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
+    R package version 0.0.1.
+    <b>CRAN</b> 2023,
+    <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
 
 ### Funding
