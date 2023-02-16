@@ -24,14 +24,16 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
 
 ### Installation 
 
-1. Download through CRAN
+There are two ways to install this package.
+
+1. Download the [CRAN](https://cran.r-project.org/web/packages/ggrain/) version  
 ```r
 install.packages("ggrain")
 
 library(ggrain)
 ```
 
-2. Download through GitHub
+2. Download through [GitHub](https://github.com/njudd/ggrain)
 ```r
 if (!require(remotes)) {
     install.packages("remotes")
