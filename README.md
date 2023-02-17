@@ -24,14 +24,16 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
 
 ### Installation 
 
-1. Download through CRAN
+There are two ways to install this package.
+
+1. Download the [CRAN](https://cran.r-project.org/web/packages/ggrain/) version  
 ```r
 install.packages("ggrain")
 
 library(ggrain)
 ```
 
-2. Download through GitHub
+2. Download through [GitHub](https://github.com/njudd/ggrain)
 ```r
 if (!require(remotes)) {
     install.packages("remotes")
@@ -85,12 +87,12 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Citation
 
-[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen and Rogier Kievit. 
+[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen, Micah Allen, and Rogier Kievit. 
 
 <pre>
-- Judd, Nicholas, van Langen, Jordy, & Kievit, Rogier.
+- Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
     <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
-    R package version 0.0.1.
+    R package version 0.0.2.
     <b>CRAN</b> 2023,
     <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
