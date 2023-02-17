@@ -14,7 +14,7 @@ Description: The 'geom_rain()' function adds different geoms together using 'ggp
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
-	ggplot2 (>= 3.0.0),
+	ggplot2 (>= 3.4.0),
 	R (>= 3.4.0)
 Imports:
 	grid,
