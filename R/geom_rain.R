@@ -10,6 +10,7 @@
 #' @param cov A covariate to color the dots by - must be as a string (e.g., "cov")
 #' @param rain.side How you want the rainclouds displayed, right ("r"), left ("l") or flanking ("f"), for a 1-by-1 flanking raincloud use ("f1x1") and for a 2-by-2 use ("f2x2").
 #' @param likert Currently developing, right now just addes y-jitter.
+#' @param seed For the jittering in point & line to match. 
 #' @param point.args A list of args for the dots
 #' @param point.args.pos A list of positional args for the points
 #' @param line.args A list of args for the lines, you need to specify a group to connect them with id.long.var
