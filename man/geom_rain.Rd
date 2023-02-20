@@ -12,11 +12,14 @@ geom_rain(
   cov = NULL,
   rain.side = NULL,
   likert = FALSE,
+  seed = 42,
   ...,
   point.args = rlang::list2(...),
-  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0)),
+  point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
+    = seed)),
   line.args = rlang::list2(alpha = 0.2, ...),
-  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0), ),
+  line.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
+    = seed), ),
   boxplot.args = rlang::list2(outlier.shape = NA, ...),
   boxplot.args.pos = rlang::list2(width = 0.05, position = position_nudge(x = 0.1), ),
   violin.args = rlang::list2(...),
