@@ -83,6 +83,7 @@ geom_rain <- function(mapping = NULL,
                       cov = NULL, # should dots be colored due to a covariate?
                       rain.side = NULL, # The side to draw the violin/boxplot. "l" for left, "r" for right, "f" for flanking, defaults to "r"
                       likert = FALSE, #make sure you don't need to do more in the long for loop area
+                      seed = 42, # for the jittering in point & line to match
                       # rain.center = NULL, currently not implimented
                       ...,
                       point.args = rlang::list2(
@@ -92,7 +93,8 @@ geom_rain <- function(mapping = NULL,
                       point.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = 0)
+                          height = 0,
+                          seed = seed)
                       ),
                       line.args = rlang::list2(
                         alpha = .2,
@@ -101,7 +103,8 @@ geom_rain <- function(mapping = NULL,
                       line.args.pos = rlang::list2(
                         position = position_jitter(
                           width = .04,
-                          height = 0),
+                          height = 0,
+                          seed = seed),
                       ),
                       boxplot.args =  rlang::list2(
                         outlier.shape = NA,
