@@ -26,7 +26,7 @@ ggplot(iris, aes(x = 1, y = Sepal.Length)) +
 
 There are two ways to install this package.
 
-1. Download the [CRAN](https://cran.r-project.org/web/packages/ggrain/) version  
+1. Download the [CRAN](https://CRAN.R-project.org/package=ggrain) version  
 ```r
 install.packages("ggrain")
 
