@@ -92,7 +92,7 @@ You can open an issue or make a pull request if you would like to add something 
 <pre>
 - Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
     <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
-    R package version 0.0.2.
+    R package version 0.0.3.
     <b>CRAN</b> 2023,
     <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
