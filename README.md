@@ -1,4 +1,4 @@
-# ggrain <img src="https://github.com/jorvlan/open-visualizations/blob/master/R/package_figures/Rplot03.png" width="150" height="160" align="right"/>
+# ggrain <img src="https://github.com/jorvlan/open-visualizations/blob/master/R/package_figures/Rplot03.png" width="160" height="160" align="right"/>
 
 [![R-CMD-check](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/njudd/ggrain/actions/workflows/R-CMD-check.yaml)
 [![Bugs](https://img.shields.io/github/issues/njudd/ggrain/bug?label=Bugs&logo=github&logoColor=%23FFF&color=brightgreen)](https://github.com/njudd/ggrain/issues?q=is%3Aopen+is%3Aissue)
