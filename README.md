@@ -105,7 +105,7 @@ You can open an issue or make a pull request if you would like to add something 
 In 2021, NWO (Dutch research council) announced their inaugural [NWO Open Science Fund](https://www.nwo.nl/en/researchprogrammes/open-science/open-science-fund). The Open Science Fund aims to support researchers to develop, test and implement innovative ways of making research open, accessible, transparent and reusable, covering the whole range of Open Science. The Raincloud plots team was awarded this fantastic initiative and is specifically working on:
 
 - Creating the [`ggrain`](https://github.com/njudd/ggrain) R-package
-- Creating a ShinyApp Raincloudplots
+- Creating an interactive R Shiny application [`raincloudplots`](https://lcdlab.shinyapps.io/raincloudplots-shiny/)
 - Integrating Raincloudplots in [JASP Statistics](https://jasp-stats.org)
 - Organzing [globally accessible, online workshops](https://github.com/jorvlan/raincloudplots-workshops) to help people create raincloudplots and improve their data visualizations in general.
 
@@ -122,7 +122,8 @@ You can read more about our awarded project here: https://www.nwo.nl/en/projects
     <b>Wellcome Open Research</b> 2021, 4:63. <a href="https://doi.org/10.12688/wellcomeopenres.15191.2">https://doi.org/10.12688/wellcomeopenres.15191.2</a>
 </pre>
 
-There are now ***3*** ways in which you can use our Raincloud Plots tools: 
+There are now ***4*** ways in which you can use our Raincloud Plots tools: 
 - through a series of specific easy to modify scripts [https://github.com/RainCloudPlots/RainCloudPlots](https://github.com/RainCloudPlots/RainCloudPlots)
 - through our initial [`raincloudplots`](https://github.com/jorvlan/raincloudplots) package
 - through the newest R-package [`ggrain`](https://github.com/njudd/ggrain)
+- through our R Shiny application: [`raincloudplots`](https://lcdlab.shinyapps.io/raincloudplots-shiny/)
