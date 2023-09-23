@@ -41,7 +41,7 @@
 #' e1 + geom_rain()
 #'
 #' # x must be the discrete variable
-#' # orinetation can be changed with coord_flip()
+#' # orientation can be changed with coord_flip()
 #' e1 + geom_rain(alpha = .5) + coord_flip()
 #'
 #' # we can color the dots by a covariate
