@@ -203,7 +203,7 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
             boxplot.args = list(outlier.shape = NA, alpha = .8),
             violin.args = list(alpha = .8, color = NA),
             boxplot.args.pos = list(width = .1,
-             position = ggpp::position_dodgenudge(width = .1,,
+             position = ggpp::position_dodgenudge(width = .1,
                                                   x = c(-.13, -.13, # t1 old, t1 young
                                                         -.13, .13, 
                                                          .13, .13))),
