@@ -10,7 +10,7 @@
 #' @param cov A covariate to color the dots by - must be as a string (e.g., "cov")
 #' @param rain.side How you want the rainclouds displayed, right ("r"), left ("l") or flanking ("f"), for a 1-by-1 flanking raincloud use ("f1x1") and for a 2-by-2 use ("f2x2").
 #' @param likert Currently developing, right now just addes y-jitter.
-#' @param seed For the jittering in point & line to match. 
+#' @param seed For the jittering in point & line to match.
 #' @param point.args A list of args for the dots
 #' @param point.args.pos A list of positional args for the points
 #' @param line.args A list of args for the lines, you need to specify a group to connect them with id.long.var
@@ -158,7 +158,7 @@ geom_rain <- function(mapping = NULL,
 
         boxplot.args.pos <- rlang::list2(
           width = .08,
-          position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
+          position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
         violin.args.pos <- rlang::list2(
           width = .7,
           position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
@@ -168,7 +168,7 @@ geom_rain <- function(mapping = NULL,
     else if (rain.side == "f1x1") {
       boxplot.args.pos <- rlang::list2(
         width = .08,
-        position = ggpp::position_dodgenudge(x = c(-.1, .1)))
+        position = ggpp::position_dodgenudge(width = .08, x = c(-.1, .1)))
       violin.args.pos <- rlang::list2(
         width = .7,
         position = position_nudge(x = c(rep(-.15, 256*2), rep(.15, 256*2))))
@@ -176,7 +176,7 @@ geom_rain <- function(mapping = NULL,
     else if (rain.side == "f2x2") {
       boxplot.args.pos <- rlang::list2(
         width = .08,
-        position = ggpp::position_dodgenudge(x = c(-.1, -.1, .1, .1)))
+        position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
       violin.args.pos <- rlang::list2(
         width = .7,
         position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
