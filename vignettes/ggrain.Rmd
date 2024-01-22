@@ -65,7 +65,7 @@ ggplot(iris, aes(1, Sepal.Width, fill = Species, color = Species)) +
   geom_rain(alpha = .5, rain.side = 'l',
             boxplot.args = list(color = "black", outlier.shape = NA),
             boxplot.args.pos = list(
-              position = ggpp::position_dodgenudge(x = .1), width = 0.1
+              position = ggpp::position_dodgenudge(x = .1, width = 0.1), width = 0.1
             )) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
@@ -162,7 +162,7 @@ We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e
 ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f',
              boxplot.args.pos = list(width = .1,
-                position = ggpp::position_dodgenudge(
+                position = ggpp::position_dodgenudge(width = .1, #width needed now in ggpp version 0.5.g
                   x = c(-.13, -.13, # pre versicolor, pre virginica
                         .13, .13))), # post; post
             violin.args.pos = list(width = .7,
@@ -203,7 +203,8 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
             boxplot.args = list(outlier.shape = NA, alpha = .8),
             violin.args = list(alpha = .8, color = NA),
             boxplot.args.pos = list(width = .1,
-             position = ggpp::position_dodgenudge(x = c(-.13, -.13, # t1 old, t1 young
+             position = ggpp::position_dodgenudge(width = .1,,
+                                                  x = c(-.13, -.13, # t1 old, t1 young
                                                         -.13, .13, 
                                                          .13, .13))),
             violin.args.pos = list(width = .7,
