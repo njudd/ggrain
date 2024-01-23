@@ -5,7 +5,7 @@
 #'
 #' Create a paired raincloud plot (useful for visualizing difference between experimental conditions tested on the same subjects or items).
 #'
-#' Adopted from the geom_violinhalf() source code from the {see} package
+#' Adopted from the geom_violinhalf() source code from the see package
 #'
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_violin
