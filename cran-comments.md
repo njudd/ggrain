@@ -1,4 +1,4 @@
-This release contains some minor documentation fixes.
+This release fixes an issue related to the new version of ggpp
 
 
 ## Test environments
