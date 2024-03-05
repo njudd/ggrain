@@ -100,7 +100,7 @@ You can open an issue or make a pull request if you would like to add something 
     <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
 
-### scientific papers that used & cited 👏 `ggrain`
+### Scientific papers that used & cited 👏 `ggrain`
 <pre>
 <b>*</b> Han, C., Danzeng, Q., Li, L., Bai, S., & Zheng, C. (2024). 
     Machine learning reveals PANoptosis as a potential reporter and 
