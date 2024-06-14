@@ -116,6 +116,10 @@ You can open an issue or make a pull request if you would like to add something 
     Choice repetition bias in intertemporal choice: An eye-tracking study.
     <b>OSF (Open Science Framework) / PsyArXiv.</b>
     <a href="https://doi.org/10.31234/osf.io/g3v9m">https://doi.org/10.31234/osf.io/g3v9m</a>
+<b>*</b> Bognar, M., Gyurkovics, M., Aczel, B., & van Steenbergen, H. (2023).
+    The curve of control: Non-monotonic effects of task difficulty on cognitive control.
+    <b>PsyArXiv</b>
+    <a href="https://doi.org/10.31234/osf.io/ywup9">https://doi.org/10.31234/osf.io/ywup9</a>
 </pre>	
 
 ### Funding
