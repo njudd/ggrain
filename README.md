@@ -100,6 +100,28 @@ You can open an issue or make a pull request if you would like to add something 
     <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
 
+### Scientific papers that used & cited 👏 `ggrain`
+<pre>
+<b>*</b> Han, C., Danzeng, Q., Li, L., Bai, S., & Zheng, C. (2024). 
+    Machine learning reveals PANoptosis as a potential reporter and 
+    prognostic revealer of tumour microenvironment in lung adenocarcinoma. 
+    <b>The Journal of Gene Medicine, 26(1), e3599.</b>
+    <a href="https://doi.org/10.1002/jgm.3599">https://doi.org/10.1002/jgm.3599</a>
+<b>*</b> Jiang, S., Shang, W. Z., Cui, J. Y., Yan, Y. Y., Yang, T., Hu, Y., ... & Wu, B. (2023). 
+    Prevalence and Predictors of Hemorrhagic Foci on Long-term 
+    Follow-up MRI of Recent Single Subcortical Infarcts. 
+    <b>Translational Stroke Research, 1-11.</b>
+    <a href="https://doi.org/10.1007/s12975-023-01224-7">https://doi.org/10.1007/s12975-023-01224-7</a>
+<b>*</b> Senftleben, U., Schoemann, M., & Scherbaum, S. (2024). 
+    Choice repetition bias in intertemporal choice: An eye-tracking study.
+    <b>OSF (Open Science Framework) / PsyArXiv.</b>
+    <a href="https://doi.org/10.31234/osf.io/g3v9m">https://doi.org/10.31234/osf.io/g3v9m</a>
+<b>*</b> Bognar, M., Gyurkovics, M., Aczel, B., & van Steenbergen, H. (2023).
+    The curve of control: Non-monotonic effects of task difficulty on cognitive control.
+    <b>PsyArXiv</b>
+    <a href="https://doi.org/10.31234/osf.io/ywup9">https://doi.org/10.31234/osf.io/ywup9</a>
+</pre>	
+
 ### Funding
 <img src="https://github.com/njudd/ggrain/blob/main/inst/git_pics/nwo_openscience.jpg" width="150" height="160" align="right"/>
 
