@@ -25,10 +25,10 @@ authors:
     affiliation: 4
   - given-names: Micah Allen^[shared senior authorship]
     orcid: 0000-0001-9399-4179
-    affiliation: 5
+    affiliation: "5, a"
   - given-names: Rogier Kievit^[shared senior authorship]
     orcid: 0000-0003-0700-4568
-    affiliation: 1
+    affiliation: "1, a"
     
 affiliations:
  - name: Department of Cognitive Neuroscience, Donders Institute for Brain, Cognition and Behavior, Radboud University Medical Center, Nijmegen, The Netherlands
@@ -41,6 +41,8 @@ affiliations:
    index: 4
  - name: Center of Functionally Integrative Neuroscience, Department of Clinical Medicine, Aarhus University, Aarhus, Denmark
    index: 5
+ - name: Shared Senior Authorship
+   index: a 
 date: 8 July 2025
 bibliography: inst/references.bib
 ---
