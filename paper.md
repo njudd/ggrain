@@ -83,7 +83,7 @@ For detailed usage examples see the vignette [https://www.njudd.com/raincloud-gg
 
 **ggrain** requires the **ggplot2** [@ggplot2] to build `geom_rain` which follows the grammar of the graphics framework. The gghalves package is extensively used for their half `geom_half_violin` function [@gghalves]. ggpp is used for their combination of jitter and nudging for points [@ggpp]. Other dependencies include grid, rlang, vctrs & cli [@grid; @rlang; @vctrs; @cli].
 
-(!inst/git_pics/Pub_Fig.png)
+![img1](inst/git_pics/Pub_Fig.png)
 
 **Figure 1:** Two example figures from **ggrain**: *a)* a grouped raincloud and *b)* a grouped repeated measures raincloud. Source code how to create these figures is available at: [https://github.com/njudd/ggrain/blob/main/inst/JOSS_figures.R](!https://github.com/njudd/ggrain/blob/main/inst/JOSS_figures.R).
 
