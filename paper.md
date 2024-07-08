@@ -91,7 +91,7 @@ For detailed usage examples see the vignette [https://www.njudd.com/raincloud-gg
 
 This project was supported by the Open Science Fund from the Dutch research council (Nederlandse Organisatie voor Wetenschappelijk Onderzoek, NWO, file number: 203.001.011). First we would like to acknowledge the coining of the name ‘raincloud plots’ by Jon Roiser on March 15, 2018. We also would like to thank all participants in our in-person and online raincloud plots workshops, as their feedback has considerably improved our package. Finally, we would like to thank everyone who has ever used raincloud plots in their work, shared or advocated our work on social media, submitted bug reports or issues, and provided kind suggestions on how to improve our software. The ‘ggrain’ R-package is more robust, user-friendly, and intuitive because of them.
 
-
+# References
 
 
 
