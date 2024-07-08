@@ -22,7 +22,6 @@ authors:
     orcid: 0000-0001-8498-4059
     affiliation: 3
   - given-names: Tom Rhys Marshall
-    orcid: 0000-0001-8498-4059
     affiliation: 4
   - given-names: Micah Allen^[shared senior authorship]
     orcid: 0000-0001-9399-4179
