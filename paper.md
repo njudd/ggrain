@@ -43,7 +43,7 @@ affiliations:
  - name: Center of Functionally Integrative Neuroscience, Department of Clinical Medicine, Aarhus University, Aarhus, Denmark
    index: 5
 date: 8 July 2025
-bibliography: inst/paper.bib
+bibliography: inst/references.bib
 ---
 
 # Summary
