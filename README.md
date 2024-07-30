@@ -104,6 +104,10 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Scientific papers that used & cited 👏 `ggrain`
 <pre>
+<b>*</b> Robison, M. K., Celaya, X., Ball, B. H., & Brewer, G. A. (2024). 
+	Task sequencing does not systematically affect the factor structure of cognitive abilities. 
+	<b>Psychonomic Bulletin & Review, 31(2), 670-685.</b>
+	<a href="https://doi.org/10.3758/s13423-023-02369-0">https://doi.org/10.3758/s13423-023-02369-0</a>
 <b>*</b> Han, C., Danzeng, Q., Li, L., Bai, S., & Zheng, C. (2024). 
     Machine learning reveals PANoptosis as a potential reporter and 
     prognostic revealer of tumour microenvironment in lung adenocarcinoma. 
