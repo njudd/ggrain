@@ -1,8 +1,10 @@
 bibentry(
-  "Software",
-  title = "ggrain: A Rainclouds Geom for 'ggplot2'.",
-  author = "Nicholas Judd, Jordy van Langen, Micah Allen, Rogier A. Kievit", 
-  year = 2024,
-  journal = "CRAN",
-  doi = "10.32614/CRAN.package.ggrain",
-)
+  "Article",
+  title = "Raincloud plots: a multi-platform tool for robust data visualization [version 2; peer review: 2 approved]",
+  author = "Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, Jordy van Langen, Rogier A. Kievit", 
+  year = 2021,
+  journal = "Wellcome Open Research",
+  volume = 4,
+  number = 63,
+  doi = "10.12688/wellcomeopenres.15191.2",
+) 
