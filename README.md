@@ -22,7 +22,7 @@
 
 ### Citation
 
-[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen, Micah Allen, and Rogier Kievit. 
+[`ggrain`](https://njudd.com/raincloud-ggrain/) was developed by [`Nicholas Judd`](https://njudd.com), Jordy van Langen, Micah Allen, and [`Rogier Kievit`](https://lifespancognitivedynamics.com/). 
 
 <pre>
 - Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
