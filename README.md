@@ -19,6 +19,19 @@
 - Connect longitudinal observations
 - Handles Likert data
 - Allows mapping of a covariate.
+
+### Citation
+
+[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen, Micah Allen, and Rogier Kievit. 
+
+<pre>
+- Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
+    <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
+    R package version 0.0.3.
+    <b>CRAN</b> 2023, https://doi.org/10.32614/CRAN.package.ggrain,
+    <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
+</pre>
+
 	
 ### Example 
 
@@ -89,18 +102,6 @@ Position-related arguments (e.g., jittering, nudging & width) can be passed with
 
 We warmly welcome all contributions. 
 You can open an issue or make a pull request if you would like to add something new!
-
-### Citation
-
-[`ggrain`](https://github.com/njudd/ggrain) was developed by Nicholas Judd, Jordy van Langen, Micah Allen, and Rogier Kievit. 
-
-<pre>
-- Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
-    <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
-    R package version 0.0.3.
-    <b>CRAN</b> 2023, https://doi.org/10.32614/CRAN.package.ggrain,
-    <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
-</pre>
 
 ### Scientific papers that used & cited 👏 `ggrain`
 <pre>
