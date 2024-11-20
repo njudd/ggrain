@@ -27,7 +27,7 @@
 <pre>
 - Judd, N., van Langen, J., Allen, M., & Kievit, R.A.
     <i>ggrain: A Rainclouds Geom for 'ggplot2'.</i>
-    R package version 0.0.3.
+    R package version 0.0.4.
     <b>CRAN</b> 2023, https://doi.org/10.32614/CRAN.package.ggrain,
     <a href="https://CRAN.R-project.org/package=ggrain">https://CRAN.R-project.org/package=ggrain</a>
 </pre>
