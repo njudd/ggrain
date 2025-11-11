@@ -1,3 +1,5 @@
+#' This is taken from gghalves great R package
+#' I am trying to remove the dependency
 #' @inheritParams ggplot2::stat_ydensity
 #' @seealso [geom_half_violin()] for examples.
 #' @importFrom ggplot2 layer
