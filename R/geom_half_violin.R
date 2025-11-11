@@ -1,4 +1,6 @@
 #' Half Violin plot
+#' This is taken from gghalves great R package
+#' I am trying to remove the dependency
 #'
 #' A violin plot is a compact display of a continuous distribution. It is a
 #' blend of [geom_boxplot()] and [geom_density()]: a
