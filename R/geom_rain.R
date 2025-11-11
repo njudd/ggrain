@@ -26,7 +26,6 @@
 #' need library(ggplot2)
 #' depends = ggplot2
 #' @importFrom ggplot2 aes
-#' @importFrom gghalves geom_half_violin
 #' @importFrom rlang list2 sym !! !!! exec
 #' @importFrom ggpp position_dodgenudge
 #' @export
@@ -268,7 +267,7 @@ geom_rain <- function(mapping = NULL,
     e4 <- rlang::exec(geom_paired_raincloud, inherit.aes = TRUE, !!!violin.args)
   }
   else {
-    e4 <- rlang::exec(gghalves::geom_half_violin, inherit.aes = TRUE, !!!violin.args)
+    e4 <- rlang::exec(geom_half_violin, inherit.aes = TRUE, !!!violin.args)
   }
 
   if (!is.null(id.long.var)){
