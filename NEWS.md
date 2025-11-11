@@ -1,10 +1,15 @@
+ggrain 0.1.0
+---------------------------------------------------------------
+- removing the gghalves dependency due to maintance issues with gghalves
+- fixing the preset nudging due to a change in geom_violin
+- doing the thing that CRAN wanted on namespace
+
 ggrain 0.0.4
 ---------------------------------------------------------------
 - updates to ggpp:position_dodgenudge() broke the rainside flanking functions
 - the width of the boxplots now needs to be specified twice (additionally now in dodgenudge)
 - the rain side args and the vignette was updated
 - put a ggpp dependency of 0.5.6
-
 
 ggrain 0.0.3
 ----------------------------------------------------------------
