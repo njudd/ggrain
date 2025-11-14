@@ -167,7 +167,7 @@ ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fil
                 position = ggpp::position_dodgenudge(width = .1, #width needed now in ggpp version 0.5.g
                   x = c(-.13, -.13, # pre versicolor, pre virginica
                         .13, .13))), # post; post
-            violin.args.pos = list(width = .7,
+            violin.args.pos = list(width = .7, quantiles = NULL,
              position = position_nudge(x = c(rep(-.2, 512), rep(-.2, 512),# pre; pre
                                              rep(.2, 512), rep(.2, 512))))) + #post; post
   theme_classic() +
