@@ -160,7 +160,7 @@ geom_rain <- function(mapping = NULL,
           width = .08,
           position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
         violin.args.pos <- rlang::list2(
-          width = .7,
+          width = .7, quantiles = NULL,
           position = position_nudge(x = c(rep(-.15, 512), rep(-.15, 512),
                                           rep(.15, 512), rep(.15, 512))))
       }
@@ -170,7 +170,7 @@ geom_rain <- function(mapping = NULL,
         width = .08,
         position = ggpp::position_dodgenudge(width = .08, x = c(-.1, .1)))
       violin.args.pos <- rlang::list2(
-        width = .7,
+        width = .7, quantiles = NULL,
         position = position_nudge(x = c(rep(-.15, 512), rep(.15, 512))))
     }
     else if (rain.side == "f2x2") {
@@ -178,7 +178,7 @@ geom_rain <- function(mapping = NULL,
         width = .08,
         position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
       violin.args.pos <- rlang::list2(
-        width = .7,
+        width = .7, quantiles = NULL,
         position = position_nudge(x = c(rep(-.15, 512), rep(-.15, 512),
                                         rep(.15, 512), rep(.15, 512))))
     } else
@@ -298,15 +298,3 @@ geom_rain <- function(mapping = NULL,
     list(e4, e3, e1)
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
