@@ -158,6 +158,8 @@ ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fil
 
 We can easily flank them using the `rain.side` argument for 2-by-2 flanking (i.e., `'f2x2'`). This also automatically uses `ggpp::position_dodgenudge` to dodge the boxplots. Yet, for descriptive purposes with will use the flanking argument `rain.side = 'f'` with the defaults from `'f2x2'`. The `rain.side = 'f'` argument defaults to a 2-by-2 yet throw a warning if you don't remap the `violin.args.pos`. When using flanking with more groups or more time points you must give specific `boxplot.args.pos` and `violin.args.pos` for each element. The left elements must have negative x-axis nudging values with the right ones have positive x-axis nudging values.
 
+For manual nudging of violins with quantiles please see the instructions on [Github Issue 16](https://github.com/njudd/ggrain/issues/16).
+
 ```{r rainclouds by time by group flipped}
 ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fill = Species)) +
   geom_rain(alpha = .5, rain.side = 'f',
@@ -166,8 +168,8 @@ ggplot(iris.long[iris.long$time %in% c('t1', 't2'),], aes(time, Sepal.Width, fil
                   x = c(-.13, -.13, # pre versicolor, pre virginica
                         .13, .13))), # post; post
             violin.args.pos = list(width = .7,
-             position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# pre; pre
-                                             rep(.2, 256*2), rep(.2, 256*2))))) + #post; post
+             position = position_nudge(x = c(rep(-.2, 512), rep(-.2, 512),# pre; pre
+                                             rep(.2, 512), rep(.2, 512))))) + #post; post
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
   guides(fill = 'none', color = 'none')
@@ -208,9 +210,9 @@ ggplot(iris.long, aes(time, Sepal.Width, fill = Species)) +
                                                         -.13, .13, 
                                                          .13, .13))),
             violin.args.pos = list(width = .7,
-             position = position_nudge(x = c(rep(-.2, 256*2), rep(-.2, 256*2),# t1
-                                             rep(-.2, 256*2), rep(.2, 256*2), # t2
-                                             rep(.2, 256*2), rep(.2, 256*2))))) +
+             position = position_nudge(x = c(rep(-.2, 512), rep(-.2, 512),# t1
+                                             rep(-.2, 512), rep(.2, 512), # t2
+                                             rep(.2, 512), rep(.2, 512))))) +
   theme_classic() +
   scale_fill_manual(values=c("dodgerblue", "darkorange")) +
   scale_color_viridis_c(option =  "A", direction = -1) +
