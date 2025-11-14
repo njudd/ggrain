@@ -6,6 +6,7 @@
 #'
 #' @name geom_rain
 #' @inheritParams ggplot2::geom_boxplot
+#' @inheritParams ggplot2::geom_violin
 #' @param id.long.var A group to connect the lines by - must be a string (e.g., "id").
 #' @param cov A covariate to color the dots by - must be as a string (e.g., "cov")
 #' @param rain.side How you want the rainclouds displayed, right ("r"), left ("l") or flanking ("f"), for a 1-by-1 flanking raincloud use ("f1x1") and for a 2-by-2 use ("f2x2").
@@ -118,7 +119,7 @@ geom_rain <- function(mapping = NULL,
                         ...
                       ),
                       violin.args.pos = rlang::list2(
-                        side = "r", width = .7, quantiles = FALSE, # putting this here as it breaks shit see github issue; https://github.com/njudd/ggrain/issues/16
+                        side = "r", width = .7, quantiles = NULL, # putting this here as it breaks shit see github issue; https://github.com/njudd/ggrain/issues/16
                         position = position_nudge(x = .15),
                       )
 )
