@@ -4,3 +4,4 @@
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^cran-comments.md$
+^V1_building.R$
