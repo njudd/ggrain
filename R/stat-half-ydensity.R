@@ -1,10 +1,10 @@
 #' This is taken from gghalves great R package
 #' I am trying to remove the dependency
 #' @inheritParams ggplot2::stat_ydensity
+#' @param geom This is only half_voilin
 #' @seealso [geom_half_violin()] for examples.
 #' @importFrom ggplot2 layer
-#' @export
-#' @rdname geom_half_violin
+
 stat_half_ydensity <- function(
   mapping = NULL, data = NULL,
   geom = "half_violin", position = "dodge",
@@ -41,11 +41,9 @@ stat_half_ydensity <- function(
 }
 
 
-#' @rdname gghalves-extensions
 #' @format NULL
 #' @usage NULL
 #' @importFrom ggplot2 ggproto StatBoxplot StatYdensity
-#' @export
 StatHalfYdensity <- ggproto(
   "StatHalfYdensity", StatBoxplot,
   required_aes = c("x", "y"),
