@@ -83,11 +83,6 @@ GeomPairedRaincloud <-
               temp2[order(data$y, decreasing = TRUE) ,]
             )
 
-            # newdata <- rbind(
-            #   dplyr::arrange(dplyr::mutate(data, x = .data$xminv), .data$y),
-            #   dplyr::arrange(dplyr::mutate(data, x = .data$xmaxv), dplyr::desc(.data$y))
-            # )
-
             newdata <- rbind(newdata, newdata[1,])
 
             .grobName("geom_paired_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
