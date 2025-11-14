@@ -2,7 +2,7 @@ ggrain 0.1.0
 ---------------------------------------------------------------
 - removing the gghalves dependency due to maintance issues with gghalves
 - fixing the preset nudging due to a change in geom_violin
-- doing the thing that CRAN wanted on namespace
+- doing the thing that CRAN [wanted](https://cran.r-project.org/web/checks/check_results_ggrain.html)
 
 ggrain 0.0.4
 ---------------------------------------------------------------
