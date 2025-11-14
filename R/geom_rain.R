@@ -118,7 +118,7 @@ geom_rain <- function(mapping = NULL,
                         ...
                       ),
                       violin.args.pos = rlang::list2(
-                        side = "r", width = .7,
+                        side = "r", width = .7, quantiles = FALSE, # putting this here as it breaks shit see github issue; https://github.com/njudd/ggrain/issues/16
                         position = position_nudge(x = .15),
                       )
 )
@@ -160,8 +160,8 @@ geom_rain <- function(mapping = NULL,
           position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
         violin.args.pos <- rlang::list2(
           width = .7,
-          position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
-                                          rep(.15, 256*2), rep(.15, 256*2))))
+          position = position_nudge(x = c(rep(-.15, 512), rep(-.15, 512),
+                                          rep(.15, 512), rep(.15, 512))))
       }
     }
     else if (rain.side == "f1x1") {
@@ -170,7 +170,7 @@ geom_rain <- function(mapping = NULL,
         position = ggpp::position_dodgenudge(width = .08, x = c(-.1, .1)))
       violin.args.pos <- rlang::list2(
         width = .7,
-        position = position_nudge(x = c(rep(-.15, 256*2), rep(.15, 256*2))))
+        position = position_nudge(x = c(rep(-.15, 512), rep(.15, 512))))
     }
     else if (rain.side == "f2x2") {
       boxplot.args.pos <- rlang::list2(
@@ -178,8 +178,8 @@ geom_rain <- function(mapping = NULL,
         position = ggpp::position_dodgenudge(width = .08, x = c(-.1, -.1, .1, .1)))
       violin.args.pos <- rlang::list2(
         width = .7,
-        position = position_nudge(x = c(rep(-.15, 256*2), rep(-.15, 256*2),
-                                        rep(.15, 256*2), rep(.15, 256*2))))
+        position = position_nudge(x = c(rep(-.15, 512), rep(-.15, 512),
+                                        rep(.15, 512), rep(.15, 512))))
     } else
       stop("the rain.side arguement only accepts: \n 'l' for left \n 'r' for right \n 'f', 'f1x1', or 'f2x2' for flanking
            \n STOPPING", call. = FALSE)
