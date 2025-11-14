@@ -9,7 +9,7 @@
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
-\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{ggplot2::layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
@@ -18,8 +18,8 @@ to the paired geom/stat.}
 The point geom is used to create scatterplots. The scatterplot is most
 useful for displaying the relationship between two continuous variables.
 It can be used to compare one continuous and one categorical variable, or
-two categorical variables, but a variation like \code{\link[=geom_jitter]{geom_jitter()}},
-\code{\link[=geom_count]{geom_count()}}, or \code{\link[=geom_bin2d]{geom_bin2d()}} is usually more
+two categorical variables, but a variation like \code{\link[ggplot2:geom_jitter]{ggplot2::geom_jitter()}},
+\code{\link[ggplot2:geom_count]{ggplot2::geom_count()}}, or \code{\link[ggplot2:geom_bin_2d]{ggplot2::geom_bin2d()}} is usually more
 appropriate. A \emph{bubblechart} is a scatterplot with a third variable
 mapped to the size of points.
 }
@@ -30,14 +30,14 @@ you have more than a few points, points may be plotted on top of one
 another. This can severely distort the visual appearance of the plot.
 There is no one solution to this problem, but there are some techniques
 that can help. You can add additional information with
-\code{\link[=geom_smooth]{geom_smooth()}}, \code{\link[=geom_quantile]{geom_quantile()}} or
-\code{\link[=geom_density_2d]{geom_density_2d()}}. If you have few unique \code{x} values,
-\code{\link[=geom_boxplot]{geom_boxplot()}} may also be useful.
+\code{\link[ggplot2:geom_smooth]{ggplot2::geom_smooth()}}, \code{\link[ggplot2:geom_quantile]{ggplot2::geom_quantile()}} or
+\code{\link[ggplot2:geom_density_2d]{ggplot2::geom_density_2d()}}. If you have few unique \code{x} values,
+\code{\link[ggplot2:geom_boxplot]{ggplot2::geom_boxplot()}} may also be useful.
 
 Alternatively, you can
 summarise the number of points at each location and display that in some
-way, using \code{\link[=geom_count]{geom_count()}}, \code{\link[=geom_hex]{geom_hex()}}, or
-\code{\link[=geom_density2d]{geom_density2d()}}.
+way, using \code{\link[ggplot2:geom_count]{ggplot2::geom_count()}}, \code{\link[ggplot2:geom_hex]{ggplot2::geom_hex()}}, or
+\code{\link[ggplot2:geom_density_2d]{ggplot2::geom_density2d()}}.
 
 Another technique is to make the points transparent (e.g.
 \code{geom_point(alpha = 0.05)}) or very small (e.g.
