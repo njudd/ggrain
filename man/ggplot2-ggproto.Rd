@@ -40,19 +40,19 @@ way, using \code{\link[ggplot2:geom_count]{ggplot2::geom_count()}}, \code{\link[
 \code{\link[ggplot2:geom_density_2d]{ggplot2::geom_density2d()}}.
 
 Another technique is to make the points transparent (e.g.
-\code{geom_point(alpha = 0.05)}) or very small (e.g.
-\code{geom_point(shape = ".")}).
+\code{ggplot2::geom_point(alpha = 0.05)}) or very small (e.g.
+\code{ggplot2::geom_point(shape = ".")}).
 }
 
 \examples{
 p <- ggplot(mtcars, aes(wt, mpg))
-p + geom_point()
+p + ggplot2::geom_point()
 
 # Add aesthetic mappings
-p + geom_point(aes(colour = factor(cyl)))
-p + geom_point(aes(shape = factor(cyl)))
+p + ggplot2::geom_point(aes(colour = factor(cyl)))
+p + ggplot2::geom_point(aes(shape = factor(cyl)))
 # A "bubblechart":
-p + geom_point(aes(size = qsec))
+p + ggplot2::geom_point(aes(size = qsec))
 
 # Set aesthetics to fixed value
 ggplot(mtcars, aes(wt, mpg)) + geom_point(colour = "red", size = 3)
@@ -60,9 +60,9 @@ ggplot(mtcars, aes(wt, mpg)) + geom_point(colour = "red", size = 3)
 \donttest{
 # Varying alpha is useful for large datasets
 d <- ggplot(diamonds, aes(carat, price))
-d + geom_point(alpha = 1/10)
-d + geom_point(alpha = 1/20)
-d + geom_point(alpha = 1/100)
+d + ggplot2::geom_point(alpha = 1/10)
+d + ggplot2::geom_point(alpha = 1/20)
+d + ggplot2::geom_point(alpha = 1/100)
 }
 
 # For shapes that have a border (like 21), you can colour the inside and
@@ -76,12 +76,12 @@ ggplot(mtcars, aes(wt, mpg)) +
 # different sizes
 p <- ggplot(mtcars, aes(mpg, wt, shape = factor(cyl)))
 p +
-  geom_point(aes(colour = factor(cyl)), size = 4) +
-  geom_point(colour = "grey90", size = 1.5)
+  ggplot2::geom_point(aes(colour = factor(cyl)), size = 4) +
+  ggplot2::geom_point(colour = "grey90", size = 1.5)
 p +
-  geom_point(colour = "black", size = 4.5) +
-  geom_point(colour = "pink", size = 4) +
-  geom_point(aes(shape = factor(cyl)))
+  ggplot2::geom_point(colour = "black", size = 4.5) +
+  ggplot2::geom_point(colour = "pink", size = 4) +
+  ggplot2::geom_point(aes(shape = factor(cyl)))
 
 # geom_point warns when missing values have been dropped from the data set
 # and not plotted, you can turn this off by setting na.rm = TRUE

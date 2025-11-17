@@ -118,7 +118,7 @@ on 30-10-22 attribution to https://yjunechoe.github.io/
 \details{
 Create a paired raincloud plot (useful for visualizing difference between experimental conditions tested on the same subjects or items).
 
-Adopted from the geom_violinhalf() source code from the see package
+Adopted from the see::geom_violinhalf() source code from the see package
 }
 \examples{
 library(ggplot2)
