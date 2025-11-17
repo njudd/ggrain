@@ -3,7 +3,7 @@
 #' I am trying to remove the dependency
 #'
 #' A violin plot is a compact display of a continuous distribution. It is a
-#' blend of [geom_boxplot()] and [geom_density()]: a
+#' blend of [ggplot2::geom_boxplot()] and [ggplot2::geom_density()]: a
 #' violin plot is a mirrored density plot displayed in the same way as a
 #' boxplot.
 #' 
