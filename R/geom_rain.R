@@ -280,7 +280,7 @@ geom_rain <- function(mapping = NULL,
     # you need false, but you need to take x & y with you!!!
 
     # https://github.com/tidyverse/ggplot2/issues/3535
-    # redoing geom_point with ordered data
+    # redoing ggplot2::geom_point with ordered data
     # I don't think this will work because data isn't passed
     # now it works but I need to pass the data arg
     # also the args are quite verbose, can you trim them down
