@@ -22,7 +22,7 @@
 #' @param violin.args.pos A list of positional args for the violin
 #' @return Returns a list of three environments to be used with the 'ggplot()' function in the 'ggplot2' package.
 #' @return If the id.long.var argument is used the output will be a list of 4 environments.
-#' @return These 4 environments have a similar structure to 'geom_boxplot()', 'geom_violin()', 'geom_point()' and 'geom_line()' from 'ggplot2'.
+#' @return These 4 environments have a similar structure to 'ggplot2::geom_boxplot()', 'ggplot2::geom_violin()', 'ggplot2::geom_point()' and 'ggplot2::geom_line()' from 'ggplot2'.
 #' need library(rlang)
 #' need library(ggplot2)
 #' depends = ggplot2
@@ -280,7 +280,7 @@ geom_rain <- function(mapping = NULL,
     # you need false, but you need to take x & y with you!!!
 
     # https://github.com/tidyverse/ggplot2/issues/3535
-    # redoing geom_point with ordered data
+    # redoing ggplot2::geom_point with ordered data
     # I don't think this will work because data isn't passed
     # now it works but I need to pass the data arg
     # also the args are quite verbose, can you trim them down
