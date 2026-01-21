@@ -40,8 +40,8 @@ way, using \code{\link[ggplot2:geom_count]{ggplot2::geom_count()}}, \code{\link[
 \code{\link[ggplot2:geom_density_2d]{ggplot2::geom_density2d()}}.
 
 Another technique is to make the points transparent (e.g.
-\code{ggplot2::geom_point(alpha = 0.05)}) or very small (e.g.
-\code{ggplot2::geom_point(shape = ".")}).
+\verb{[ggplot2::geom_point(alpha = 0.05)]}) or very small (e.g.
+\verb{[ggplot2::geom_point(shape = ".")]}).
 }
 
 \examples{
@@ -83,7 +83,7 @@ p +
   ggplot2::geom_point(colour = "pink", size = 4) +
   ggplot2::geom_point(aes(shape = factor(cyl)))
 
-# geom_point warns when missing values have been dropped from the data set
+# ggplot2::geom_point warns when missing values have been dropped from the data set
 # and not plotted, you can turn this off by setting na.rm = TRUE
 set.seed(1)
 mtcars2 <- transform(mtcars, mpg = ifelse(runif(32) < 0.2, NA, mpg))
