@@ -1,3 +1,7 @@
+ggrain 0.1.1
+---------------------------------------------------------------
+- removing one last cross ref to gghalves to make CRAN happy
+
 ggrain 0.1.0
 ---------------------------------------------------------------
 - removing the gghalves dependency due to maintance issues with gghalves
