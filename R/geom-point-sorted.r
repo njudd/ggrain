@@ -27,7 +27,7 @@
 #' `[ggplot2::geom_point(alpha = 0.05)]`) or very small (e.g.
 #' `[ggplot2::geom_point(shape = ".")]`).
 #'
-#' @inheritParams [ggplot2::geom_point()]
+#' @inheritParams ggplot2::geom_point
 #' @param na.rm If `FALSE`, the default, missing values are removed with
 #'   a warning. If `TRUE`, missing values are silently removed.
 #' @param ... Other arguments passed on to [ggplot2::layer()]. These are
