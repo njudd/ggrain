@@ -2,7 +2,6 @@
 #' I am trying to remove the dependency
 #' @inheritParams ggplot2::stat_ydensity
 #' @param geom This is only half_voilin
-#' @seealso [gghalves::geom_half_violin()] for examples.
 #' @importFrom ggplot2 layer
 
 stat_half_ydensity <- function(
