@@ -1,3 +1,7 @@
+ggrain 0.1.2
+---------------------------------------------------------------
+- like omfg I think I got rid of it
+
 ggrain 0.1.1
 ---------------------------------------------------------------
 - removing one last cross ref to gghalves to make CRAN happy

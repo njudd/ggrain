@@ -92,8 +92,7 @@ For a complete overview of `ggrain` such as a 2-by-2 raincloud plot or multiple 
 - `Likert`: `True` or `False` response which adds y jittering
 - `rain.side`: Which side to display the rainclouds: 'l' for left, 'r' for right and 'f' for flanking
 
-Specific geom arguments can be passed with a list to any of the 4 geom's with the argument `{point/line/boxplot/violin}.args`. For a list of arguments that can be passed see the help files of the respective geom's (e.g., `?gghalves::geom_half_violin`).
-
+Specific geom arguments can be passed with a list to any of the 4 geom's with the argument `{point/line/boxplot/violin}.args`. 
 Position-related arguments (e.g., jittering, nudging & width) can be passed with `{point/line/boxplot/violin}.args.pos`, see the help file of `?geom_rain` for defaults
 
 ![img](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/time_group_cov_vin.png)
