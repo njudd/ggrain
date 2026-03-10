@@ -104,6 +104,10 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Scientific papers that used & cited 👏 `ggrain`
 <pre>
+<b>*</b> Garofalo, S., Finotti, G., Orsoni, M., Giovagnoli, S., & Benassi, M. (2024). 
+	Testing Bayesian Informative Hypotheses in Five Steps With JASP and R.
+	<b>Advances in Methods and Practices in Psychological Science, 7(4), 25152459241260259.</b>
+	<a href="https://doi.org/10.1177/25152459241260259">https://doi.org/10.1177/25152459241260259</a>
 <b>*</b> de Müllenheim, P. Y. (2024). Analyser des données avec R.
 	<a href="https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf">https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf</a>
 <b>*</b> Robison, M. K., Celaya, X., Ball, B. H., & Brewer, G. A. (2024). 
