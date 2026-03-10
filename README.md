@@ -104,6 +104,8 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Scientific papers that used & cited 👏 `ggrain`
 <pre>
+<b>*</b> de Müllenheim, P. Y. (2024). Analyser des données avec R.
+	<a href="https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf">https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf</a>
 <b>*</b> Robison, M. K., Celaya, X., Ball, B. H., & Brewer, G. A. (2024). 
     Task sequencing does not systematically affect the factor structure of cognitive abilities. 
     <b>Psychonomic Bulletin & Review, 31(2), 670-685.</b>
