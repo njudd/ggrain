@@ -104,6 +104,41 @@ You can open an issue or make a pull request if you would like to add something 
 
 ### Scientific papers that used & cited 👏 `ggrain`
 <pre>
+<b>*</b> Yulugkural, Z., Yildiz, M., Topcu, E., Elmaslar Mert, H. T., & Temiz, A. (2026). 
+	Epigenetic Modulation of IL‐7 and IL‐10: Toward Personalized Immune Therapies in Viral Epidemics. 
+	<b>Journal of Immunology Research, 2026(1), 9467657.</b>
+	<a href="https://doi.org/10.1155/jimr/9467657">https://doi.org/10.1155/jimr/9467657</a>
+<b>*</b> Birdsey, L. P., Brown, S., Dos’ Santos, T., Evans, D., Runacres, A., Weston, M., & Field, A. (2026).
+	National‐Standard Middle‐Distance Runners Maintain 1500 m Time Trial Running Performance on Successive Days. 
+	<b>European journal of sport science, 26(3), e70142.</b>
+	<a href="https://doi.org/10.1002/ejsc.70142">https://doi.org/10.1002/ejsc.70142</a>
+<b>*</b> Yin, C., Kindt, A., Harms, A., Hartman, R., Hankemeier, T., & De Lange, E. (2026). 
+	Lipidomic fingerprints reveal sex-, age-, and disease-dependent differences in the TgF344-AD transgenic rats. 
+	<b>Metabolomics, 22(1), 9.</b>
+	<a href="https://doi.org/10.1007/s11306-025-02350-z">https://doi.org/10.1007/s11306-025-02350-z</a>
+<b>*</b> Weston, K. L., Burn, N. L., Goroski, A., Weston, M., Galna, B., Glossop, R., ... & Basterfield, L. (2026). 
+	Feasibility of a school-based peer-led high-intensity interval training intervention: the Young Fitness Leaders project. 
+	<b>BMC Public Health, 26, 799.</b>
+	<a href="10.1186/s12889-026-26543-w">10.1186/s12889-026-26543-w</a>
+<b>*</b> Pawel, S., & Held, L. (2026). 
+	Bayes Factor Group Sequential Designs. 
+	<b>arXiv preprint arXiv:2601.02851.</b>
+	<a href="https://doi.org/10.48550/arXiv.2601.02851">https://doi.org/10.48550/arXiv.2601.02851</a>
+<b>*</b> Dutschke, R., Thiele, G., Schoemann, M., Surrey, C., & Scherbaum, S. 
+	Assessing complex belief structures with the triads task: Reliability and validity.
+	<b>OSF</b>
+	<a href="https://sciety.org/articles/activity/10.31234/osf.io/ubc85_v1">https://sciety.org/articles/activity/10.31234/osf.io/ubc85_v1</a>
+<b>*</b> Urry, H. L., Plonski, P. E., Patel, P., Cathern, M. D., Taylor, H. A., & Brunyé, T. T. (2026). 
+	Urgent, hurry up!!! Perceived time pressure affects fine motor performance via subjective distress in US adults. 
+	<b>Journal of Experimental Psychology: Human Perception and Performance.</b>
+	<a href="https://doi.org/10.1037/xhp0001386">https://doi.org/10.1037/xhp0001386</a>
+<b>*</b> Petit, Q., Lecoq, S., Congnard, F., Cronier, N., de Müllenheim, P. Y., Abraham, P., & Noury‐Desvaux, B. (2026). 
+	Heart rate increase results in case of positional venous entrapment. 
+	<b>Clinical Physiology and Functional Imaging, 46(1), e70041.</b>
+	<a href="https://doi.org/10.1111/cpf.70041">https://doi.org/10.1111/cpf.70041</a>
+<b>*</b> Cruz, T. D. D., & de Lucena, M. A. (2026). 
+	Training and oversight of algorithms in social decision-making: Algorithms with prescribed selfish defaults breed selfish decisions.    	      <b>Computers in Human Behavior, 108924.</b>
+	<a href="https://doi.org/10.1016/j.chb.2026.108924">https://doi.org/10.1016/j.chb.2026.108924</a>
 <b>*</b> Garofalo, S., Finotti, G., Orsoni, M., Giovagnoli, S., & Benassi, M. (2024). 
 	Testing Bayesian Informative Hypotheses in Five Steps With JASP and R.
 	<b>Advances in Methods and Practices in Psychological Science, 7(4), 25152459241260259.</b>
