@@ -137,7 +137,7 @@ You can open an issue or make a pull request if you would like to add something 
 	<b>Clinical Physiology and Functional Imaging, 46(1), e70041.</b>
 	<a href="https://doi.org/10.1111/cpf.70041">https://doi.org/10.1111/cpf.70041</a>
 <b>*</b> Cruz, T. D. D., & de Lucena, M. A. (2026). 
-	Training and oversight of algorithms in social decision-making: Algorithms with prescribed selfish defaults breed selfish decisions.    	      <b>Computers in Human Behavior, 108924.</b>
+	Training and oversight of algorithms in social decision-making: Algorithms with prescribed selfish defaults breed selfish decisions.			<b>Computers in Human Behavior, 108924.</b>
 	<a href="https://doi.org/10.1016/j.chb.2026.108924">https://doi.org/10.1016/j.chb.2026.108924</a>
 <b>*</b> Garofalo, S., Finotti, G., Orsoni, M., Giovagnoli, S., & Benassi, M. (2024). 
 	Testing Bayesian Informative Hypotheses in Five Steps With JASP and R.
