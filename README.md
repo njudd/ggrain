@@ -140,6 +140,11 @@ You can open an issue or make a pull request if you would like to add something 
 	Training and oversight of algorithms in social decision-making: Algorithms with prescribed selfish defaults breed selfish decisions.
 	<b>Computers in Human Behavior, 108924.</b>
 	<a href="https://doi.org/10.1016/j.chb.2026.108924">https://doi.org/10.1016/j.chb.2026.108924</a>
+<b>*</b> Selvakumar, J., Havdal, L. B., Brodwall, E. M., Sommen, S., Berven, L. L., Stiansen-Sonerud, T., ... & Wyller, V. B. B. (2025). 
+	Risk factors for fatigue severity in the post-COVID-19 condition: A prospective controlled cohort study of nonhospitalised adolescents and young adults. 
+	<b>Brain, Behavior, & Immunity-Health, 44, 100967.</b>
+	<a href="https://doi.org/10.1016/j.bbih.2025.100967">https://doi.org/10.1016/j.bbih.2025.100967</a>
+
 <b>*</b> Garofalo, S., Finotti, G., Orsoni, M., Giovagnoli, S., & Benassi, M. (2024). 
 	Testing Bayesian Informative Hypotheses in Five Steps With JASP and R.
 	<b>Advances in Methods and Practices in Psychological Science, 7(4), 25152459241260259.</b>
