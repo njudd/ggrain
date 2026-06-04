@@ -13,6 +13,7 @@ geom_rain(
   rain.side = NULL,
   likert = FALSE,
   seed = 42,
+  stacked = FALSE,
   ...,
   point.args = rlang::list2(...),
   point.args.pos = rlang::list2(position = position_jitter(width = 0.04, height = 0, seed
@@ -62,6 +63,12 @@ the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{ann
 \item{likert}{Currently developing, right now just addes y-jitter.}
 
 \item{seed}{For the jittering in point & line to match.}
+
+\item{stacked}{When \code{TRUE}, replaces jittered points with stacked dots via
+\code{geom_dotplot(binaxis = "y")}, useful for discrete y-values. The stack
+direction is set automatically based on \code{rain.side} so dots grow away from
+the violin and boxplot. Incompatible with \code{id.long.var} (a warning is issued
+and lines are suppressed). Defaults to \code{FALSE}.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}'s \code{params} argument. These
 arguments broadly fall into one of 4 categories below. Notably, further

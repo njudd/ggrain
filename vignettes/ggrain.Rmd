@@ -244,3 +244,73 @@ scale_fill_manual(values=c("darkorange", "darkorange")) +
 theme_classic()
 ```
 ![](https://raw.githubusercontent.com/njudd/ggrain/main/inst/git_pics/geom_signif_image.png)
+
+## Discrete Data
+
+When your y-variable takes only a handful of distinct values (e.g., drug doses like 10 mg / 20 mg / 50 mg, Likert ratings, or cylinder counts), jittered scatter points can be misleading because they imply fractional values that do not exist in the data. Setting `stacked = TRUE` replaces the jittered `geom_point` layer with `geom_dotplot(binaxis = "y", stackdir = "centerwhole")`, which stacks one dot per observation at each discrete y-value and clearly shows the count at each level.
+
+We simulate a small discrete dataset — three groups of 20 observations each with integer scores (1–9) drawn from shifted normal distributions, mimicking a dose-response scenario.
+
+```{r stacked data}
+set.seed(321)
+n_grp <- 20
+disc_dat <- data.frame(
+  group = factor(rep(c("Control", "Low Dose", "High Dose"), each = n_grp),
+                 levels = c("Control", "Low Dose", "High Dose")),
+  score = c(
+    sample(1:9, n_grp, replace = TRUE, prob = dnorm(1:9, 4.5, 1.5)),
+    sample(1:9, n_grp, replace = TRUE, prob = dnorm(1:9, 5.5, 1.5)),
+    sample(1:9, n_grp, replace = TRUE, prob = dnorm(1:9, 6.5, 1.5))
+  )
+)
+```
+
+### Basic stacked raincloud
+
+By default (`rain.side = 'r'`) the stacked dots grow leftward, keeping them clear of the violin and boxplot.
+
+```{r stacked basic}
+ggplot(disc_dat, aes(group, score, fill = group)) +
+  geom_rain(stacked = TRUE) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none')
+```
+
+### Stacked with left-side violin
+
+With `rain.side = 'l'` the dots automatically grow rightward so they stay clear of the left-side violin.
+
+```{r stacked left}
+ggplot(disc_dat, aes(group, score, fill = group)) +
+  geom_rain(stacked = TRUE, rain.side = 'l') +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none')
+```
+
+### Fine-tuning dot size and bin width
+
+All `geom_dotplot` parameters can be passed through `point.args`.
+
+```{r stacked fine-tuned}
+ggplot(disc_dat, aes(group, score, fill = group)) +
+  geom_rain(stacked = TRUE,
+            point.args = list(binaxis = "y", stackdir = "down",
+                              dotsize = 0.4, stackratio = 0.5, binwidth = 1)) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none')
+```
+
+Reducing `binwidth` creates finer bins, so each dot represents a narrower range of values.
+
+```{r stacked fine-tuned binwidth}
+ggplot(disc_dat, aes(group, score, fill = group)) +
+  geom_rain(stacked = TRUE,
+            point.args = list(binaxis = "y", stackdir = "down",
+                              dotsize = 0.4, stackratio = 0.5, binwidth = 0.5)) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none')
+```

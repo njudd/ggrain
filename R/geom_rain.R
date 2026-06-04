@@ -12,6 +12,10 @@
 #' @param rain.side How you want the rainclouds displayed, right ("r"), left ("l") or flanking ("f"), for a 1-by-1 flanking raincloud use ("f1x1") and for a 2-by-2 use ("f2x2").
 #' @param likert Currently developing, right now just addes y-jitter.
 #' @param seed For the jittering in point & line to match.
+#' @param stacked When `TRUE`, replaces jittered points with stacked dots via
+#'   `geom_dotplot(binaxis = "y", stackdir = "centerwhole")`, useful for
+#'   discrete y-values. Incompatible with `id.long.var` (a warning is issued
+#'   and lines are suppressed). Defaults to `FALSE`.
 #' @param point.args A list of args for the dots
 #' @param point.args.pos A list of positional args for the points
 #' @param line.args A list of args for the lines, you need to specify a group to connect them with id.long.var
@@ -85,6 +89,7 @@ geom_rain <- function(mapping = NULL,
                       rain.side = NULL, # The side to draw the violin/boxplot. "l" for left, "r" for right, "f" for flanking, defaults to "r"
                       likert = FALSE, #make sure you don't need to do more in the long for loop area
                       seed = 42, # for the jittering in point & line to match
+                      stacked = FALSE, # when TRUE use geom_dotplot instead of jittered points
                       # rain.center = NULL, currently not implimented
                       ...,
                       point.args = rlang::list2(
@@ -246,7 +251,31 @@ geom_rain <- function(mapping = NULL,
     message("Likert = T; setting y axis jittering for point & line to .1")
     }
 
-
+  # stacked dots: replace jittered points with geom_dotplot
+  if (stacked) {
+    if (!is.null(id.long.var)) {
+      warning("incompatible to have lines linked with an ID and stacked dots", call. = FALSE)
+      id.long.var <- NULL
+    }
+    # geom_dotplot handles its own internal positioning; clear the jitter position
+    if (!is.null(rain.side) && rain.side %in% c("f", "f1x1", "f2x2")) {
+      point.args.pos <- rlang::list2(position = position_dodge(width = 0.8))
+    } else {
+      point.args.pos <- rlang::list2()
+    }
+    if (!"binaxis"  %in% names(point.args)) point.args$binaxis  <- "y"
+    if (!"dotsize"  %in% names(point.args)) point.args$dotsize  <- 0.5
+    if (!"stackdir" %in% names(point.args)) {
+      # Stack away from violin/boxplot so dots don't overlap them
+      if (!is.null(rain.side) && rain.side == "l") {
+        point.args$stackdir <- "up"       # violin on left, dots grow right
+      } else if (!is.null(rain.side) && rain.side %in% c("f", "f1x1", "f2x2")) {
+        point.args$stackdir <- "centerwhole"
+      } else {
+        point.args$stackdir <- "down"     # violin on right (default), dots grow left
+      }
+    }
+  }
 
   # combining args with position args
   point.args <- c(point.args, point.args.pos)
@@ -255,10 +284,10 @@ geom_rain <- function(mapping = NULL,
   violin.args <- c(violin.args, violin.args.pos)
 
   if(!is.null(cov)){ # remap the color in e1; if a covariate is specified
-    e1 <- rlang::exec(geom_point_sorted, aes(color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args) # bang, bang, bang
+    e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, aes(color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
   }
   else {
-    e1 <- rlang::exec(geom_point_sorted, inherit.aes = TRUE, !!!point.args) # bang, bang, bang
+    e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, inherit.aes = TRUE, !!!point.args)
   }
 
   e3 <- rlang::exec(geom_boxplot, inherit.aes = TRUE, !!!boxplot.args)
@@ -287,10 +316,10 @@ geom_rain <- function(mapping = NULL,
     # CHECK OUT JITTER_NUDGE()
 
     if(!is.null(cov)){ # remap the color in e1 to the covariate
-      e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var), color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
+      e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, aes(group = !!rlang::sym(id.long.var), color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
     }
     else {
-      e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args)
+      e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args)
     }
     list(e2, e4, e3, e1)
   }
