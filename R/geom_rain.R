@@ -13,9 +13,12 @@
 #' @param likert Currently developing, right now just addes y-jitter.
 #' @param seed For the jittering in point & line to match.
 #' @param stacked When `TRUE`, replaces jittered points with stacked dots via
-#'   `geom_dotplot(binaxis = "y", stackdir = "centerwhole")`, useful for
-#'   discrete y-values. Incompatible with `id.long.var` (a warning is issued
-#'   and lines are suppressed). Defaults to `FALSE`.
+#'   `geom_dotplot(binaxis = "y")`, useful for discrete y-values. Dots stack
+#'   away from the violin: `stackdir = "down"` for `rain.side = "r"` (default),
+#'   `"up"` for `"l"` and `"centerwhole"` for flanking. `point.args.pos` is
+#'   respected (e.g., `position_nudge()`); if not supplied, no jitter is applied.
+#'   Incompatible with `id.long.var` (a warning is issued and lines are
+#'   suppressed). Defaults to `FALSE`.
 #' @param point.args A list of args for the dots
 #' @param point.args.pos A list of positional args for the points
 #' @param line.args A list of args for the lines, you need to specify a group to connect them with id.long.var
@@ -130,6 +133,7 @@ geom_rain <- function(mapping = NULL,
 )
 {
 
+  user.point.pos <- !missing(point.args.pos) # must be before any modification of point.args.pos
 
   # if rain.side == "paired" check if the defaults are used;
   # if so rewrite to paired nudging args; else take their args
@@ -257,11 +261,13 @@ geom_rain <- function(mapping = NULL,
       warning("incompatible to have lines linked with an ID and stacked dots", call. = FALSE)
       id.long.var <- NULL
     }
-    # geom_dotplot handles its own internal positioning; clear the jitter position
-    if (!is.null(rain.side) && rain.side %in% c("f", "f1x1", "f2x2")) {
-      point.args.pos <- rlang::list2(position = position_dodge(width = 0.8))
-    } else {
-      point.args.pos <- rlang::list2()
+    # geom_dotplot handles its own internal positioning; drop the default jitter unless user supplied a position
+    if (!user.point.pos) {
+      if (!is.null(rain.side) && rain.side %in% c("f", "f1x1", "f2x2")) {
+        point.args.pos <- rlang::list2(position = position_dodge(width = 0.8))
+      } else {
+        point.args.pos <- rlang::list2()
+      }
     }
     if (!"binaxis"  %in% names(point.args)) point.args$binaxis  <- "y"
     if (!"dotsize"  %in% names(point.args)) point.args$dotsize  <- 0.5
@@ -316,10 +322,10 @@ geom_rain <- function(mapping = NULL,
     # CHECK OUT JITTER_NUDGE()
 
     if(!is.null(cov)){ # remap the color in e1 to the covariate
-      e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, aes(group = !!rlang::sym(id.long.var), color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
+      e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var), color = !!rlang::sym(cov)), inherit.aes = TRUE, !!!point.args)
     }
     else {
-      e1 <- rlang::exec(if (stacked) geom_dotplot else geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args)
+      e1 <- rlang::exec(geom_point_sorted, aes(group = !!rlang::sym(id.long.var)), inherit.aes = TRUE, !!!point.args)
     }
     list(e2, e4, e3, e1)
   }
