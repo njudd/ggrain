@@ -247,7 +247,7 @@ theme_classic()
 
 ## Discrete Data
 
-When your y-variable takes only a handful of distinct values (e.g., drug doses like 10 mg / 20 mg / 50 mg, Likert ratings, or cylinder counts), jittered scatter points can be misleading because they imply fractional values that do not exist in the data. Setting `stacked = TRUE` replaces the jittered `geom_point` layer with `geom_dotplot(binaxis = "y", stackdir = "centerwhole")`, which stacks one dot per observation at each discrete y-value and clearly shows the count at each level.
+When your y-variable takes only a handful of distinct values (e.g., drug doses like 10 mg / 20 mg / 50 mg, Likert ratings, or cylinder counts), jittered scatter points can be misleading because they imply fractional values that do not exist in the data. Setting `stacked = TRUE` replaces the jittered `geom_point` layer with `geom_dotplot(binaxis = "y")`, which stacks one dot per observation at each discrete y-value and clearly shows the count at each level.
 
 We simulate a small discrete dataset — three groups of 20 observations each with integer scores (1–9) drawn from shifted normal distributions, mimicking a dose-response scenario.
 
@@ -310,6 +310,22 @@ ggplot(disc_dat, aes(group, score, fill = group)) +
   geom_rain(stacked = TRUE,
             point.args = list(binaxis = "y", stackdir = "down",
                               dotsize = 0.4, stackratio = 0.5, binwidth = 0.5)) +
+  theme_classic() +
+  scale_fill_brewer(palette = 'Dark2') +
+  guides(fill = 'none')
+```
+
+### Positioning stacked dots
+
+Stacked dots can be shifted with `point.args.pos`, just like the other components. Here the boxplot is centered, the dots are nudged left and the violin right.
+
+```{r stacked positioning}
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+  geom_rain(rain.side = 'r', stacked = TRUE,
+            boxplot.args = list(width = 0.1, outlier.shape = NA),
+            boxplot.args.pos = list(position = position_nudge(x = 0)),
+            point.args.pos = list(position = position_nudge(x = -0.1)),
+            violin.args.pos = list(position = position_nudge(x = 0.1))) +
   theme_classic() +
   scale_fill_brewer(palette = 'Dark2') +
   guides(fill = 'none')
