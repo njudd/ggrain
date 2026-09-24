@@ -2,26 +2,32 @@
 
 export(geom_rain)
 import(ggplot2)
-importFrom(ggplot2,Geom)
-importFrom(ggplot2,GeomBoxplot)
-importFrom(ggplot2,GeomPolygon)
-importFrom(ggplot2,GeomViolin)
-importFrom(ggplot2,StatBoxplot)
-importFrom(ggplot2,StatYdensity)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,draw_key_point)
-importFrom(ggplot2,draw_key_polygon)
-importFrom(ggplot2,ggproto)
-importFrom(ggplot2,layer)
+importFrom(ggplot2,
+  Geom,
+  GeomBoxplot,
+  GeomPolygon,
+  GeomViolin,
+  StatBoxplot,
+  StatYdensity,
+  aes,
+  draw_key_point,
+  draw_key_polygon,
+  ggproto,
+  layer
+)
 importFrom(ggpp,position_dodgenudge)
-importFrom(grid,gpar)
-importFrom(grid,grob)
-importFrom(grid,grobName)
-importFrom(grid,pointsGrob)
-importFrom(rlang,"!!!")
-importFrom(rlang,"!!")
-importFrom(rlang,.data)
-importFrom(rlang,exec)
-importFrom(rlang,list2)
-importFrom(rlang,sym)
+importFrom(grid,
+  gpar,
+  grob,
+  grobName,
+  pointsGrob
+)
+importFrom(rlang,
+  "!!!",
+  "!!",
+  .data,
+  exec,
+  list2,
+  sym
+)
 importFrom(vctrs,vec_unique)
