@@ -65,10 +65,12 @@ the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{ann
 \item{seed}{For the jittering in point & line to match.}
 
 \item{stacked}{When \code{TRUE}, replaces jittered points with stacked dots via
-\code{geom_dotplot(binaxis = "y")}, useful for discrete y-values. The stack
-direction is set automatically based on \code{rain.side} so dots grow away from
-the violin and boxplot. Incompatible with \code{id.long.var} (a warning is issued
-and lines are suppressed). Defaults to \code{FALSE}.}
+\code{geom_dotplot(binaxis = "y")}, useful for discrete y-values. Dots stack
+away from the violin: \code{stackdir = "down"} for \code{rain.side = "r"} (default),
+\code{"up"} for \code{"l"} and \code{"centerwhole"} for flanking. \code{point.args.pos} is
+respected (e.g., \code{position_nudge()}); if not supplied, no jitter is applied.
+Incompatible with \code{id.long.var} (a warning is issued and lines are
+suppressed). Defaults to \code{FALSE}.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}'s \code{params} argument. These
 arguments broadly fall into one of 4 categories below. Notably, further

@@ -88,8 +88,11 @@ lists which parameters it can accept.
 
 \item{nudge}{Add space between the violinplot and the middle of the space allotted to a given factor on the x-axis.}
 
-\item{quantiles}{If not \code{NULL} (default), compute the \code{quantile} variable
-and draw horizontal lines at the given quantiles in \code{geom_violin()}.}
+\item{quantiles}{A numeric vector with numbers between 0 and 1 to indicate
+quantiles marked by the \code{quantile} computed variable. The default marks the
+25th, 50th and 75th percentiles. The display of quantiles can be
+turned on by setting \code{quantile.linetype} to non-blank when using
+\code{geom = "violin"} (default).}
 
 \item{trim}{If \code{TRUE} (default), trim the tails of the violins
 to the range of the data. If \code{FALSE}, don't trim the tails.}
